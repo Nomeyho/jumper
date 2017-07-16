@@ -9,14 +9,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.nomeyho.jumper.objects.Player;
 
 public class GameScreen extends ScreenAdapter {
-    public static final float WORLD_WIDTH = 768;
-    public static final float WORLD_HEIGHT = 1024;
-
     private ShapeRenderer shapeRenderer;
-    private Viewport viewport;
+    private ExtendViewport viewport;
     private Camera camera;
     private SpriteBatch batch;
 
@@ -25,6 +24,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         this.viewport.update(width, height);
+        this.camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        this.camera.update();
     }
 
     /**
@@ -34,10 +35,10 @@ public class GameScreen extends ScreenAdapter {
     public void show() {
         // Camera
         this.camera = new OrthographicCamera();
-        this.camera.position.set(WORLD_WIDTH / 2, WORLD_HEIGHT / 2, 0);
+        this.camera.position.set(Application.SIZE / 2, Application.SIZE / 2, 0);
         this.camera.update();
-        // Viewport
-        this.viewport = new ExtendViewport(WORLD_WIDTH, WORLD_HEIGHT, this.camera);
+        // Application
+        this.viewport = new ExtendViewport(Application.SIZE,Application.SIZE-1,this.camera);
         // Grid
         this.shapeRenderer = new ShapeRenderer();
         // Batch
@@ -67,6 +68,8 @@ public class GameScreen extends ScreenAdapter {
         this.batch.setTransformMatrix(this.camera.view);
         this.batch.begin();
             // TODO: draw images (textures) here
+        Player player = new Player();
+        player.draw(this.batch);
         this.batch.end();
     }
 

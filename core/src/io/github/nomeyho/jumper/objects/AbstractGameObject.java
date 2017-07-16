@@ -1,5 +1,6 @@
 package io.github.nomeyho.jumper.objects;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.nomeyho.jumper.math.Location;
 
 public abstract class AbstractGameObject {
@@ -10,5 +11,5 @@ public abstract class AbstractGameObject {
     AbstractGameObject() {}
 
     public abstract void update(float delta);
-    public abstract void draw();
+    public abstract void draw(SpriteBatch batch);
 }
