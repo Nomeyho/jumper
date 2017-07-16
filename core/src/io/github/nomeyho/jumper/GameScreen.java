@@ -20,15 +20,16 @@ public class GameScreen extends ScreenAdapter {
     private Camera camera;
     private SpriteBatch batch;
 
-    public GameScreen() {
-    }
+    public GameScreen() {}
 
     @Override
     public void resize(int width, int height) {
         this.viewport.update(width, height);
     }
 
-    // Called once at startup
+    /**
+     * Called once at startup
+     */
     @Override
     public void show() {
         // Camera
@@ -43,7 +44,10 @@ public class GameScreen extends ScreenAdapter {
         this.batch = new SpriteBatch();
     }
 
-    // Called 60 times per sec
+    /**
+     * Called 60 times per sec
+     * @param delta, time in ms since the previous frame
+     */
     @Override
     public void render(float delta) {
         clearScreen();
@@ -55,8 +59,10 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
+    /**
+     * Render a new scene
+     */
     private void draw() {
-        // Render new scene
         this.batch.setProjectionMatrix(this.camera.projection);
         this.batch.setTransformMatrix(this.camera.view);
         this.batch.begin();

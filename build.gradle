@@ -90,6 +90,7 @@ project(":ios") {
     }
 }
 
+/*
 project(":html") {
     apply plugin: "gwt"
     apply plugin: "war"
@@ -105,6 +106,7 @@ project(":html") {
         
     }
 }
+*/
 
 project(":core") {
     apply plugin: "java"
