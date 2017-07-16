@@ -23,5 +23,4 @@ public class Bell extends AbstractGameObject{
     public void draw(SpriteBatch batch) {
         batch.draw(this.bellTexture,this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
     }
-
 }
