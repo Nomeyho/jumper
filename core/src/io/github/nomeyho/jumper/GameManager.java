@@ -5,8 +5,6 @@ import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
 import io.github.nomeyho.jumper.objects.AbstractGameObject;
 import io.github.nomeyho.jumper.objects.Player;
-import io.github.nomeyho.jumper.objects.visitor.RendererVisitor;
-import io.github.nomeyho.jumper.objects.visitor.UpdaterVisitor;
 
 public class GameManager {
     public Player player;
@@ -18,24 +16,21 @@ public class GameManager {
     }
 
     public void update (float delta) {
-        UpdaterVisitor visitor = new UpdaterVisitor(delta);
-        this.player.accept(visitor);
+        this.player.update(delta);
         for(AbstractGameObject go: this.level.objects)
-            go.accept(visitor);
+            go.update(delta);
     }
 
     public void draw (SpriteBatch batch) {
-        RendererVisitor visitor = new RendererVisitor(batch);
-
         // Draw layer per layer
         for(int layer = Application.MIN_LAYER; layer < Application.MAX_LAYER; ++layer) {
             // Draw player
             if (this.player.location.getLayer() == layer)
-                this.player.accept(visitor);
+                this.player.draw(batch);
             // Draw objects
             for(AbstractGameObject go: this.level.objects) {
                 if(go.location.getLayer() == layer)
-                    go.accept(visitor);
+                    go.draw(batch);
             }
         }
     }
