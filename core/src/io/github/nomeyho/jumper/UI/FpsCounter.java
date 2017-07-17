@@ -3,8 +3,8 @@ package io.github.nomeyho.jumper.UI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import io.github.nomeyho.jumper.Application;
-import io.github.nomeyho.jumper.GameScreen;
 
 public class FpsCounter {
 
@@ -13,12 +13,16 @@ public class FpsCounter {
 
     public FpsCounter(SpriteBatch batch){
         this.batch = batch;
-        font =  new BitmapFont();
-        font.getData().setScale(2.5f);
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chocolate.otf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 36;
+        this.font = generator.generateFont(parameter);
+        generator.dispose();
     }
 
 
     public void draw(){
-        this.font.draw(batch, (int) Gdx.graphics.getFramesPerSecond() + " fps",5, Application.worldHeight-20);
+        this.font.draw(batch, Gdx.graphics.getFramesPerSecond() + " fps",5, Application.worldHeight-20);
     }
 }
