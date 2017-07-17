@@ -22,6 +22,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void resize(int width, int height) {
         this.viewport.update(width, height);
+        Application.worldHeight = this.viewport.getWorldHeight();
+        Application.worldWidth = this.viewport.getWorldWidth();
         this.camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
         this.camera.update();
     }
@@ -37,6 +39,8 @@ public class GameScreen extends ScreenAdapter {
         this.camera.update();
         // Application
         this.viewport = new ExtendViewport(Application.SIZE,Application.SIZE-1,this.camera);
+        Application.worldHeight = this.viewport.getWorldHeight();
+        Application.worldWidth = this.viewport.getWorldWidth();
         // Grid
         this.shapeRenderer = new ShapeRenderer();
         // Batch

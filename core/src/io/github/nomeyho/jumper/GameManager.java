@@ -1,6 +1,7 @@
 package io.github.nomeyho.jumper;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.nomeyho.jumper.UI.FpsCounter;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
 import io.github.nomeyho.jumper.objects.AbstractGameObject;
@@ -33,6 +34,8 @@ public class GameManager {
                     go.draw(batch);
             }
         }
+        FpsCounter fpscounter = new FpsCounter(batch);
+        fpscounter.draw();
     }
 
     /*
