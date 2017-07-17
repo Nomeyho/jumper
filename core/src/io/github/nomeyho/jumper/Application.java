@@ -1,6 +1,7 @@
 package io.github.nomeyho.jumper;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,6 +25,9 @@ public class Application {
             assetManager.getLogger().setLevel(Logger.DEBUG);
         // Textures
         assetManager.load("assets.atlas", TextureAtlas.class);
+        // Fonts
+        BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
+        Application.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
         assetManager.finishLoading();
     }
 }
