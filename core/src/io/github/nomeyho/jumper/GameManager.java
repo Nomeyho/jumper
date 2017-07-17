@@ -18,6 +18,7 @@ public class GameManager {
 
     public void update (float delta) {
         this.player.update(delta);
+        this.level.update(this.player.location.getX(), this.player.location.getY());
         for(AbstractGameObject go: this.level.objects)
             go.update(delta);
     }
