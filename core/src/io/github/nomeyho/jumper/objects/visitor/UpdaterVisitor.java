@@ -1,10 +1,9 @@
-package io.github.nomeyho.jumper.visitor.updater;
+package io.github.nomeyho.jumper.objects.visitor;
 
 import io.github.nomeyho.jumper.objects.Bell;
 import io.github.nomeyho.jumper.objects.Player;
-import io.github.nomeyho.jumper.visitor.GameObjectVisitor;
 
-public class UpdaterVisitor implements GameObjectVisitor {
+public class UpdaterVisitor implements IGameObjectVisitor {
     private float delta = 0;
 
     public UpdaterVisitor (float delta) {

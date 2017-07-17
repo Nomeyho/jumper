@@ -2,7 +2,7 @@ package io.github.nomeyho.jumper.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import io.github.nomeyho.jumper.visitor.GameObjectVisitor;
+import io.github.nomeyho.jumper.objects.visitor.IGameObjectVisitor;
 
 public class Player extends AbstractGameObject {
     public static final float WIDTH = 100;
@@ -15,7 +15,7 @@ public class Player extends AbstractGameObject {
     }
 
     @Override
-    public void accept(GameObjectVisitor visitor) {
+    public void accept(IGameObjectVisitor visitor) {
         visitor.visit(this);
     }
 }

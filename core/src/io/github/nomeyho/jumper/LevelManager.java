@@ -1,18 +1,13 @@
-package io.github.nomeyho.jumper.levels;
+package io.github.nomeyho.jumper;
 
-import com.badlogic.gdx.utils.Array;
-import io.github.nomeyho.jumper.objects.Bell;
-import io.github.nomeyho.jumper.objects.Player;
+import io.github.nomeyho.jumper.levels.AbstractLevel;
+import io.github.nomeyho.jumper.levels.UsualLevel;
 
 public class LevelManager {
-    // GameObject
-    public Player player;
-    public Array<Bell> bells = new Array<Bell>();
+    public AbstractLevel level;
 
     public LevelManager () {
-        this.player = new Player(0, 0, 0);
-        this.bells.add( new Bell(500, 500, 0) );
-        this.bells.add( new Bell(900, 1200, 0) );
+        this.level = new UsualLevel();
     }
 
     /*

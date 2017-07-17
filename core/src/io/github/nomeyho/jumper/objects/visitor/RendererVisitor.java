@@ -1,11 +1,10 @@
-package io.github.nomeyho.jumper.visitor.renderer;
+package io.github.nomeyho.jumper.objects.visitor;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.nomeyho.jumper.objects.Bell;
 import io.github.nomeyho.jumper.objects.Player;
-import io.github.nomeyho.jumper.visitor.GameObjectVisitor;
 
-public class RendererVisitor implements GameObjectVisitor {
+public class RendererVisitor implements IGameObjectVisitor {
     private SpriteBatch batch;
 
     public RendererVisitor(SpriteBatch batch) {

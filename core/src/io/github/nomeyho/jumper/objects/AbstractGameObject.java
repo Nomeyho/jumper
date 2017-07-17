@@ -1,7 +1,7 @@
 package io.github.nomeyho.jumper.objects;
 
 import io.github.nomeyho.jumper.math.Location;
-import io.github.nomeyho.jumper.visitor.GameObjectVisitor;
+import io.github.nomeyho.jumper.objects.visitor.IGameObjectVisitor;
 
 public abstract class AbstractGameObject {
     public static final float WIDTH = 1;
@@ -13,5 +13,5 @@ public abstract class AbstractGameObject {
         this.location.setLayer(layer);
     }
 
-    public abstract void accept(GameObjectVisitor visitor);
+    public abstract void accept(IGameObjectVisitor visitor);
 }

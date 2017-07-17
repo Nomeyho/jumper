@@ -2,7 +2,7 @@ package io.github.nomeyho.jumper.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import io.github.nomeyho.jumper.visitor.GameObjectVisitor;
+import io.github.nomeyho.jumper.objects.visitor.IGameObjectVisitor;
 
 public class Bell extends AbstractGameObject{
 
@@ -16,7 +16,7 @@ public class Bell extends AbstractGameObject{
     }
 
     @Override
-    public void accept(GameObjectVisitor visitor) {
+    public void accept(IGameObjectVisitor visitor) {
         visitor.visit(this);
     }
 }
