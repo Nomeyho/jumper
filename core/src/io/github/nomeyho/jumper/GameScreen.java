@@ -8,7 +8,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.nomeyho.jumper.objects.Player;
 
 public class GameScreen extends ScreenAdapter {
     private ShapeRenderer shapeRenderer;
@@ -81,6 +85,7 @@ public class GameScreen extends ScreenAdapter {
      */
     private void update (float delta) {
         this.gm.update(delta);
+        this.gm.input(camera, delta);
     }
 
     @Override

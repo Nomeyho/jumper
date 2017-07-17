@@ -1,6 +1,9 @@
 package io.github.nomeyho.jumper;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import io.github.nomeyho.jumper.UI.FpsCounter;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
@@ -12,7 +15,7 @@ public class GameManager {
     public AbstractLevel level;
 
     public GameManager() {
-        this.player = new Player(0, 0, 0);
+        this.player = new Player(500, 0, 0);
         this.level = new UsualLevel();
     }
 
@@ -38,6 +41,32 @@ public class GameManager {
         FpsCounter fpscounter = new FpsCounter(batch);
         fpscounter.draw();
     }
+
+    public void input(Camera camera, float delta){
+        if(Gdx.input.isTouched()) {
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touchPos); //Convert pixels to World units
+            // Set direction
+            if((this.player.location.getX()+ Player.WIDTH/2) <= touchPos.x)
+                Player.direction = 1;
+            else
+                Player.direction = -1;
+            System.out.print(this.player.speed.x);
+            // Acceleration
+            if( this.player.speed.x < Player.SPEED_MAX_X )
+                this.player.speed.x += Player.ACCELX*delta;
+
+            // Has to move?
+            if( Math.abs(touchPos.x - player.location.getX() - Player.WIDTH/2) > Math.abs(this.player.speed.x * delta))
+                this.player.move(delta);
+            else {
+                Player.direction = 0;
+                this.player.speed.x = 0;
+                System.out.print("RESETTTT");
+            }
+            }
+        }
 
     /*
 
