@@ -1,6 +1,7 @@
 package io.github.nomeyho.jumper.math;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.nomeyho.jumper.Application;
 
 public class Location {
     private Vector2 location = new Vector2();
@@ -26,7 +27,12 @@ public class Location {
     }
 
     public void setLayer(int layer) {
-        this.layer = layer;
+        if(layer < Application.MIN_LAYER)
+            this.layer = 0;
+        if(layer > Application.MAX_LAYER)
+            this.layer = 0;
+        else
+            this.layer = layer;
     }
 
     public int getLayer() {
