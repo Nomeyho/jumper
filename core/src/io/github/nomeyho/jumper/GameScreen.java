@@ -9,15 +9,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import io.github.nomeyho.jumper.objects.Player;
+import io.github.nomeyho.jumper.levels.LevelManager;
+import io.github.nomeyho.jumper.objects.Bell;
+import io.github.nomeyho.jumper.visitor.renderer.RendererVisitor;
 
 public class GameScreen extends ScreenAdapter {
     private ShapeRenderer shapeRenderer;
     private ExtendViewport viewport;
     private Camera camera;
     private SpriteBatch batch;
+    private LevelManager lm;
 
     public GameScreen() {}
 
@@ -43,6 +44,8 @@ public class GameScreen extends ScreenAdapter {
         this.shapeRenderer = new ShapeRenderer();
         // Batch
         this.batch = new SpriteBatch();
+        // Game level
+        this.lm = new LevelManager();
     }
 
     /**
@@ -67,9 +70,10 @@ public class GameScreen extends ScreenAdapter {
         this.batch.setProjectionMatrix(this.camera.projection);
         this.batch.setTransformMatrix(this.camera.view);
         this.batch.begin();
-            // TODO: draw images (textures) here
-        Player player = new Player();
-        player.draw(this.batch);
+            RendererVisitor visitor = new RendererVisitor(this.batch);
+            this.lm.player.accept(visitor);
+            for(Bell bell: this.lm.bells)
+                bell.accept(visitor);
         this.batch.end();
     }
 

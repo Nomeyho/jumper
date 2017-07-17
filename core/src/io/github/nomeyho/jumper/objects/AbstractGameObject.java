@@ -1,15 +1,17 @@
 package io.github.nomeyho.jumper.objects;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.nomeyho.jumper.math.Location;
+import io.github.nomeyho.jumper.visitor.GameObjectVisitor;
 
 public abstract class AbstractGameObject {
     public static final float WIDTH = 1;
     public static final float HEIGHT = 1;
     public Location location = new Location(0, 0, 0);
 
-    AbstractGameObject() {}
+    AbstractGameObject(float x, float y, int layer) {
+        this.location.setLocation(x, y);
+        this.location.setLayer(layer);
+    }
 
-    public abstract void update(float delta);
-    public abstract void draw(SpriteBatch batch);
+    public abstract void accept(GameObjectVisitor visitor);
 }

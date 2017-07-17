@@ -5,12 +5,15 @@ import io.github.nomeyho.jumper.objects.Bell;
 import io.github.nomeyho.jumper.objects.Player;
 
 public class LevelManager {
-    public static LevelManager INSTANCE = new LevelManager();
     // GameObject
-    private Player player;
-    private Array<Bell> bells = new Array<Bell>();
+    public Player player;
+    public Array<Bell> bells = new Array<Bell>();
 
-    private LevelManager () {}
+    public LevelManager () {
+        this.player = new Player(0, 0, 0);
+        this.bells.add( new Bell(500, 500, 0) );
+        this.bells.add( new Bell(900, 1200, 0) );
+    }
 
     /*
 
