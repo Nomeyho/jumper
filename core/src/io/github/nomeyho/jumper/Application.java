@@ -25,6 +25,11 @@ public class Application {
             assetManager.getLogger().setLevel(Logger.DEBUG);
         // Textures
         assetManager.load("assets.atlas", TextureAtlas.class);
+
+        for(int i=0; i<10000; ++i) {
+            assetManager.load("assets.atlas", TextureAtlas.class);
+        }
+
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
         Application.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
