@@ -5,6 +5,16 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 
 project.ext.mainClassName = "io.github.nomeyho.jumper.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets");
+project.ext.texturePacker = [ "android/assets/img/", "android/assets/", "assets" ]
+
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+
+task texturePacker << {
+    if (project.ext.has('texturePacker')) {
+        logger.info "Calling TexturePacker: "+texturePacker
+        TexturePacker.process(texturePacker[0], texturePacker[1], texturePacker[2])
+    }
+}
 
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
