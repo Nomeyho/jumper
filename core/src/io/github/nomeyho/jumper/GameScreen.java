@@ -8,16 +8,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import io.github.nomeyho.jumper.objects.Player;
+
 
 public class GameScreen extends ScreenAdapter {
     private ShapeRenderer shapeRenderer;
     private ExtendViewport viewport;
-    private Camera camera;
+    private OrthographicCamera camera;
+    private OrthographicCamera guiCamera;
     private SpriteBatch batch;
     private GameManager gm;
 
@@ -28,8 +26,10 @@ public class GameScreen extends ScreenAdapter {
         this.viewport.update(width, height);
         Application.worldHeight = this.viewport.getWorldHeight();
         Application.worldWidth = this.viewport.getWorldWidth();
-        this.camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        this.camera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
         this.camera.update();
+        this.guiCamera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
+        this.guiCamera.update();
     }
 
     /**
@@ -39,12 +39,9 @@ public class GameScreen extends ScreenAdapter {
     public void show() {
         // Camera
         this.camera = new OrthographicCamera();
-        this.camera.position.set(Application.SIZE / 2, Application.SIZE / 2, 0);
-        this.camera.update();
+        this.guiCamera = new OrthographicCamera();
         // Application
-        this.viewport = new ExtendViewport(Application.SIZE,Application.SIZE-1,this.camera);
-        Application.worldHeight = this.viewport.getWorldHeight();
-        Application.worldWidth = this.viewport.getWorldWidth();
+        this.viewport = new ExtendViewport(Application.SIZE, Application.SIZE, this.camera);
         // Grid
         this.shapeRenderer = new ShapeRenderer();
         // Batch
@@ -73,10 +70,18 @@ public class GameScreen extends ScreenAdapter {
      * Render a new scene
      */
     private void draw() {
+        // World
         this.batch.setProjectionMatrix(this.camera.projection);
         this.batch.setTransformMatrix(this.camera.view);
         this.batch.begin();
         this.gm.draw(this.batch);
+        this.batch.end();
+        // UI
+        this.batch.setProjectionMatrix(this.guiCamera.projection);
+        this.batch.setTransformMatrix(this.guiCamera.view);
+        this.batch.begin();
+        System.out.println("ICI" + this.guiCamera.viewportHeight + "/" + this.guiCamera.viewportWidth);
+        this.gm.drawUI(this.batch);
         this.batch.end();
     }
 
@@ -84,8 +89,11 @@ public class GameScreen extends ScreenAdapter {
      * Update the game
      */
     private void update (float delta) {
+        this.gm.input(camera);
         this.gm.update(delta);
-        this.gm.input(camera, delta);
+        // Re-center camera
+        this.camera.position.set(camera.viewportWidth/2,this.gm.player.location.getY(),0);
+        this.camera.update();
     }
 
     @Override

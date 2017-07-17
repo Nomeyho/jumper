@@ -11,10 +11,13 @@ public class Player extends AbstractGameObject {
     public static final float WIDTH = 100;
     public static final float HEIGHT = 180;
     public static final float SPEED_MAX_X = 2000;
+    public static final float SPEED_MAX_Y = 50;
     public static final float ACCELX = 6000;
-    public static float direction = 0;
+    public static final float ACCELY = -10;
 
+    private float direction = 0;
     private TextureRegion playerTexture;
+    private Vector3 touchedPos = new Vector3();
 
     public Player(float x, float y, int layer) {
         super(x, y, layer);
@@ -24,6 +27,34 @@ public class Player extends AbstractGameObject {
 
     @Override
     public void update(float delta) {
+        // Set direction
+        if((this.location.getX()+ Player.WIDTH/2) <= this.touchedPos.x)
+            this.direction = 1;
+        else
+            this.direction = -1;
+
+        // Acceleration
+        if(this.speed.x < SPEED_MAX_X )
+            this.speed.x += ACCELX * delta;
+        if(this.speed.y < SPEED_MAX_Y)
+            this.speed.y += ACCELY * delta;
+
+        // Move along X
+        if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH/2) > Math.abs(this.speed.x * delta)) {
+            Float normWidth = MathUtils.clamp(
+                    this.location.getX() + ( direction * this.speed.x * delta),
+                    0,
+                    Application.worldWidth - Player.WIDTH
+            );
+            this.location.setLocation(normWidth, this.location.getY());
+        }
+        else {
+            this.direction = 0;
+            this.speed.x = 0;
+        }
+
+        // Move along Y
+        this.location.add(0, - this.speed.y * delta);
     }
 
     @Override
@@ -31,9 +62,7 @@ public class Player extends AbstractGameObject {
         batch.draw(this.playerTexture,this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
     }
 
-    public void move(float delta){
-        Float normWidth = MathUtils.clamp(this.location.getX() + ( direction * this.speed.x * delta), 0
-                        , Application.worldWidth - Player.WIDTH);
-        this.location.setLocation(normWidth, this.location.getY());
+    public void setTouchedPos(Vector3 pos) {
+        this.touchedPos.set(pos);
     }
 }

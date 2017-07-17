@@ -26,6 +26,11 @@ public class Location {
         this.location.y =y;
     }
 
+    public void add(float x, float y) {
+        this.location.x += x;
+        this.location.y += y;
+    }
+
     public void setLayer(int layer) {
         if(layer < Application.MIN_LAYER)
             this.layer = 0;
