@@ -15,7 +15,7 @@ public class GameScreen extends ScreenAdapter {
     private ExtendViewport viewport;
     private Camera camera;
     private SpriteBatch batch;
-    private LevelManager lm;
+    private GameManager gm;
 
     public GameScreen() {}
 
@@ -41,8 +41,8 @@ public class GameScreen extends ScreenAdapter {
         this.shapeRenderer = new ShapeRenderer();
         // Batch
         this.batch = new SpriteBatch();
-        // Game level
-        this.lm = new LevelManager();
+        // Game manager
+        this.gm = new GameManager();
     }
 
     /**
@@ -68,7 +68,7 @@ public class GameScreen extends ScreenAdapter {
         this.batch.setProjectionMatrix(this.camera.projection);
         this.batch.setTransformMatrix(this.camera.view);
         this.batch.begin();
-        this.lm.level.draw(this.batch);
+        this.gm.draw(this.batch);
         this.batch.end();
     }
 
@@ -76,7 +76,7 @@ public class GameScreen extends ScreenAdapter {
      * Update the game
      */
     private void update (float delta) {
-        this.lm.level.update(delta);
+        this.gm.update(delta);
     }
 
     @Override

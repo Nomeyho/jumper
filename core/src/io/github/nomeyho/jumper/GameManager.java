@@ -1,13 +1,34 @@
 package io.github.nomeyho.jumper;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
+import io.github.nomeyho.jumper.objects.AbstractGameObject;
+import io.github.nomeyho.jumper.objects.Player;
+import io.github.nomeyho.jumper.objects.visitor.RendererVisitor;
+import io.github.nomeyho.jumper.objects.visitor.UpdaterVisitor;
 
-public class LevelManager {
+public class GameManager {
+    public Player player;
     public AbstractLevel level;
 
-    public LevelManager () {
+    public GameManager() {
+        this.player = new Player(0, 0, 0);
         this.level = new UsualLevel();
+    }
+
+    public void update (float delta) {
+        UpdaterVisitor visitor = new UpdaterVisitor(delta);
+        this.player.accept(visitor);
+        for(AbstractGameObject go: this.level.objects)
+            go.accept(visitor);
+    }
+
+    public void draw (SpriteBatch batch) {
+        RendererVisitor visitor = new RendererVisitor(batch);
+        this.player.accept(visitor);
+        for(AbstractGameObject go: this.level.objects)
+            go.accept(visitor);
     }
 
     /*
@@ -23,7 +44,7 @@ public class LevelManager {
     private static final float MIN = 1;
     private static final float MAX = Viewport.DIM_X - 2;
 
-    public LevelManager () {
+    public GameManager () {
         this.player = new Player(Viewport.DIM_X / 2, 0);
     }
 
