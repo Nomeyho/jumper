@@ -28,6 +28,8 @@ public class GameScreen extends ScreenAdapter {
         Application.worldWidth = this.viewport.getWorldWidth();
         this.camera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
         this.camera.update();
+        this.guiCamera.viewportWidth = Application.worldWidth;
+        this.guiCamera.viewportHeight = Application.worldHeight;
         this.guiCamera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
         this.guiCamera.update();
     }

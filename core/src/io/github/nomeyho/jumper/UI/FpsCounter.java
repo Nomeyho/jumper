@@ -14,6 +14,6 @@ public class FpsCounter {
     }
 
     public void draw(SpriteBatch batch) {
-        this.font.draw(batch, Gdx.graphics.getFramesPerSecond() + " fps",5, Application.worldHeight - 300);
+        this.font.draw(batch, Gdx.graphics.getFramesPerSecond() + " fps",5, Application.worldHeight - 20);
     }
 }
