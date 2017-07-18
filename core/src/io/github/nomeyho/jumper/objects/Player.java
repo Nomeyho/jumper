@@ -12,7 +12,7 @@ public class Player extends AbstractGameObject {
     public static final float HEIGHT = 180;
     public static final float SPEED_MAX_X = 2000;
     public static final float SPEED_MAX_Y = 50;
-    public static final float ACCELX = 6000;
+    public static final float ACCELX = 8000;
     public static final float ACCELY = -10;
 
     private float direction = 0;
@@ -40,7 +40,7 @@ public class Player extends AbstractGameObject {
             this.speed.y += ACCELY * delta;
 
         // Move along X
-        if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH/2) > Math.abs(this.speed.x * delta)) {
+        if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH/2) > Math.abs(this.speed.x * delta / 2)) {
             Float normWidth = MathUtils.clamp(
                     this.location.getX() + ( direction * this.speed.x * delta),
                     0,
