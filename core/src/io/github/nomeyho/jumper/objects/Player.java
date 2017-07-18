@@ -13,7 +13,7 @@ public class Player extends AbstractGameObject {
     public static final float SPEED_MAX_X = 2000;
     public static final float SPEED_MAX_Y = 50;
     public static final float ACCELX = 4000;
-    public static final float ACCELY = -10;
+    public static final float ACCELY = 10;
     public static final float ACCEL_SMOOTH_LEVEL = 1;
 
     private float direction = 0;
@@ -54,8 +54,10 @@ public class Player extends AbstractGameObject {
                 this.direction = 0;
                 this.speed.x = 0;
             }
+
             // Move along Y
-            this.location.add(0, - this.speed.y * delta / ACCEL_SMOOTH_LEVEL);
+            float dy = - this.speed.y * delta / ACCEL_SMOOTH_LEVEL;
+            this.location.add(0, dy < 0 ? 0 : dy);
         }
     }
 

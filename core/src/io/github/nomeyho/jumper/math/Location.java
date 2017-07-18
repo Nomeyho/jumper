@@ -43,4 +43,9 @@ public class Location {
     public int getLayer() {
         return this.layer;
     }
+
+    @Override
+    public String toString() {
+        return "x:" + this.location.x + " y:" + this.location.y + " layer:" + this.layer;
+    }
 }

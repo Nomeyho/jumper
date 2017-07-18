@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
@@ -25,8 +26,10 @@ public class GameScreen extends ScreenAdapter {
         this.viewport.update(width, height);
         Application.worldHeight = this.viewport.getWorldHeight();
         Application.worldWidth = this.viewport.getWorldWidth();
+
         this.camera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
         this.camera.update();
+
         this.guiCamera.viewportWidth = Application.worldWidth;
         this.guiCamera.viewportHeight = Application.worldHeight;
         this.guiCamera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
@@ -92,7 +95,8 @@ public class GameScreen extends ScreenAdapter {
         this.gm.input(camera);
         this.gm.update(delta);
         // Re-center camera
-        this.camera.position.set(camera.viewportWidth/2,this.gm.player.location.getY(),0);
+        updateCamera(delta);
+        updateGuiCamera(delta);
         this.camera.update();
     }
 
@@ -100,5 +104,19 @@ public class GameScreen extends ScreenAdapter {
     public void dispose () {
         this.batch.dispose();
         this.shapeRenderer.dispose();
+    }
+
+    private void updateCamera (float delta) {
+        float x = camera.viewportWidth / 2;
+        float y = this.gm.player.location.getY();
+
+        if (y < Application.worldHeight / 2)
+            y = Application.worldHeight / 2;
+
+        this.camera.position.set(x, y,0);
+        this.camera.update();
+    }
+
+    private void updateGuiCamera (float delta) {
     }
 }
