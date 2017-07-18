@@ -51,7 +51,7 @@ public class GameScreen extends ScreenAdapter {
         // Batch
         this.batch = new SpriteBatch();
         // Game manager
-        this.gm = new GameManager();
+        this.gm = new GameManager(this.camera, this.guiCamera);
     }
 
     /**
@@ -92,7 +92,6 @@ public class GameScreen extends ScreenAdapter {
      * Update the game
      */
     private void update (float delta) {
-        this.gm.input(camera);
         this.gm.update(delta);
         // Re-center camera
         updateCamera(delta);

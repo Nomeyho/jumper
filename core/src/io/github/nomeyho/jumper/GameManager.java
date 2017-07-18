@@ -1,9 +1,7 @@
 package io.github.nomeyho.jumper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import io.github.nomeyho.jumper.UI.FpsCounter;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
@@ -13,11 +11,17 @@ import io.github.nomeyho.jumper.objects.Player;
 public class GameManager {
     public Player player;
     public AbstractLevel level;
+    public Camera camera;
+    public Camera guiCamera;
     private FpsCounter fpscounter = new FpsCounter();
+    private InputController inputController;
 
-    public GameManager() {
+    public GameManager(Camera camera, Camera guiCamera) {
         this.player = new Player(500, 0, 0);
         this.level = new UsualLevel();
+        this.camera = camera;
+        this.guiCamera = guiCamera;
+        this.inputController = new InputController(this);
     }
 
     public void update (float delta) {
@@ -43,14 +47,5 @@ public class GameManager {
 
     public void drawUI (SpriteBatch batch) {
         this.fpscounter.draw(batch);
-    }
-
-    public void input(Camera camera) {
-        if(Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos); //Convert pixels to World units
-            this.player.setTouchedPos(touchPos);
-        }
     }
 }
