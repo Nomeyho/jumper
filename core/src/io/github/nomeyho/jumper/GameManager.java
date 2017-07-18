@@ -15,9 +15,10 @@ public class GameManager {
     public Camera guiCamera;
     private FpsCounter fpscounter = new FpsCounter();
     private InputController inputController;
+    public static boolean GAME_STARTING = false;
 
     public GameManager(Camera camera, Camera guiCamera) {
-        this.player = new Player(500, 500, 0);
+        this.player = new Player(Application.worldWidth / 2, 0, 0);
         this.level = new UsualLevel();
         this.camera = camera;
         this.guiCamera = guiCamera;

@@ -114,7 +114,7 @@ public class GameScreen extends ScreenAdapter {
         float x = camera.viewportWidth / 2;
         float y = this.gm.player.location.getY();
 
-        if (y < Application.worldHeight / 2)
+       // if (y < Application.worldHeight / 2)
             y = Application.worldHeight / 2;
 
         this.camera.position.set(x, y,0);

@@ -30,19 +30,23 @@ public class InputController implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         this.gameManager.player.setTouchedPos(toWorld(screenX, screenY));
-        return false;
+        if(!GameManager.GAME_STARTING) {
+            GameManager.GAME_STARTING = true;
+
+        }
+        this.gameManager.player.jump();
+        return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        this.gameManager.player.setTouchedPos(toWorld(screenX, screenY));
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        this.gameManager.player.setTouchedPos(toWorld(screenX, screenY));
-        return false;
+       this.gameManager.player.setTouchedPos(toWorld(screenX, screenY));
+        return true;
     }
 
     @Override

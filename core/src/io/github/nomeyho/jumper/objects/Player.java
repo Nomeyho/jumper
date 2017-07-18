@@ -6,19 +6,23 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import io.github.nomeyho.jumper.Application;
+import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.utils.DirectionEnum;
+import io.github.nomeyho.jumper.utils.Utils;
 
 public class Player extends AbstractGameObject {
     public static final float WIDTH = 100;
     public static final float HEIGHT = 180;
     public static final float SPEED_MAX_X = 2000;
-    public static final float SPEED_MAX_Y = 50;
-    public static final float ACCELX = 4000;
-    public static final float ACCELY = 10;
-    public static final float ACCEL_SMOOTH_LEVEL = 1;
+    public static final float SPEED_MAX_Y_DOWN = -500;
+    public static final float ACCELX = 2000;
+    public static final float ACCELY = -1000;
 
-    private float direction = 0;
     private TextureRegion playerTexture;
     private Vector3 touchedPos = new Vector3();
+    private DirectionEnum direction = DirectionEnum.RIGHT;
+
+
 
     public Player(float x, float y, int layer) {
         super(x, y, layer);
@@ -28,37 +32,36 @@ public class Player extends AbstractGameObject {
 
     @Override
     public void update(float delta) {
-        // Set direction
-        if((this.location.getX()+ Player.WIDTH/2) <= this.touchedPos.x)
-            this.direction = 1;
-        else
-            this.direction = -1;
-
-        // Acceleration
-        for(int n=1; n<=ACCEL_SMOOTH_LEVEL; n++)
-        {
-            if(this.speed.x < SPEED_MAX_X )
-                this.speed.x += ACCELX * delta / ACCEL_SMOOTH_LEVEL;
-            if(this.speed.y < SPEED_MAX_Y)
-                this.speed.y += ACCELY * delta / ACCEL_SMOOTH_LEVEL;
-            // Move along X
-            if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH/2) > Math.abs(this.speed.x * delta / (2*ACCEL_SMOOTH_LEVEL))) {
-                Float normWidth = MathUtils.clamp(
-                        this.location.getX() + ( direction * this.speed.x * delta / ACCEL_SMOOTH_LEVEL),
-                        0,
-                        Application.worldWidth - Player.WIDTH
-                );
-                this.location.setLocation(normWidth, this.location.getY());
-            }
-            else {
-                this.direction = 0;
-                this.speed.x = 0;
-            }
-
-            // Move along Y
-            float dy = - this.speed.y * delta / ACCEL_SMOOTH_LEVEL;
-            this.location.add(0, dy < 0 ? 0 : dy);
+        // Handle x
+        if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5) > 0.001 && GameManager.GAME_STARTING){
+           // Sign change -> instant redirection
+           DirectionEnum newDirection = DirectionEnum.toDirection(this.touchedPos.x - this.location.getX() - WIDTH * 0.5 );
+           if(this.direction != newDirection) { this.speed.x = 0; }
+           this.direction = newDirection;
+           // Max speed check
+           if(Math.abs(this.speed.x) < SPEED_MAX_X)
+                this.speed.x += this.direction.getSign() * ACCELX * delta;
+           // Ensure that the new position do not overextend the arrival point (delta)
+           float x;
+           if(this.direction == DirectionEnum.RIGHT)
+             x = MathUtils.clamp(this.location.getX() + this.speed.x * delta, this.location.getX(), touchedPos.x - WIDTH * 0.5f);
+           else
+             x = MathUtils.clamp(this.location.getX() + this.speed.x * delta, touchedPos.x - WIDTH * 0.5f, this.location.getX());
+           // Ensure that the new position remains inside de viewport limits
+           x = MathUtils.clamp(x, 0, Application.worldWidth - WIDTH);
+           this.location.setLocation(x,this.location.getY());
         }
+        else
+            this.speed.x =0;
+
+        // Handle y
+        if(this.speed.y >= SPEED_MAX_Y_DOWN)
+            this.speed.y += ACCELY * delta;
+        float y = location.getY() + speed.y * delta;
+        if(y<=0){ y = 0; }
+        this.location.setLocation(location.getX(), y);
+        if(this.location.getY() == 0)
+            this.speed.y =0;
     }
 
     @Override
@@ -69,4 +72,10 @@ public class Player extends AbstractGameObject {
     public void setTouchedPos(Vector3 pos) {
         this.touchedPos.set(pos);
     }
+
+    public void jump(){
+        this.speed.y += 500;
+        System.out.print(this.speed.y);
+    }
+
 }
