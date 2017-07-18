@@ -55,7 +55,7 @@ public class Player extends AbstractGameObject {
                 this.speed.x = 0;
             }
             // Move along Y
-            this.location.add(0, - this.speed.y * delta);
+            this.location.add(0, - this.speed.y * delta / ACCEL_SMOOTH_LEVEL);
         }
     }
 
