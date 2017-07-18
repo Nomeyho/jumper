@@ -3,21 +3,19 @@ package io.github.nomeyho.jumper.loading;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameScreen;
 import io.github.nomeyho.jumper.JumperGame;
+import io.github.nomeyho.jumper.utils.Utils;
 
 
 public class LoadingScreen extends ScreenAdapter {
@@ -35,6 +33,7 @@ public class LoadingScreen extends ScreenAdapter {
     private Texture logoTexture;
     private Image logo;
     private ProgressBar progressBar;
+    private Label progressLabel;
 
     public LoadingScreen(JumperGame game) {
         this.game = game;
@@ -49,14 +48,20 @@ public class LoadingScreen extends ScreenAdapter {
         this.shapeRenderer.updateMatrices();
 
         // Position widgets
+        float centerX = this.viewport.getWorldWidth() / 2;
+        float centerY = this.viewport.getWorldHeight() / 2;
+
         this.logo.setWidth(SIZE * 0.4f);
         this.logo.setScaling(Scaling.fillX);
-        this.logo.setX((this.viewport.getWorldWidth() - this.logo.getWidth()) / 2);
-        this.logo.setY((this.viewport.getWorldHeight() - this.logo.getHeight()) / 2 + 100);
+        this.logo.setX(centerX - this.logo.getWidth()/2);
+        this.logo.setY(centerY - this.logo.getHeight()/2 + 100);
 
-        this.progressBar.setPosition(100, 100);
-        this.progressBar.setSize(100, 50);
-        this.progressBar.setValue(this.progressBar.getValue() + 0.1f);
+        this.progressBar.setSize(SIZE * 0.9f, 30);
+        this.progressBar.setX(centerX - this.progressBar.getWidth()/2);
+        this.progressBar.setY(CELL * 2);
+
+        this.progressLabel.setX(centerX - this.progressLabel.getWidth()/2);
+        this.progressLabel.setY(CELL * 2 + this.progressBar.getHeight());
     }
 
     @Override
@@ -75,6 +80,13 @@ public class LoadingScreen extends ScreenAdapter {
         // Progress bar
         this.progressBar = new ProgressBar(0f, 1f, 0.01f, false, getProgressBarStyle());
         this.stage.addActor(this.progressBar);
+
+        // Progress label
+        this.progressLabel = new Label("test", getProgressLabelStyle());
+        this.stage.addActor(this.progressLabel);
+
+        // Start queuing assets for loading
+        Application.loadAssets();
     }
 
     @Override
@@ -92,12 +104,15 @@ public class LoadingScreen extends ScreenAdapter {
 
     private void update() {
         if (Application.assetManager.update()) {
+            this.progressBar.setValue(1);
+            this.progressLabel.setText("100%");
             // If the screen is touched after loading
             if(Gdx.input.isTouched())
                 this.game.setScreen(new GameScreen());
         } else {
-            this.progress = Application.assetManager.getProgress();
-            // TODO this.progress = Interpolation.linear.apply(progress, Application.assetManager.getProgress(), 0.1f);
+            this.progress = Interpolation.linear.apply(this.progress, Application.assetManager.getProgress(), 0.1f);
+            this.progressBar.setValue(this.progress);
+            this.progressLabel.setText(this.progress + "%");
         }
     }
     private void clearScreen() {
@@ -126,24 +141,18 @@ public class LoadingScreen extends ScreenAdapter {
 
     private ProgressBar.ProgressBarStyle getProgressBarStyle () {
         ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
-        Pixmap pixmap;
-        TextureRegionDrawable drawable;
 
-        // Background
-        pixmap = new Pixmap(100, 20, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.BLUE);
-        pixmap.fill();
-        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
-        pixmap.dispose();
-        style.background = drawable;
+        style.background = Utils.getColoredDrawable(100, 20, Color.RED);
+        style.knob = Utils.getColoredDrawable(0, 20, Color.BLUE);
+        style.knobBefore = Utils.getColoredDrawable(100, 20, Color.BLUE);
 
-        pixmap = new Pixmap(100, 20, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.RED);
-        pixmap.fill();
-        drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
-        pixmap.dispose();
-        style.knob = drawable;
-        style.knobBefore = drawable;
+        return style;
+    }
+
+    private Label.LabelStyle getProgressLabelStyle () {
+        Label.LabelStyle style = new Label.LabelStyle();
+
+        style.font = new BitmapFont();
 
         return style;
     }

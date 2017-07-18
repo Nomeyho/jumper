@@ -2,7 +2,6 @@ package io.github.nomeyho.jumper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -82,7 +81,6 @@ public class GameScreen extends ScreenAdapter {
         this.batch.setProjectionMatrix(this.guiCamera.projection);
         this.batch.setTransformMatrix(this.guiCamera.view);
         this.batch.begin();
-        System.out.println("ICI" + this.guiCamera.viewportHeight + "/" + this.guiCamera.viewportWidth);
         this.gm.drawUI(this.batch);
         this.batch.end();
     }

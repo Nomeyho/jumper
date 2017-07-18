@@ -19,20 +19,16 @@ public class Application {
     // TODO DO NOT USE ASSET IN STATIC
     public static final AssetManager assetManager = new AssetManager();
 
-    static {
+    public static void loadAssets () {
         // java -jar runnable-texturepacker.jar ./Jumper/android/assets/img/ ./Jumper/android/assets/ assets
         if(DEBUG)
             assetManager.getLogger().setLevel(Logger.DEBUG);
         // Textures
         assetManager.load("assets.atlas", TextureAtlas.class);
 
-        for(int i=0; i<10000; ++i) {
-            assetManager.load("assets.atlas", TextureAtlas.class);
-        }
-
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
         Application.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
-        assetManager.finishLoading();
+        // assetManager.finishLoading();
     }
 }
