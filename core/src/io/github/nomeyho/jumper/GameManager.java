@@ -17,7 +17,7 @@ public class GameManager {
     private InputController inputController;
 
     public GameManager(Camera camera, Camera guiCamera) {
-        this.player = new Player(500, 0, 0);
+        this.player = new Player(500, 500, 0);
         this.level = new UsualLevel();
         this.camera = camera;
         this.guiCamera = guiCamera;

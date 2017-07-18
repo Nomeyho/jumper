@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
@@ -34,6 +33,9 @@ public class GameScreen extends ScreenAdapter {
         this.guiCamera.viewportHeight = Application.worldHeight;
         this.guiCamera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
         this.guiCamera.update();
+
+        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
+        this.shapeRenderer.updateMatrices();
     }
 
     /**
@@ -86,6 +88,9 @@ public class GameScreen extends ScreenAdapter {
         this.batch.begin();
         this.gm.drawUI(this.batch);
         this.batch.end();
+        // Grid
+        if(Application.DEBUG)
+            drawGrid();
     }
 
     /**
@@ -117,5 +122,15 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void updateGuiCamera (float delta) {
+    }
+
+    private void drawGrid () {
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        for (int x = 0; x < this.viewport.getWorldWidth(); x += Application.CELL) {
+            for (int y = 0; y < this.viewport.getWorldHeight(); y += Application.CELL) {
+                this.shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
+            }
+        }
+        this.shapeRenderer.end();
     }
 }
