@@ -19,4 +19,6 @@ public class IOSLauncher extends IOSApplication.Delegate {
         UIApplication.main(argv, null, IOSLauncher.class);
         pool.close();
     }
+
+    // TODO https://discuss.multi-os-engine.org/t/libgdx-i18ln-with-ios-moe/925/3
 }

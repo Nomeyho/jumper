@@ -14,12 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameScreen;
 import io.github.nomeyho.jumper.JumperGame;
-import io.github.nomeyho.jumper.utils.Utils;
 
 
 public class MenuScreen extends ScreenAdapter {
@@ -84,7 +84,7 @@ public class MenuScreen extends ScreenAdapter {
         this.stage.addActor(this.logo);
 
         // Play
-        this.playBtn = new TextButton("Play", getBtnStyle());
+        this.playBtn = new TextButton("", getBtnStyle());
         this.playBtn.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
@@ -95,11 +95,25 @@ public class MenuScreen extends ScreenAdapter {
         this.stage.addActor(this.playBtn);
 
         // Buy
-        this.buyBtn = new TextButton("Buy", getBtnStyle());
+        this.buyBtn = new TextButton("", getBtnStyle());
         this.stage.addActor(this.buyBtn);
 
         // Settings
-        this.settingsBtn = new TextButton("Settings", getBtnStyle());
+        this.settingsBtn = new TextButton("", getBtnStyle());
+        this.settingsBtn.addListener(new ActorGestureListener() {
+            private boolean french = false;
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                if(french) {
+                    Application.loadLocale("");
+                    french = false;
+                } else {
+                    Application.loadLocale("fr");
+                    french = true;
+                }
+            }
+        });
         this.stage.addActor(this.settingsBtn);
 
         // Start taking input from the UI
@@ -119,7 +133,12 @@ public class MenuScreen extends ScreenAdapter {
         this.shapeRenderer.dispose();
     }
 
-    private void update() {}
+    private void update() {
+        I18NBundle bundle = Application.assetManager.get(Application.locale, I18NBundle.class);
+        this.playBtn.setText(bundle.get("play"));
+        this.buyBtn.setText(bundle.get("buy"));
+        this.settingsBtn.setText(bundle.get("settings"));
+    }
 
     private void clearScreen() {
         Gdx.gl.glClearColor(Color.GRAY.r, Color.GRAY.g, Color.GRAY.b, Color.GRAY.a);
