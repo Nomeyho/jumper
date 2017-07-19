@@ -87,7 +87,6 @@ public class LoadingScreen extends ScreenAdapter {
 
         // Start queuing assets for loading
         Application.loadAssets();
-        Application.loadLocale(""); // TODO use syslang or preferences
     }
 
     @Override

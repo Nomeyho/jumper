@@ -100,20 +100,6 @@ public class MenuScreen extends ScreenAdapter {
 
         // Settings
         this.settingsBtn = new TextButton("", getBtnStyle());
-        this.settingsBtn.addListener(new ActorGestureListener() {
-            private boolean french = false;
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                if(french) {
-                    Application.loadLocale("");
-                    french = false;
-                } else {
-                    Application.loadLocale("fr");
-                    french = true;
-                }
-            }
-        });
         this.stage.addActor(this.settingsBtn);
 
         // Start taking input from the UI

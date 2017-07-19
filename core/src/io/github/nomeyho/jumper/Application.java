@@ -19,6 +19,7 @@ public class Application {
 
     // Assets
     // TODO DO NOT USE ASSET IN STATIC
+    public static final String locale = "lang/locale";
     public static final AssetManager assetManager = new AssetManager();
     public static void loadAssets () {
         // java -jar runnable-texturepacker.jar ./Jumper/android/assets/img/ ./Jumper/android/assets/ assets
@@ -32,28 +33,6 @@ public class Application {
         Application.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
 
         // Locales
-        Application.assetManager.load("lang/locale", I18NBundle.class);
-    }
-
-    // Locale
-    public static String locale = "lang/locale";
-    public static void loadLocale (String locale) {
-        // e.g. "en" -> "lang/locale_en" or "" -> "lang/locale"
-        if (locale.length() > 0)
-            locale = "lang/locale_" + locale;
-        else
-            locale = "lang/locale";
-
-        // Already same language?
-        if (Application.locale.equals(locale))
-            return;
-
-        // Load locale synchronously
-        Application.assetManager.load(locale, I18NBundle.class);
-        Application.assetManager.finishLoading();
-
-        // Unload previous locale
-        Application.assetManager.unload(Application.locale);
-        Application.locale = locale;
+        Application.assetManager.load(Application.locale, I18NBundle.class);
     }
 }
