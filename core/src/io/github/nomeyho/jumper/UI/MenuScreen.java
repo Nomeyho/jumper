@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
@@ -83,8 +82,11 @@ public class MenuScreen extends ScreenAdapter {
         this.logo = new Image(this.logoTexture);
         this.stage.addActor(this.logo);
 
+        I18NBundle bundle = Application.get().assetManager.get(Application.locale, I18NBundle.class);
+
         // Play
         this.playBtn = new TextButton("", getBtnStyle());
+        this.playBtn.setText(bundle.get("play"));
         this.playBtn.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
@@ -96,10 +98,12 @@ public class MenuScreen extends ScreenAdapter {
 
         // Buy
         this.buyBtn = new TextButton("", getBtnStyle());
+        this.buyBtn.setText(bundle.get("buy"));
         this.stage.addActor(this.buyBtn);
 
         // Settings
         this.settingsBtn = new TextButton("", getBtnStyle());
+        this.settingsBtn.setText(bundle.get("settings"));
         this.stage.addActor(this.settingsBtn);
 
         // Start taking input from the UI
@@ -120,10 +124,6 @@ public class MenuScreen extends ScreenAdapter {
     }
 
     private void update() {
-        I18NBundle bundle = Application.assetManager.get(Application.locale, I18NBundle.class);
-        this.playBtn.setText(bundle.get("play"));
-        this.buyBtn.setText(bundle.get("buy"));
-        this.settingsBtn.setText(bundle.get("settings"));
     }
 
     private void clearScreen() {
@@ -153,7 +153,7 @@ public class MenuScreen extends ScreenAdapter {
     private TextButton.TextButtonStyle getBtnStyle () {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 
-        TextureAtlas atlas = Application.assetManager.get("assets.atlas");
+        TextureAtlas atlas = Application.get().assetManager.get("assets.atlas");
         style.up = new TextureRegionDrawable(atlas.findRegion("button"));
         style.down = new TextureRegionDrawable(atlas.findRegion("button_down"));
         style.font = new BitmapFont();

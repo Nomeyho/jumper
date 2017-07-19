@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -86,7 +85,7 @@ public class LoadingScreen extends ScreenAdapter {
         this.stage.addActor(this.progressLabel);
 
         // Start queuing assets for loading
-        Application.loadAssets();
+        Application.get().loadAssets();
     }
 
     @Override
@@ -103,14 +102,14 @@ public class LoadingScreen extends ScreenAdapter {
     }
 
     private void update() {
-        if (Application.assetManager.update()) {
+        if (Application.get().assetManager.update()) {
             this.progressBar.setValue(1);
             this.progressLabel.setText("100%");
             this.game.setScreen(new MenuScreen(this.game));
         } else {
-            this.progress = Interpolation.linear.apply(this.progress, Application.assetManager.getProgress(), 0.1f);
+            this.progress = Interpolation.linear.apply(this.progress, Application.get().assetManager.getProgress(), 0.1f);
             this.progressBar.setValue(this.progress);
-            this.progressLabel.setText(this.progress + "%");
+            this.progressLabel.setText((int)this.progress + "%");
         }
     }
     private void clearScreen() {

@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Logger;
 
 public class Application {
+    private static Application INSTANCE = new Application();
+
     public static final boolean DEBUG = true;
     public static final String TAG = "Jumper";
     public static final float SIZE = 1000;
@@ -16,23 +18,27 @@ public class Application {
     public static final int MAX_LAYER = +1;
     public static float worldHeight = SIZE;
     public static float worldWidth = SIZE;
-
-    // Assets
-    // TODO DO NOT USE ASSET IN STATIC
     public static final String locale = "lang/locale";
-    public static final AssetManager assetManager = new AssetManager();
-    public static void loadAssets () {
+
+    public AssetManager assetManager = new AssetManager();
+    public void loadAssets () {
         // java -jar runnable-texturepacker.jar ./Jumper/android/assets/img/ ./Jumper/android/assets/ assets
         if(DEBUG)
-            assetManager.getLogger().setLevel(Logger.DEBUG);
+            this.assetManager.getLogger().setLevel(Logger.DEBUG);
         // Textures
-        assetManager.load("assets.atlas", TextureAtlas.class);
+        this.assetManager.load("assets.atlas", TextureAtlas.class);
 
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
-        Application.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
+        this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
 
         // Locales
-        Application.assetManager.load(Application.locale, I18NBundle.class);
+        this.assetManager.load(Application.locale, I18NBundle.class);
+    }
+
+    private Application() {}
+
+    public static Application get() {
+        return INSTANCE;
     }
 }

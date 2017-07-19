@@ -5,10 +5,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
 public class InputController implements InputProcessor {
-    GameManager gameManager;
 
-    public InputController (GameManager gameManager) {
-        this.gameManager = gameManager;
+    public InputController () {
         Gdx.input.setInputProcessor(this);
     }
 
@@ -29,12 +27,12 @@ public class InputController implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        this.gameManager.player.setTouchedPos(toWorld(screenX, screenY));
+        GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
         if(!GameManager.GAME_STARTING) {
             GameManager.GAME_STARTING = true;
 
         }
-        this.gameManager.player.jump();
+        GameManager.get().player.jump();
         return true;
     }
 
@@ -45,7 +43,7 @@ public class InputController implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-       this.gameManager.player.setTouchedPos(toWorld(screenX, screenY));
+        GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
         return true;
     }
 
@@ -62,7 +60,7 @@ public class InputController implements InputProcessor {
     private Vector3 toWorld (float screenX, float screenY) {
         Vector3 touchPos = new Vector3();
         touchPos.set(screenX, screenY, 0);
-        this.gameManager.camera.unproject(touchPos); // convert pixels to World units
+        GameManager.get().camera.unproject(touchPos); // convert pixels to World units
         return touchPos;
     }
 }

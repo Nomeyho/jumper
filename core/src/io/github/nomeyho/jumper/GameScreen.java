@@ -16,7 +16,6 @@ public class GameScreen extends ScreenAdapter {
     private OrthographicCamera camera;
     private OrthographicCamera guiCamera;
     private SpriteBatch batch;
-    private GameManager gm;
 
     public GameScreen() {}
 
@@ -52,8 +51,9 @@ public class GameScreen extends ScreenAdapter {
         this.shapeRenderer = new ShapeRenderer();
         // Batch
         this.batch = new SpriteBatch();
-        // Game manager
-        this.gm = new GameManager(this.camera, this.guiCamera);
+
+        // /!\ if not called here, NULL reference
+        GameManager.get().init(this.camera, this.guiCamera);
     }
 
     /**
@@ -80,13 +80,13 @@ public class GameScreen extends ScreenAdapter {
         this.batch.setProjectionMatrix(this.camera.projection);
         this.batch.setTransformMatrix(this.camera.view);
         this.batch.begin();
-        this.gm.draw(this.batch);
+        GameManager.get().draw(this.batch);
         this.batch.end();
         // UI
         this.batch.setProjectionMatrix(this.guiCamera.projection);
         this.batch.setTransformMatrix(this.guiCamera.view);
         this.batch.begin();
-        this.gm.drawUI(this.batch);
+        GameManager.get().drawUI(this.batch);
         this.batch.end();
         // Grid
         if(Application.DEBUG)
@@ -97,7 +97,7 @@ public class GameScreen extends ScreenAdapter {
      * Update the game
      */
     private void update (float delta) {
-        this.gm.update(delta);
+        GameManager.get().update(delta);
         // Re-center camera
         updateCamera(delta);
         updateGuiCamera(delta);
@@ -112,7 +112,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void updateCamera (float delta) {
         float x = camera.viewportWidth / 2;
-        float y = this.gm.player.location.getY();
+        float y = GameManager.get().player.location.getY();
 
        // if (y < Application.worldHeight / 2)
             y = Application.worldHeight / 2;
