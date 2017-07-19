@@ -14,9 +14,10 @@ public class Player extends AbstractGameObject {
     public static final float WIDTH = 100;
     public static final float HEIGHT = 180;
     public static final float SPEED_MAX_X = 2000;
-    public static final float SPEED_MAX_Y_DOWN = -500;
+    public static final float SPEEDX =  1000;
+    public static final float SPEED_MAX_Y_DOWN = -2000;
     public static final float ACCELX = 2000;
-    public static final float ACCELY = -1000;
+    public static final float ACCELY = -2000;
 
     private TextureRegion playerTexture;
     private Vector3 touchedPos = new Vector3();
@@ -26,10 +27,13 @@ public class Player extends AbstractGameObject {
 
     public Player(float x, float y, int layer) {
         super(x, y, layer);
-        TextureAtlas atlas = Application.assetManager.get("assets.atlas");
+        TextureAtlas atlas = Application.get().assetManager.get("assets.atlas");
         this.playerTexture =  atlas.findRegion("player");
     }
 
+    private float previous_static_position;
+    private double final_speed;
+    private double previous_distance = 0;
     @Override
     public void update(float delta) {
         // Handle x
@@ -38,9 +42,25 @@ public class Player extends AbstractGameObject {
            DirectionEnum newDirection = DirectionEnum.toDirection(this.touchedPos.x - this.location.getX() - WIDTH * 0.5 );
            if(this.direction != newDirection) { this.speed.x = 0; }
            this.direction = newDirection;
-           // Max speed check
+
+           if(this.speed.x == 0){
+             this.previous_static_position = this.location.getX();
+           }
+           double distance =  Math.abs(this.touchedPos.x - this.previous_static_position - WIDTH * 0.5);
+            if(Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5) < 0.45 * distance &&
+                    previous_distance >= distance){
+                System.out.println("friction start : "+this.speed.x);
+                if(Math.abs(this.speed.x) > Math.abs(direction.getSign() * ((-0.5*final_speed*final_speed)/(0.5 * distance)) * delta))
+                    this.speed.x += direction.getSign() * ((-0.5*final_speed*final_speed)/(0.45 * distance)) * delta;
+            }
+            else {
+                this.speed.x = this.direction.getSign() * SPEEDX;
+                final_speed = this.speed.x;
+            }
+            previous_distance= distance;
+           /* Max speed check
            if(Math.abs(this.speed.x) < SPEED_MAX_X)
-                this.speed.x += this.direction.getSign() * ACCELX * delta;
+                this.speed.x += this.direction.getSign() * ACCELX * delta;*/
            // Ensure that the new position do not overextend the arrival point (delta)
            float x;
            if(this.direction == DirectionEnum.RIGHT)
@@ -51,8 +71,10 @@ public class Player extends AbstractGameObject {
            x = MathUtils.clamp(x, 0, Application.worldWidth - WIDTH);
            this.location.setLocation(x,this.location.getY());
         }
-        else
+        else{
             this.speed.x =0;
+            previous_distance =0;
+        }
 
         // Handle y
         if(this.speed.y >= SPEED_MAX_Y_DOWN)
@@ -74,8 +96,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void jump(){
-        this.speed.y += 500;
-        System.out.print(this.speed.y);
+        this.speed.y += 1000;
     }
 
 }
