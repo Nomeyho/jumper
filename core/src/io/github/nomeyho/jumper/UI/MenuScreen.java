@@ -1,15 +1,19 @@
-package io.github.nomeyho.jumper.loading;
+package io.github.nomeyho.jumper.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
@@ -18,7 +22,7 @@ import io.github.nomeyho.jumper.JumperGame;
 import io.github.nomeyho.jumper.utils.Utils;
 
 
-public class LoadingScreen extends ScreenAdapter {
+public class MenuScreen extends ScreenAdapter {
     // View
     private static float SIZE = 480;
     private static float CELL = 32;
@@ -26,16 +30,16 @@ public class LoadingScreen extends ScreenAdapter {
     private Camera camera;
     // State
     private JumperGame game;
-    private float progress = 0;
     // UI
     private ShapeRenderer shapeRenderer;
     private Stage stage;
     private Texture logoTexture;
     private Image logo;
-    private ProgressBar progressBar;
-    private Label progressLabel;
+    private TextButton playBtn;
+    private TextButton buyBtn;
+    private TextButton settingsBtn;
 
-    public LoadingScreen(JumperGame game) {
+    public MenuScreen(JumperGame game) {
         this.game = game;
     }
 
@@ -54,14 +58,16 @@ public class LoadingScreen extends ScreenAdapter {
         this.logo.setWidth(SIZE * 0.4f);
         this.logo.setScaling(Scaling.fillX);
         this.logo.setX(centerX - this.logo.getWidth()/2);
-        this.logo.setY(centerY - this.logo.getHeight()/2 + 100);
+        this.logo.setY(centerY - this.logo.getHeight()/2 + 150);
 
-        this.progressBar.setSize(SIZE * 0.9f, 30);
-        this.progressBar.setX(centerX - this.progressBar.getWidth()/2);
-        this.progressBar.setY(CELL * 2);
+        this.playBtn.setWidth(SIZE * 0.4f);
+        this.playBtn.setPosition(centerX, centerY - 50, Align.center);
 
-        this.progressLabel.setX(centerX - this.progressLabel.getWidth()/2);
-        this.progressLabel.setY(CELL * 2 + this.progressBar.getHeight());
+        this.buyBtn.setWidth(SIZE * 0.4f);
+        this.buyBtn.setPosition(centerX, this.playBtn.getY() - this.buyBtn.getHeight(), Align.center);
+
+        this.settingsBtn.setWidth(SIZE * 0.4f);
+        this.settingsBtn.setPosition(centerX, this.buyBtn.getY() - this.settingsBtn.getHeight(), Align.center);
     }
 
     @Override
@@ -77,16 +83,27 @@ public class LoadingScreen extends ScreenAdapter {
         this.logo = new Image(this.logoTexture);
         this.stage.addActor(this.logo);
 
-        // Progress bar
-        this.progressBar = new ProgressBar(0f, 1f, 0.01f, false, getProgressBarStyle());
-        this.stage.addActor(this.progressBar);
+        // Play
+        this.playBtn = new TextButton("Play", getBtnStyle());
+        this.playBtn.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                game.setScreen(new GameScreen());
+            }
+        });
+        this.stage.addActor(this.playBtn);
 
-        // Progress label
-        this.progressLabel = new Label("test", getProgressLabelStyle());
-        this.stage.addActor(this.progressLabel);
+        // Buy
+        this.buyBtn = new TextButton("Buy", getBtnStyle());
+        this.stage.addActor(this.buyBtn);
 
-        // Start queuing assets for loading
-        Application.loadAssets();
+        // Settings
+        this.settingsBtn = new TextButton("Settings", getBtnStyle());
+        this.stage.addActor(this.settingsBtn);
+
+        // Start taking input from the UI
+        Gdx.input.setInputProcessor(this.stage);
     }
 
     @Override
@@ -102,19 +119,8 @@ public class LoadingScreen extends ScreenAdapter {
         this.shapeRenderer.dispose();
     }
 
-    private void update() {
-        if (Application.assetManager.update()) {
-            this.progressBar.setValue(1);
-            this.progressLabel.setText("100%");
-            // If the screen is touched after loading
-            if(Gdx.input.isTouched())
-                this.game.setScreen(new GameScreen());
-        } else {
-            this.progress = Interpolation.linear.apply(this.progress, Application.assetManager.getProgress(), 0.1f);
-            this.progressBar.setValue(this.progress);
-            this.progressLabel.setText(this.progress + "%");
-        }
-    }
+    private void update() {}
+
     private void clearScreen() {
         Gdx.gl.glClearColor(Color.GRAY.r, Color.GRAY.g, Color.GRAY.b, Color.GRAY.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT) ;
@@ -139,19 +145,12 @@ public class LoadingScreen extends ScreenAdapter {
         this.shapeRenderer.end();
     }
 
-    private ProgressBar.ProgressBarStyle getProgressBarStyle () {
-        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+    private TextButton.TextButtonStyle getBtnStyle () {
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
 
-        style.background = Utils.getColoredDrawable(100, 20, Color.RED);
-        style.knob = Utils.getColoredDrawable(0, 20, Color.BLUE);
-        style.knobBefore = Utils.getColoredDrawable(100, 20, Color.BLUE);
-
-        return style;
-    }
-
-    private Label.LabelStyle getProgressLabelStyle () {
-        Label.LabelStyle style = new Label.LabelStyle();
-
+        TextureAtlas atlas = Application.assetManager.get("assets.atlas");
+        style.up = new TextureRegionDrawable(atlas.findRegion("button"));
+        style.down = new TextureRegionDrawable(atlas.findRegion("button_down"));
         style.font = new BitmapFont();
 
         return style;

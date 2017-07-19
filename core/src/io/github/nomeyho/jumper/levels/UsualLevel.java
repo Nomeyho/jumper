@@ -27,7 +27,7 @@ public class UsualLevel extends AbstractLevel {
     public void update (float playerX, float playerY) {
         // Generate new bells
         int i = (int) currentBellHeight;
-        while(i<Application.worldHeight) {
+        while(i<playerY + Application.worldHeight) {
             float x = this.randomFloat(1, Application.worldWidth - Bell.WIDTH);
             this.objects.add(new Bell(x, i, 0));
             i += Bell.HEIGHT * 2;
