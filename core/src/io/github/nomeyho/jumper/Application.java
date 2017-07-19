@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Logger;
+import io.github.nomeyho.jumper.lang.LanguageEnum;
+import io.github.nomeyho.jumper.lang.LanguageManager;
 
 public class Application {
     private static Application INSTANCE = new Application();
@@ -33,7 +35,7 @@ public class Application {
         this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
 
         // Locales
-        this.assetManager.load(Application.locale, I18NBundle.class);
+        LanguageManager.get().setLang(LanguageEnum.ENGLISH);
     }
 
     private Application() {}

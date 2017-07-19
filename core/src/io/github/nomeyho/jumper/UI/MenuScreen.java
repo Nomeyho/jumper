@@ -19,9 +19,11 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameScreen;
 import io.github.nomeyho.jumper.JumperGame;
+import io.github.nomeyho.jumper.lang.ITranslatable;
+import io.github.nomeyho.jumper.lang.LanguageManager;
 
 
-public class MenuScreen extends ScreenAdapter {
+public class MenuScreen extends ScreenAdapter implements ITranslatable {
     // View
     private static float SIZE = 480;
     private static float CELL = 32;
@@ -40,6 +42,7 @@ public class MenuScreen extends ScreenAdapter {
 
     public MenuScreen(JumperGame game) {
         this.game = game;
+        LanguageManager.get().register(this);
     }
 
     @Override
@@ -82,11 +85,8 @@ public class MenuScreen extends ScreenAdapter {
         this.logo = new Image(this.logoTexture);
         this.stage.addActor(this.logo);
 
-        I18NBundle bundle = Application.get().assetManager.get(Application.locale, I18NBundle.class);
-
         // Play
         this.playBtn = new TextButton("", getBtnStyle());
-        this.playBtn.setText(bundle.get("play"));
         this.playBtn.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
@@ -98,13 +98,13 @@ public class MenuScreen extends ScreenAdapter {
 
         // Buy
         this.buyBtn = new TextButton("", getBtnStyle());
-        this.buyBtn.setText(bundle.get("buy"));
         this.stage.addActor(this.buyBtn);
 
         // Settings
         this.settingsBtn = new TextButton("", getBtnStyle());
-        this.settingsBtn.setText(bundle.get("settings"));
         this.stage.addActor(this.settingsBtn);
+
+        updateLang();
 
         // Start taking input from the UI
         Gdx.input.setInputProcessor(this.stage);
@@ -159,5 +159,12 @@ public class MenuScreen extends ScreenAdapter {
         style.font = new BitmapFont();
 
         return style;
+    }
+
+    public void updateLang() {
+        I18NBundle bundle = LanguageManager.get().getBundle();
+        this.playBtn.setText(bundle.get("play"));
+        this.buyBtn.setText(bundle.get("buy"));
+        this.settingsBtn.setText(bundle.get("settings"));
     }
 }
