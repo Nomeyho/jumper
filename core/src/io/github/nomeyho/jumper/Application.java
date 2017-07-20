@@ -29,11 +29,16 @@ public class Application {
     public AssetManager assetManager = new AssetManager();
 
     public void loadUIAssets () {
+        if(DEBUG)
+            this.assetManager.getLogger().setLevel(Logger.DEBUG);
+
         this.assetManager.load(
                 SKIN,
                 Skin.class,
                 new SkinLoader.SkinParameter("UI/neutralizer-ui.atlas")
         );
+
+        // Synchronous!
         this.assetManager.finishLoading();
     }
 
@@ -47,9 +52,6 @@ public class Application {
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
         this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
-
-        // Locales
-        LanguageManager.get().setLang(LanguageEnum.English);
     }
 
     private Application() {}
