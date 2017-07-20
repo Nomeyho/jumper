@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -26,8 +27,8 @@ import io.github.nomeyho.jumper.lang.LanguageManager;
 
 public class MenuScreen extends ScreenAdapter implements ITranslatable {
     // View
-    private static float SIZE = 480;
-    private static float CELL = 32;
+    public static float SIZE = 480;
+    public static float CELL = 32;
     private ExtendViewport viewport;
     private Camera camera;
     // State
@@ -40,6 +41,7 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
     private TextButton playBtn;
     private TextButton buyBtn;
     private TextButton settingsBtn;
+    private SettingsMenu settingsMenu;
 
     public MenuScreen(JumperGame game) {
         this.game = game;
@@ -71,6 +73,9 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
 
         this.settingsBtn.setWidth(SIZE * 0.4f);
         this.settingsBtn.setPosition(centerX, this.buyBtn.getY() - this.settingsBtn.getHeight(), Align.center);
+
+        this.settingsMenu.setSize(this.viewport.getWorldWidth() - 10, this.viewport.getWorldHeight() - 10);
+        this.settingsMenu.setPosition(centerX, centerY, Align.center);
     }
 
     @Override
@@ -104,9 +109,20 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
 
         // Settings
         this.settingsBtn = new TextButton("", skin);
+        this.settingsBtn.addListener(new ActorGestureListener() {
+            @Override
+            public void tap(InputEvent event, float x, float y, int count, int button) {
+                super.tap(event, x, y, count, button);
+                settingsMenu.setVisible(true);
+            }
+        });
         this.stage.addActor(this.settingsBtn);
+        this.settingsMenu = new SettingsMenu("", skin);
+        this.stage.addActor(this.settingsMenu);
 
+        // Lang
         updateLang();
+        LanguageManager.get().register(this);
 
         // Start taking input from the UI
         Gdx.input.setInputProcessor(this.stage);
