@@ -100,11 +100,11 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.updateLang();
 
         /* Bind values to UI elements */
-        this.soundChk.setChecked(UserPreferences.INSTANCE.sound);
-        this.soundVol.setValue(UserPreferences.INSTANCE.volSound);
-        this.musicChk.setChecked(UserPreferences.INSTANCE.music);
-        this.musicVol.setValue(UserPreferences.INSTANCE.volMusic);
-        this.langSelect.setSelected(UserPreferences.INSTANCE.lang);
+        this.soundChk.setChecked(UserPreferences.get().sound);
+        this.soundVol.setValue(UserPreferences.get().volSound);
+        this.musicChk.setChecked(UserPreferences.get().music);
+        this.musicVol.setValue(UserPreferences.get().volMusic);
+        this.langSelect.setSelected(UserPreferences.get().lang);
     }
 
     @Override
@@ -119,13 +119,17 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     }
 
     public void save () {
-        UserPreferences.INSTANCE.sound = this.soundChk.isChecked();
-        UserPreferences.INSTANCE.volSound = (int)this.soundVol.getValue();
-        UserPreferences.INSTANCE.music = this.musicChk.isChecked();
-        UserPreferences.INSTANCE.volMusic = (int)this.musicVol.getValue();
-        UserPreferences.INSTANCE.lang = this.langSelect.getSelected();
+        UserPreferences.get().sound = this.soundChk.isChecked();
+        UserPreferences.get().volSound = (int)this.soundVol.getValue();
+        UserPreferences.get().music = this.musicChk.isChecked();
+        UserPreferences.get().volMusic = (int)this.musicVol.getValue();
+        UserPreferences.get().lang = this.langSelect.getSelected();
 
         // Actually save it to the file
-        UserPreferences.INSTANCE.save();
+        UserPreferences.get().save();
+
+        // Perform UI changes
+        LanguageManager.get().setLang(UserPreferences.get().lang);
+        // TODO sound
     }
 }

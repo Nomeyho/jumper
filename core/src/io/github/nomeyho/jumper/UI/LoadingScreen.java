@@ -68,7 +68,8 @@ public class LoadingScreen extends ScreenAdapter {
     @Override
     public void show() {
         Application.get().loadUIAssets();
-        UserPreferences.INSTANCE.load();
+        UserPreferences.get().load();
+        LanguageManager.get().setLang(UserPreferences.get().lang);
 
         // View
         this.camera = new OrthographicCamera();

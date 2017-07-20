@@ -6,13 +6,17 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 import io.github.nomeyho.jumper.Application;
 
+import java.util.Iterator;
+
 public class LanguageManager {
     private static LanguageManager INSTANCE = new LanguageManager();
     private Array<ITranslatable> toTranslate = new Array<ITranslatable>();
     private I18NBundle bundle = null;
-    private LanguageEnum language = LanguageEnum.English;
+    private LanguageEnum language;
 
-    private LanguageManager() {}
+    private LanguageManager() {
+        this.setLang(LanguageEnum.English);
+    }
 
     public static LanguageManager get() {
         return INSTANCE;
@@ -29,8 +33,8 @@ public class LanguageManager {
 
         // Translate all registered objects
         if(this.language != language) {
-            for(ITranslatable o: this.toTranslate)
-                o.updateLang();
+            for(int i=0; i<this.toTranslate.size; ++i)
+                this.toTranslate.get(i).updateLang();
         }
 
         // Set new language

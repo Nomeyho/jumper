@@ -7,7 +7,7 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
 
 public class UserPreferences {
-    public static final UserPreferences INSTANCE = new UserPreferences();
+    private static final UserPreferences INSTANCE = new UserPreferences();
 
     public boolean sound;
     public boolean music;
@@ -21,12 +21,11 @@ public class UserPreferences {
         this.preferences = Gdx.app.getPreferences(Application.PREFERENCES);
     }
 
-    public void load () {
-        if(Application.DEBUG) {
-            System.out.println("Loaded preferences:");
-            System.out.println(this.toString());
-        }
+    public static UserPreferences get() {
+        return INSTANCE;
+    }
 
+    public void load () {
         this.sound = this.preferences.getBoolean("sound", true);
         this.music = this.preferences.getBoolean("music", true);
 
@@ -38,6 +37,11 @@ public class UserPreferences {
 
         String langStr = this.preferences.getString("lang", LanguageEnum.English.name());
         this.lang = LanguageEnum.valueOf(langStr);
+
+        if(Application.DEBUG) {
+            System.out.println("Loaded preferences:");
+            System.out.println(this.toString());
+        }
     }
 
     public void save () {
