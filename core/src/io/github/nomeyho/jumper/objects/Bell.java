@@ -28,6 +28,7 @@ public class Bell extends AbstractGameObject {
     @Override
     public void update(float delta) {
         this.location.add(0, - SPEED * delta);
+        this.updateHitbox();
     }
 
     @Override
