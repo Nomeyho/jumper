@@ -23,7 +23,7 @@ public class Application {
     public static float worldHeight = SIZE;
     public static float worldWidth = SIZE;
     public static final String LOCALES = "lang/locale";
-    public static final String PREFERENCES =  "preferences";
+    public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
     public static final String SKIN = "UI/neutralizer-ui.json";
 
     public AssetManager assetManager = new AssetManager();
@@ -49,7 +49,7 @@ public class Application {
         this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
 
         // Locales
-        LanguageManager.get().setLang(LanguageEnum.ENGLISH);
+        LanguageManager.get().setLang(LanguageEnum.English);
     }
 
     private Application() {}

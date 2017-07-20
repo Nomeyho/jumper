@@ -85,6 +85,7 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
         this.viewport = new ExtendViewport(SIZE, SIZE, this.camera);
         this.shapeRenderer = new ShapeRenderer();
         this.stage = new Stage(this.viewport);
+        this.stage.setDebugAll(Application.DEBUG);
 
         // Logo
         this.logoTexture = new Texture(Gdx.files.internal("logo.png"));

@@ -10,7 +10,7 @@ public class LanguageManager {
     private static LanguageManager INSTANCE = new LanguageManager();
     private Array<ITranslatable> toTranslate = new Array<ITranslatable>();
     private I18NBundle bundle = null;
-    private LanguageEnum language = LanguageEnum.ENGLISH;
+    private LanguageEnum language = LanguageEnum.English;
 
     private LanguageManager() {}
 

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.JumperGame;
+import io.github.nomeyho.jumper.lang.LanguageManager;
 import io.github.nomeyho.jumper.utils.Utils;
 
 
@@ -67,7 +68,7 @@ public class LoadingScreen extends ScreenAdapter {
     @Override
     public void show() {
         Application.get().loadUIAssets();
-
+        UserPreferences.INSTANCE.load();
 
         // View
         this.camera = new OrthographicCamera();
@@ -81,14 +82,8 @@ public class LoadingScreen extends ScreenAdapter {
         this.stage.addActor(this.logo);
 
         // Progress bar
-        Skin skin = (Skin) Application.get().assetManager.get(Application.SKIN);
-        this.progressBar = new ProgressBar(
-                0f,
-                1f,
-                0.01f,
-                false,
-                skin
-        );
+        Skin skin = Application.get().assetManager.get(Application.SKIN);
+        this.progressBar = new ProgressBar(0f, 1f,0.01f,false, skin);
         this.stage.addActor(this.progressBar);
 
         // Progress label

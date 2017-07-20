@@ -11,8 +11,8 @@ public class UserPreferences {
 
     public boolean sound;
     public boolean music;
-    public float volSound;
-    public float volMusic;
+    public int volSound;
+    public int volMusic;
     public LanguageEnum lang;
 
     private Preferences preferences;
@@ -22,19 +22,43 @@ public class UserPreferences {
     }
 
     public void load () {
+        if(Application.DEBUG) {
+            System.out.println("Loaded preferences:");
+            System.out.println(this.toString());
+        }
+
         this.sound = this.preferences.getBoolean("sound", true);
         this.music = this.preferences.getBoolean("music", true);
-        this.volSound = this.preferences.getFloat("volSound", 0.5f);
-        this.volSound = MathUtils.clamp(this.volSound, 0.0f, 1.0f);
-        this.volMusic = this.preferences.getFloat("volMusic", 0.5f);
-        this.volMusic = MathUtils.clamp(this.volMusic, 0.0f, 1.0f);
+
+        this.volSound = this.preferences.getInteger("volSound", 50);
+        this.volSound = MathUtils.clamp(this.volSound, 0, 100);
+
+        this.volMusic = this.preferences.getInteger("volMusic", 50);
+        this.volMusic = MathUtils.clamp(this.volMusic, 0, 100);
+
+        String langStr = this.preferences.getString("lang", LanguageEnum.English.name());
+        this.lang = LanguageEnum.valueOf(langStr);
     }
 
     public void save () {
+        if(Application.DEBUG) {
+            System.out.println("Saved preferences:");
+            System.out.println(this.toString());
+        }
+
         this.preferences.putBoolean("sound", this.sound);
         this.preferences.putBoolean("music", this.music);
-        this.preferences.putFloat("volSound", this.volSound);
-        this.preferences.putFloat("volMusic", this.volMusic);
+        this.preferences.putInteger("volSound", this.volSound);
+        this.preferences.putInteger("volMusic", this.volMusic);
+        this.preferences.putString("lang", this.lang.name());
         this.preferences.flush();
+    }
+
+    @Override
+    public String toString() {
+        return ""
+        + "Sound: " + this.sound + " (" + this.volSound + ")\n"
+        + "Music: " + this.music + " (" + this.volMusic + ")\n"
+        + "Lang: " + this.lang;
     }
 }
