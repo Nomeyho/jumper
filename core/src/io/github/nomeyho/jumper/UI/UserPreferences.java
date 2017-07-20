@@ -38,17 +38,13 @@ public class UserPreferences {
         String langStr = this.preferences.getString("lang", LanguageEnum.English.name());
         this.lang = LanguageEnum.valueOf(langStr);
 
-        if(Application.DEBUG) {
-            System.out.println("Loaded preferences:");
-            System.out.println(this.toString());
-        }
+        if(Application.DEBUG)
+            Gdx.app.log(Application.TAG, "Loaded preferences:\n" + this.toString());
     }
 
     public void save () {
-        if(Application.DEBUG) {
-            System.out.println("Saved preferences:");
-            System.out.println(this.toString());
-        }
+        if(Application.DEBUG)
+            Gdx.app.log(Application.TAG, "Saved preferences:\n" + this.toString());
 
         this.preferences.putBoolean("sound", this.sound);
         this.preferences.putBoolean("music", this.music);

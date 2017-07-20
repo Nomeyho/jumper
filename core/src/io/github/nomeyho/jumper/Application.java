@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Logger;
+import io.github.nomeyho.jumper.collisions.Hitbox;
+import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
 import io.github.nomeyho.jumper.lang.LanguageManager;
 
@@ -52,6 +54,9 @@ public class Application {
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
         this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
+
+        // Hitbox
+        this.assetManager.load("hitbox/hitbox.json", HitboxAtlas.class);
     }
 
     private Application() {}
