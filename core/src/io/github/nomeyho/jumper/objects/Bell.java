@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 
 public class Bell extends AbstractGameObject {
     public static final float WIDTH = 100;
@@ -14,9 +15,14 @@ public class Bell extends AbstractGameObject {
 
     public Bell(float x, float y, int layer) {
         super(x, y, layer);
-        TextureAtlas atlas = Application.get().assetManager.get("assets.atlas");
-        this.bellTexture =  atlas.findRegion("bell");
+
+        TextureAtlas textureAtlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
+        this.bellTexture =  textureAtlas.findRegion("bell");
+
         this.speed.set(0, SPEED, 0);
+
+        HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
+        this.hitbox = hitboxAtlas.get("bell");
     }
 
     @Override

@@ -8,10 +8,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.OrderedMap;
 import io.github.nomeyho.jumper.Application;
 
 public class HitboxLoader extends
@@ -34,15 +34,28 @@ public class HitboxLoader extends
         JsonReader reader = new JsonReader();
         JsonValue root = reader.parse(file.readString());
 
+        // List of bodies (= textures)
         JsonValue bodies = root.get("rigidBodies");
         Gdx.app.log(Application.TAG, "Found " + bodies.size + " bodies");
         for(JsonValue body: bodies) {
-            Gdx.app.log(Application.TAG, "Body: " + body.getString("name"));
+            // List of polygons - assume to have the origin at (0,0)
             JsonValue polygons = body.get("polygons");
+            Array<Polygon> _polygons = new Array<Polygon>();
+            for(JsonValue polygon: polygons) {
+                // List of vertices
+                Gdx.app.log(Application.TAG, body.getString("name") + "(" + polygon.size + " points)");
+                float[] vertices = new float[polygon.size * 2];
+                int idx = 0;
+                for(JsonValue vertex: polygon) {
+                    vertices[idx++] = vertex.getFloat("x");
+                    vertices[idx++] = vertex.getFloat("y");
+                }
+                _polygons.add(new Polygon(vertices));
+            }
+            atlas.hitboxes.put(body.getString("name"), new Hitbox(_polygons));
         }
 
         this.atlas = atlas;
-        // TODO
     }
 
     @Override

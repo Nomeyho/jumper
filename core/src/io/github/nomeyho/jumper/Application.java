@@ -24,6 +24,8 @@ public class Application {
     public static final int MAX_LAYER = +1;
     public static float worldHeight = SIZE;
     public static float worldWidth = SIZE;
+    public static final String TEXTURE_ATLAS = "assets.atlas";
+    public static final String HITBOX_ATLAS = "hitbox/hitbox.json";
     public static final String LOCALES = "lang/locale";
     public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
     public static final String SKIN = "UI/neutralizer-ui.json";
@@ -49,14 +51,14 @@ public class Application {
         if(DEBUG)
             this.assetManager.getLogger().setLevel(Logger.DEBUG);
         // Textures
-        this.assetManager.load("assets.atlas", TextureAtlas.class);
+        this.assetManager.load(TEXTURE_ATLAS, TextureAtlas.class);
 
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
         this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
 
         // Hitbox
-        this.assetManager.load("hitbox/hitbox.json", HitboxAtlas.class);
+        this.assetManager.load(HITBOX_ATLAS, HitboxAtlas.class);
     }
 
     private Application() {}

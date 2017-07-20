@@ -8,4 +8,10 @@ public class HitboxAtlas {
     public HitboxAtlas() {
         this.hitboxes = new ObjectMap<String, Hitbox>();
     }
+
+    public Hitbox get (String key) {
+        if(!this.hitboxes.containsKey(key))
+            throw new IllegalArgumentException("Hitbox " + key + "does not exist");
+        return this.hitboxes.get(key);
+    }
 }

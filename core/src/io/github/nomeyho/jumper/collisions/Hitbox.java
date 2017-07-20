@@ -11,6 +11,10 @@ public class Hitbox implements Shape2D {
         this.polygons = new Array<Polygon>();
     }
 
+    public Hitbox (Array<Polygon> polygons) {
+        this.polygons = polygons;
+    }
+
     @Override
     public boolean contains(Vector2 point) {
         for(int i=0; i<this.polygons.size; ++i)
