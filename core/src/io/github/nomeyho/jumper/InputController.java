@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public class InputController implements InputProcessor {
 
+    private boolean avoid_start_drag = false;
+
     public InputController () {
         Gdx.input.setInputProcessor(this);
     }
@@ -27,23 +29,25 @@ public class InputController implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
         if(!GameManager.GAME_STARTING) {
             GameManager.GAME_STARTING = true;
-
+            GameManager.get().player.jump();
+            GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
         }
-        GameManager.get().player.jump();
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        if(!avoid_start_drag)
+            avoid_start_drag = true;
+        return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
+        if(avoid_start_drag)
+           GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
         return true;
     }
 

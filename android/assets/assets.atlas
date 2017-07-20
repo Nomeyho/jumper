@@ -6,36 +6,29 @@ filter: Nearest,Nearest
 repeat: none
 bell
   rotate: false
-  xy: 204, 4
+  xy: 2, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-button
-  rotate: false
-  xy: 2, 54
-  size: 200, 50
-  orig: 200, 50
-  offset: 0, 0
-  index: -1
-button_down
-  rotate: false
-  xy: 2, 2
-  size: 200, 50
-  orig: 200, 50
-  offset: 0, 0
-  index: -1
 orange
   rotate: false
-  xy: 306, 4
+  xy: 104, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 408, 4
+  xy: 206, 2
   size: 100, 100
   orig: 100, 100
+  offset: 0, 0
+  index: -1
+snowflake
+  rotate: false
+  xy: 308, 52
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.utils.DirectionEnum;
 import io.github.nomeyho.jumper.utils.Utils;
 
@@ -15,30 +16,47 @@ public class Player extends AbstractGameObject {
     public static final float HEIGHT = 180;
     public static final float SPEED_MAX_Y_DOWN = -2000;
     public static final float ACCELY = -2000;
-    public static final float SPEED_MAX_X = 2000;
-
+    public static final float SPEED_MAX_X = 1000;
+    private Vector3 touchedPos =  new Vector3();
+    private float previous_touchedPos;
 
     private TextureRegion playerTexture;
-    private Vector3 touchedPos = new Vector3();
     private DirectionEnum direction = DirectionEnum.RIGHT;
 
 
 
     public Player(float x, float y, int layer) {
         super(x, y, layer);
-        TextureAtlas atlas = Application.get().assetManager.get("assets.atlas");
+        TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
         this.playerTexture =  atlas.findRegion("player");
+        // Initial touch = initial player position
+        this.touchedPos.x = x + WIDTH * 0.5f;
+        this.touchedPos.y = y;
+        this.previous_touchedPos = x;
+
+        HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
+        this.hitbox = hitboxAtlas.get("player");
     }
 
     @Override
     public void update(float delta) {
-        // Handle x (0.001 = minimal precision)
-        if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5) > 0.001 && GameManager.GAME_STARTING){
-           // Sign change -> instant redirection
-           DirectionEnum newDirection = DirectionEnum.toDirection(this.touchedPos.x - this.location.getX() - WIDTH * 0.5 );
-           if(this.direction != newDirection) { this.speed.x = 0; }
-           this.direction = newDirection;
-           this.speed.x = this.direction.getSign() * SPEED_MAX_X;
+        float precision = 0.01f;
+        // Handle x (0.001 = minimal position precision)
+        if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5) > precision){
+           // Get direction
+           this.direction = DirectionEnum.toDirection(this.touchedPos.x - this.location.getX() - WIDTH * 0.5);
+           // Slowdown
+           if(touchedPos.x == previous_touchedPos && Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5)< Application.worldWidth/5){
+               float newSpeed;
+               if(this.direction == DirectionEnum.RIGHT)
+                   newSpeed = MathUtils.clamp(this.speed.x - SPEED_MAX_X / 10, SPEED_MAX_X / 4, SPEED_MAX_X);
+               else
+                   newSpeed = MathUtils.clamp(this.speed.x + SPEED_MAX_X / 10, -SPEED_MAX_X, -SPEED_MAX_X /4);
+               this.speed.x = newSpeed;
+           }
+           else
+              this.speed.x = this.direction.getSign() * SPEED_MAX_X;
+           previous_touchedPos = touchedPos.x;
            // Ensure that the new position do not overextend the arrival point (delta)
            float x;
            if(this.direction == DirectionEnum.RIGHT)
@@ -61,6 +79,10 @@ public class Player extends AbstractGameObject {
         this.location.setLocation(location.getX(), y);
         if(this.location.getY() == 0)
             this.speed.y =0;
+
+        // If player hit the ground, reset position
+        if(this.location.getY()==0)
+            GameManager.GAME_STARTING = false;
     }
 
     @Override
@@ -73,7 +95,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void jump(){
-        this.speed.y += 1000;
+        this.speed.y += 1200;
     }
 
 }
