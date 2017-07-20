@@ -24,7 +24,7 @@ public class LanguageManager {
 
     public void setLang(LanguageEnum language) {
         // Load new language file
-        FileHandle handle = Gdx.files.internal(Application.locale);
+        FileHandle handle = Gdx.files.internal(Application.LOCALES);
         this.bundle = I18NBundle.createBundle(handle, language.getLocale());
 
         // Translate all registered objects

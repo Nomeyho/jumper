@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -24,7 +23,7 @@ import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
 
 
-public class MenuScreen extends ScreenAdapter implements ITranslatable {
+public class SettingsMenuScreen extends ScreenAdapter implements ITranslatable {
     // View
     private static float SIZE = 480;
     private static float CELL = 32;
@@ -41,7 +40,7 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
     private TextButton buyBtn;
     private TextButton settingsBtn;
 
-    public MenuScreen(JumperGame game) {
+    public SettingsMenuScreen(JumperGame game) {
         this.game = game;
         LanguageManager.get().register(this);
     }
@@ -87,8 +86,7 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
         this.stage.addActor(this.logo);
 
         // Play
-        Skin skin = (Skin) Application.get().assetManager.get(Application.SKIN);
-        this.playBtn = new TextButton("", skin);
+        this.playBtn = new TextButton("", getBtnStyle());
         this.playBtn.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
@@ -99,11 +97,11 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
         this.stage.addActor(this.playBtn);
 
         // Buy
-        this.buyBtn = new TextButton("", skin);
+        this.buyBtn = new TextButton("", getBtnStyle());
         this.stage.addActor(this.buyBtn);
 
         // Settings
-        this.settingsBtn = new TextButton("", skin);
+        this.settingsBtn = new TextButton("", getBtnStyle());
         this.stage.addActor(this.settingsBtn);
 
         updateLang();
@@ -150,6 +148,17 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
             }
         }
         this.shapeRenderer.end();
+    }
+
+    private TextButton.TextButtonStyle getBtnStyle () {
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+
+        TextureAtlas atlas = Application.get().assetManager.get("assets.atlas");
+        style.up = new TextureRegionDrawable(atlas.findRegion("button"));
+        style.down = new TextureRegionDrawable(atlas.findRegion("button_down"));
+        style.font = new BitmapFont();
+
+        return style;
     }
 
     public void updateLang() {

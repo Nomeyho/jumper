@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
@@ -65,6 +66,9 @@ public class LoadingScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+        Application.get().loadUIAssets();
+
+
         // View
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(SIZE, SIZE, this.camera);
@@ -77,14 +81,21 @@ public class LoadingScreen extends ScreenAdapter {
         this.stage.addActor(this.logo);
 
         // Progress bar
-        this.progressBar = new ProgressBar(0f, 1f, 0.01f, false, getProgressBarStyle());
+        Skin skin = (Skin) Application.get().assetManager.get(Application.SKIN);
+        this.progressBar = new ProgressBar(
+                0f,
+                1f,
+                0.01f,
+                false,
+                skin
+        );
         this.stage.addActor(this.progressBar);
 
         // Progress label
-        this.progressLabel = new Label("", getProgressLabelStyle());
+        this.progressLabel = new Label("", skin);
         this.stage.addActor(this.progressLabel);
 
-        // Start queuing assets for loading
+        // Start queuing other assets for loading
         Application.get().loadAssets();
     }
 
@@ -134,23 +145,5 @@ public class LoadingScreen extends ScreenAdapter {
             }
         }
         this.shapeRenderer.end();
-    }
-
-    private ProgressBar.ProgressBarStyle getProgressBarStyle () {
-        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
-
-        style.background = Utils.getColoredDrawable(100, 20, Color.RED);
-        style.knob = Utils.getColoredDrawable(0, 20, Color.BLUE);
-        style.knobBefore = Utils.getColoredDrawable(100, 20, Color.BLUE);
-
-        return style;
-    }
-
-    private Label.LabelStyle getProgressLabelStyle () {
-        Label.LabelStyle style = new Label.LabelStyle();
-
-        style.font = new BitmapFont();
-
-        return style;
     }
 }

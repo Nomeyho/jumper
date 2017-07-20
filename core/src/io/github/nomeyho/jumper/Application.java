@@ -2,8 +2,10 @@ package io.github.nomeyho.jumper;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Logger;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
@@ -20,9 +22,21 @@ public class Application {
     public static final int MAX_LAYER = +1;
     public static float worldHeight = SIZE;
     public static float worldWidth = SIZE;
-    public static final String locale = "lang/locale";
+    public static final String LOCALES = "lang/locale";
+    public static final String PREFERENCES =  "preferences";
+    public static final String SKIN = "UI/neutralizer-ui.json";
 
     public AssetManager assetManager = new AssetManager();
+
+    public void loadUIAssets () {
+        this.assetManager.load(
+                SKIN,
+                Skin.class,
+                new SkinLoader.SkinParameter("UI/neutralizer-ui.atlas")
+        );
+        this.assetManager.finishLoading();
+    }
+
     public void loadAssets () {
         // java -jar runnable-texturepacker.jar ./Jumper/android/assets/img/ ./Jumper/android/assets/ assets
         if(DEBUG)
