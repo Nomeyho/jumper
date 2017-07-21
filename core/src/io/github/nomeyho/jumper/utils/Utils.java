@@ -39,7 +39,7 @@ public class Utils {
     }
 
     public static int randomInt(int min, int max) {
-        return rand.nextInt(max - min) + min;
+        return rand.nextInt(max - min + 1) + min;
     }
 
     public static <T> T getRandom(T[] array) {

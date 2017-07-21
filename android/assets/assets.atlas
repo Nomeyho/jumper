@@ -1,47 +1,61 @@
 
 assets.png
-size: 1024,128
+size: 1024,256
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
 bell
   rotate: false
-  xy: 2, 2
+  xy: 2, 54
+  size: 200, 161
+  orig: 200, 161
+  offset: 0, 0
+  index: 2
+bell
+  rotate: false
+  xy: 204, 57
+  size: 200, 158
+  orig: 200, 158
+  offset: 0, 0
+  index: 1
+bell
+  rotate: false
+  xy: 406, 66
+  size: 200, 149
+  orig: 200, 149
+  offset: 0, 0
+  index: 3
+bell
+  rotate: false
+  xy: 777, 115
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 bell_explosion
   rotate: false
-  xy: 308, 20
-  size: 89, 82
-  orig: 89, 82
+  xy: 608, 83
+  size: 167, 132
+  orig: 167, 132
   offset: 0, 0
   index: 1
-bell_explosion
-  rotate: false
-  xy: 399, 20
-  size: 89, 82
-  orig: 89, 82
-  offset: 0, 0
-  index: 2
 orange
   rotate: false
-  xy: 104, 2
+  xy: 879, 115
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 206, 2
+  xy: 777, 13
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 snowflake
   rotate: false
-  xy: 490, 52
+  xy: 2, 2
   size: 50, 50
   orig: 50, 50
   offset: 0, 0

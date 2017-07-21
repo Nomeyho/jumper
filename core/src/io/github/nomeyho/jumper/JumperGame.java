@@ -19,26 +19,20 @@ public class JumperGame extends Game {
 			Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_ERROR);
 
 		Application.get().assetManager.setLoader(HitboxAtlas.class, new HitboxLoader(new InternalFileHandleResolver()));
-		Application.get().assetManager.clear();
 		Application.get().loadUIAssets();
 		UserPreferences.get().load();
 		LanguageManager.get().setLang(UserPreferences.get().lang);
 		setScreen(new LoadingScreen(this));
-
-		System.out.println("[TEST] CREATED");
 	}
 
 	@Override
 	public void resume () {
-		System.out.println("[TEST] RESUMED");
-		Application.get().assetManager.clear();
-		Application.get().loadUIAssets();
-		Application.get().loadAssets();
+		// init();
 	}
 
 	@Override
 	public void pause () {
-		Application.get().assetManager.clear();
+		// Application.get().assetManager.clear();
 	}
 
 	@Override
@@ -49,7 +43,6 @@ public class JumperGame extends Game {
 
 	public void init () {
 		Application.get().assetManager.setLoader(HitboxAtlas.class, new HitboxLoader(new InternalFileHandleResolver()));
-		Application.get().assetManager.clear();
 		Application.get().loadUIAssets();
 		UserPreferences.get().load();
 		LanguageManager.get().setLang(UserPreferences.get().lang);

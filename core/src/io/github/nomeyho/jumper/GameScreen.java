@@ -75,7 +75,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
+        Gdx.gl.glClearColor(27 / 250f, 33 / 255f, 40 / 255f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
@@ -96,8 +96,10 @@ public class GameScreen extends ScreenAdapter {
         GameManager.get().drawUI(this.batch);
         this.batch.end();
         // Grid
+        /*
         if(Application.DEBUG)
             drawGrid();
+        */
     }
 
     /**
