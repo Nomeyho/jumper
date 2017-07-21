@@ -21,13 +21,17 @@ public abstract class AbstractGameObject {
     public abstract void update(float delta);
     public abstract void draw(SpriteBatch batch);
 
-    public void updateHitbox () {
-        if(hitbox == null) return;
+    public void updateHitbox (float width, float height, float x, float y) {
+        if(this.hitbox == null) return;
 
+        //System.out.println("Before:" + this.hitbox);
         for(int i=0; i<this.hitbox.polygons.size; ++i) {
             Polygon polygon = this.hitbox.polygons.get(i);
-            polygon.setScale(WIDTH, HEIGHT);
-            polygon.translate(this.location.getX(), this.location.getY());
+            // System.out.println("ici1: " + polygon.getVertices()[0]);
+            polygon.setScale(width, height);
+            polygon.setPosition(x, y);
+            // System.out.println("ici2: " + polygon.getVertices()[0]);
         }
+        //System.out.println("After:" + this.hitbox);
     }
 }

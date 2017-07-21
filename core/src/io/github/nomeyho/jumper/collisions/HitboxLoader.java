@@ -8,11 +8,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import io.github.nomeyho.jumper.Application;
+import io.github.nomeyho.jumper.math.Polygon;
 
 public class HitboxLoader extends
         AsynchronousAssetLoader<HitboxAtlas,HitboxLoader.HitboxParameter> {

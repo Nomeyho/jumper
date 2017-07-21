@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import io.github.nomeyho.jumper.UI.LoadingScreen;
 import io.github.nomeyho.jumper.UI.UserPreferences;
-import io.github.nomeyho.jumper.collisions.Hitbox;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.collisions.HitboxLoader;
 import io.github.nomeyho.jumper.lang.LanguageManager;

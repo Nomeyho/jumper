@@ -12,6 +12,7 @@ public class HitboxAtlas {
     public Hitbox get (String key) {
         if(!this.hitboxes.containsKey(key))
             throw new IllegalArgumentException("Hitbox " + key + "does not exist");
-        return this.hitboxes.get(key);
+        // Get a copy
+        return this.hitboxes.get(key).copy();
     }
 }

@@ -83,6 +83,8 @@ public class Player extends AbstractGameObject {
         // If player hit the ground, reset position
         if(this.location.getY()==0)
             GameManager.GAME_STARTING = false;
+
+        this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY());
     }
 
     @Override

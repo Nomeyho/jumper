@@ -57,8 +57,8 @@ public class UserPreferences {
     @Override
     public String toString() {
         return ""
-        + "Sound: " + this.sound + " (" + this.volSound + ")\n"
-        + "Music: " + this.music + " (" + this.volMusic + ")\n"
+        + "Sound: " + this.sound + " (" + this.volSound + "%)\n"
+        + "Music: " + this.music + " (" + this.volMusic + "%)\n"
         + "Lang: " + this.lang;
     }
 }
