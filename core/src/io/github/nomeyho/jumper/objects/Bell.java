@@ -10,7 +10,7 @@ import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 public class Bell extends AbstractGameObject {
     public static final float WIDTH = 100;
     public static final float HEIGHT = 100;
-    private static final float SPEED = 25;
+    private static final float SPEED = 1;
     private TextureRegion bellTexture;
 
     public Bell(float x, float y, int layer) {
