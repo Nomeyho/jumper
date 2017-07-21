@@ -8,6 +8,7 @@ import io.github.nomeyho.jumper.UI.UserPreferences;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.collisions.HitboxLoader;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundManager;
 
 public class JumperGame extends Game {
 	@Override
@@ -22,5 +23,10 @@ public class JumperGame extends Game {
 		UserPreferences.get().load();
 		LanguageManager.get().setLang(UserPreferences.get().lang);
 		setScreen(new LoadingScreen(this));
+	}
+
+	@Override
+	public void dispose () {
+		SoundManager.get().dispose();
 	}
 }
