@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import io.github.nomeyho.jumper.sound.SoundManager;
 
 
 public class GameScreen extends ScreenAdapter {
@@ -35,6 +36,8 @@ public class GameScreen extends ScreenAdapter {
 
         this.shapeRenderer.setProjectionMatrix(this.camera.combined);
         this.shapeRenderer.updateMatrices();
+
+        GameManager.get().snowflakeManager.resize();
     }
 
     /**
@@ -52,8 +55,12 @@ public class GameScreen extends ScreenAdapter {
         // Batch
         this.batch = new SpriteBatch();
 
+        Application.worldWidth = Application.SIZE;
+        Application.worldHeight = Application.worldWidth / Gdx.graphics.getWidth() * Gdx.graphics.getHeight();
         // /!\ if not called here, NULL reference
         GameManager.get().init(this.camera, this.guiCamera);
+
+        SoundManager.get().playMusic();
     }
 
     /**
@@ -114,7 +121,7 @@ public class GameScreen extends ScreenAdapter {
         float x = camera.viewportWidth / 2;
         float y = GameManager.get().player.location.getY();
 
-       // if (y < Application.worldHeight / 2)
+       if (y < Application.worldHeight / 2)
             y = Application.worldHeight / 2;
 
         this.camera.position.set(x, y,0);

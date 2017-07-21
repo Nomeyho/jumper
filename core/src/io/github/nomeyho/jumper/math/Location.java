@@ -33,9 +33,9 @@ public class Location {
 
     public void setLayer(int layer) {
         if(layer < Application.MIN_LAYER)
-            this.layer = 0;
+            this.layer = Application.MIN_LAYER;
         if(layer > Application.MAX_LAYER)
-            this.layer = 0;
+            this.layer = Application.MAX_LAYER;
         else
             this.layer = layer;
     }

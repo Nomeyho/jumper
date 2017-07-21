@@ -4,6 +4,7 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.objects.AbstractGameObject;
 import io.github.nomeyho.jumper.objects.Bell;
 import io.github.nomeyho.jumper.objects.Player;
+import io.github.nomeyho.jumper.utils.Utils;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -28,7 +29,7 @@ public class UsualLevel extends AbstractLevel {
         // Generate new bells
         int i = (int) currentBellHeight;
         while(i<playerY + Application.worldHeight) {
-            float x = this.randomFloat(1, Application.worldWidth - Bell.WIDTH);
+            float x = Utils.randomFloat(1, Application.worldWidth - Bell.WIDTH);
             this.objects.add(new Bell(x, i, 0));
             i += Bell.HEIGHT * 2;
         }
@@ -43,11 +44,4 @@ public class UsualLevel extends AbstractLevel {
         }
     }
 
-    private float randomFloat (float min, float max) {
-        return this.rand.nextFloat() * max + min;
-    }
-
-    private int randomInt(int min, int max) {
-        return this.rand.nextInt(max) + min;
-    }
 }

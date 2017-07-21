@@ -97,7 +97,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void jump(){
-        this.speed.y += 1200;
+        this.speed.y += 3000;
     }
 
 }

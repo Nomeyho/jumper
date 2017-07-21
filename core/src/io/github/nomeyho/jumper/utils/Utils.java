@@ -7,8 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.Random;
+
 public class Utils {
     private Utils() {}
+
+    private static Random rand = new Random();
 
     /**
      * Creates an image of determined size filled with determined color.
@@ -28,6 +32,20 @@ public class Utils {
         pixmap.dispose();
 
         return drawable;
+    }
+
+    public static float randomFloat (float min, float max) {
+        return rand.nextFloat() * (max - min) + min;
+    }
+
+    public static int randomInt(int min, int max) {
+        return rand.nextInt(max - min) + min;
+    }
+
+    public static <T> T getRandom(T[] array) {
+        if(array == null || array.length == 0)
+            throw new IllegalArgumentException();
+        return array[randomInt(0, array.length)];
     }
 
 }

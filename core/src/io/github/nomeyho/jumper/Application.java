@@ -16,11 +16,12 @@ import io.github.nomeyho.jumper.sound.SoundEnum;
 public class Application {
     private static Application INSTANCE = new Application();
 
-    public static final boolean DEBUG = true;
+    public static final float PI = 3.1415926f;
+    public static final boolean DEBUG = false;
     public static final String TAG = "Jumper";
     public static final float SIZE = 1000;
     public static final float CELL = SIZE / 10;
-    public static final int MIN_LAYER = -1;
+    public static final int MIN_LAYER = -2;
     public static final int MAX_LAYER = +1;
     public static float worldHeight = SIZE;
     public static float worldWidth = SIZE;
