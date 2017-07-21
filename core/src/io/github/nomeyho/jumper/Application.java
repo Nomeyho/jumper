@@ -53,6 +53,7 @@ public class Application {
         // java -jar runnable-texturepacker.jar ./Jumper/android/assets/img/ ./Jumper/android/assets/ assets
         if(DEBUG)
             this.assetManager.getLogger().setLevel(Logger.DEBUG);
+
         // Textures
         this.assetManager.load(TEXTURE_ATLAS, TextureAtlas.class);
 

@@ -1,8 +1,8 @@
 
 assets.png
-size: 512,128
+size: 1024,128
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearNearest,Linear
 repeat: none
 bell
   rotate: false
@@ -11,6 +11,20 @@ bell
   orig: 100, 100
   offset: 0, 0
   index: -1
+bell_explosion
+  rotate: false
+  xy: 308, 20
+  size: 89, 82
+  orig: 89, 82
+  offset: 0, 0
+  index: 1
+bell_explosion
+  rotate: false
+  xy: 399, 20
+  size: 89, 82
+  orig: 89, 82
+  offset: 0, 0
+  index: 2
 orange
   rotate: false
   xy: 104, 2
@@ -27,7 +41,7 @@ player
   index: -1
 snowflake
   rotate: false
-  xy: 308, 52
+  xy: 490, 52
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
