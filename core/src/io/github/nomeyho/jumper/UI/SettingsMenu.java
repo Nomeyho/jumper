@@ -8,6 +8,7 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundManager;
 
 
 public class SettingsMenu extends Dialog implements ITranslatable {
@@ -130,6 +131,6 @@ public class SettingsMenu extends Dialog implements ITranslatable {
 
         // Perform UI changes
         LanguageManager.get().setLang(UserPreferences.get().lang);
-        // TODO sound
+        SoundManager.get().updateVolume();
     }
 }

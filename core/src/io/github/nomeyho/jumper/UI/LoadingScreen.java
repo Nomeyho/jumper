@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.JumperGame;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.Utils;
 
 
@@ -109,6 +110,8 @@ public class LoadingScreen extends ScreenAdapter {
             this.progressBar.setValue(1);
             this.progressLabel.setText("100%");
             this.game.setScreen(new MenuScreen(this.game));
+            // Init managers depending on the assets
+            SoundManager.get().init();
         } else {
             this.progress = Interpolation.linear.apply(this.progress, Application.get().assetManager.getProgress(), 0.1f);
             this.progressBar.setValue(this.progress);

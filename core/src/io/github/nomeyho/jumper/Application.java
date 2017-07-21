@@ -3,15 +3,15 @@ package io.github.nomeyho.jumper;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
-import io.github.nomeyho.jumper.collisions.Hitbox;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
-import io.github.nomeyho.jumper.lang.LanguageEnum;
-import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundEnum;
 
 public class Application {
     private static Application INSTANCE = new Application();
@@ -29,6 +29,8 @@ public class Application {
     public static final String LOCALES = "lang/locale";
     public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
     public static final String SKIN = "UI/neutralizer-ui.json";
+    public static final String SKIN_ATLAS = "UI/neutralizer-ui.atlas";
+    public static final String MUSIC = "sound/music.mp3";
 
     public AssetManager assetManager = new AssetManager();
 
@@ -39,7 +41,7 @@ public class Application {
         this.assetManager.load(
                 SKIN,
                 Skin.class,
-                new SkinLoader.SkinParameter("UI/neutralizer-ui.atlas")
+                new SkinLoader.SkinParameter(SKIN_ATLAS)
         );
 
         // Synchronous!
@@ -55,10 +57,16 @@ public class Application {
 
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
-        this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class);
+        this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class, parameter);
 
         // Hitbox
         this.assetManager.load(HITBOX_ATLAS, HitboxAtlas.class);
+
+        // Sound
+        this.assetManager.load(MUSIC, Music.class);
+        Array<SoundEnum> sounds = SoundEnum.toList();
+        for(int i=0; i<sounds.size; ++i)
+            this.assetManager.load(sounds.get(i).getFileName(), Sound.class);
     }
 
     private Application() {}
