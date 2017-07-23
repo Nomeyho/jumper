@@ -22,8 +22,8 @@ import io.github.nomeyho.jumper.utils.Utils;
 
 public class LoadingScreen extends ScreenAdapter {
     // View
-    private static float SIZE = 480;
-    private static float CELL = 32;
+    private static float SIZE = Application.SIZE;
+    private static float CELL = Application.CELL;
     private ExtendViewport viewport;
     private Camera camera;
     // State
@@ -53,17 +53,17 @@ public class LoadingScreen extends ScreenAdapter {
         float centerX = this.viewport.getWorldWidth() / 2;
         float centerY = this.viewport.getWorldHeight() / 2;
 
-        this.logo.setWidth(SIZE * 0.4f);
+        this.logo.setWidth(SIZE * 0.3f);
         this.logo.setScaling(Scaling.fillX);
         this.logo.setX(centerX - this.logo.getWidth()/2);
-        this.logo.setY(centerY - this.logo.getHeight()/2 + 100);
+        this.logo.setY(centerY - this.logo.getHeight()/2 + 200);
 
-        this.progressBar.setSize(SIZE * 0.9f, 30);
+        this.progressBar.setSize(SIZE * 0.9f, 15);
         this.progressBar.setX(centerX - this.progressBar.getWidth()/2);
         this.progressBar.setY(CELL * 2);
 
         this.progressLabel.setX(centerX - this.progressLabel.getWidth()/2);
-        this.progressLabel.setY(CELL * 2 + this.progressBar.getHeight());
+        this.progressLabel.setY(this.progressBar.getY() + 70);
     }
 
     @Override
@@ -73,19 +73,21 @@ public class LoadingScreen extends ScreenAdapter {
         this.viewport = new ExtendViewport(SIZE, SIZE, this.camera);
         this.shapeRenderer = new ShapeRenderer();
         this.stage = new Stage(this.viewport);
+        this.stage.setDebugAll(Application.DEBUG);
 
         // Logo
-        this.logoTexture = new Texture(Gdx.files.internal("logo.png"));
+        this.logoTexture = new Texture(Gdx.files.internal("logo.png"), true);
+        this.logoTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Nearest);
         this.logo = new Image(this.logoTexture);
         this.stage.addActor(this.logo);
 
         // Progress bar
         Skin skin = Application.get().assetManager.get(Application.SKIN);
-        this.progressBar = new ProgressBar(0f, 1f,0.01f,false, skin);
+        this.progressBar = new ProgressBar(0, 100,1,false, skin);
         this.stage.addActor(this.progressBar);
 
         // Progress label
-        this.progressLabel = new Label("", skin);
+        this.progressLabel = new Label("", skin, "small");
         this.stage.addActor(this.progressLabel);
 
         // Start queuing other assets for loading
@@ -105,7 +107,19 @@ public class LoadingScreen extends ScreenAdapter {
         this.shapeRenderer.dispose();
     }
 
+    private long t1 = System.currentTimeMillis();
     private void update() {
+        if(Application.DEBUG) {
+            long t2 = System.currentTimeMillis();
+            if (t2 - t1 > 500) { // +1% every 0.5sec
+                t1 = t2;
+                this.progress++;
+                this.progressBar.setValue(this.progress);
+                this.progressLabel.setText((int) this.progress + "%");
+            }
+            return;
+        }
+
         if (Application.get().assetManager.update()) {
             this.progressBar.setValue(1);
             this.progressLabel.setText("100%");
@@ -117,6 +131,7 @@ public class LoadingScreen extends ScreenAdapter {
             this.progressBar.setValue(this.progress);
             this.progressLabel.setText((int)this.progress + "%");
         }
+
     }
     private void clearScreen() {
         Gdx.gl.glClearColor(27 / 250f, 33 / 255f, 40 / 255f, 0);
