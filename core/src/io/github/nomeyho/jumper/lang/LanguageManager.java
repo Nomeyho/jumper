@@ -48,10 +48,12 @@ public class LanguageManager {
     /**
      * Register a new object for which the translation will be
      * triggered in case the language change.
-     * NB: null references are automatically removed (no need to unregister)
      * @param o translatable object
      */
     public void register(ITranslatable o) {
         this.toTranslate.add(o);
     }
+
+    // TODO use!
+    public void unregister(ITranslatable o) { this.toTranslate.removeValue(o, true); }
 }

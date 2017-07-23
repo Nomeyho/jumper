@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.I18NBundle;
-import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
 import io.github.nomeyho.jumper.lang.LanguageManager;
@@ -17,11 +16,8 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     private Label musicLabel;
     private Label langLabel;
 
-    private Slider soundVol;
-    private Slider musicVol;
-
-    private CheckBox soundChk;
-    private CheckBox musicChk;
+    private Slider sound;
+    private Slider music;
 
     private SelectBox<LanguageEnum> langSelect;
 
@@ -43,25 +39,20 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.setVisible(false);
         this.getButtonTable().padBottom(20);
         this.getContentTable().defaults().padBottom(10); // space between rows
+        this.getContentTable().setFillParent(true);
 
         // Sound
         this.soundLabel = new Label("", skin);
-        this.soundChk = new CheckBox("", skin);
-        this.soundChk.setWidth(this.soundChk.getHeight());
-        this.soundVol = new Slider(0, 100, 1, false, skin);
+        this.sound = new Slider(0, 100, 1, false, skin);
         this.getContentTable().add(this.soundLabel);
-        this.getContentTable().add(this.soundChk);
-        this.getContentTable().add(this.soundVol);
+        this.getContentTable().add(this.sound);
         this.getContentTable().row();
 
         // Music
         this.musicLabel = new Label("", skin);
-        this.musicChk = new CheckBox("", skin);
-        this.musicChk.setWidth(this.musicChk.getHeight());
-        this.musicVol = new Slider(0, 100, 1, false, skin);
-        this.getContentTable().add(this.musicLabel);
-        this.getContentTable().add(this.musicChk);
-        this.getContentTable().add(this.musicVol);
+        this.music = new Slider(0, 100, 1, false, skin);
+        this.getContentTable().add(this.musicLabel).expandX();
+        this.getContentTable().add(this.music).expandX().fillX();
         this.getContentTable().row();
 
         // Language select
@@ -69,7 +60,6 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.langSelect = new SelectBox<LanguageEnum>(skin);
         this.langSelect.setItems(LanguageEnum.toList());
         this.getContentTable().add(this.langLabel);
-        this.getContentTable().add(new Label("", skin));
         this.getContentTable().add(this.langSelect);
         this.getContentTable().row();
 
@@ -101,10 +91,8 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.updateLang();
 
         /* Bind values to UI elements */
-        this.soundChk.setChecked(UserPreferences.get().sound);
-        this.soundVol.setValue(UserPreferences.get().volSound);
-        this.musicChk.setChecked(UserPreferences.get().music);
-        this.musicVol.setValue(UserPreferences.get().volMusic);
+        this.sound.setValue(UserPreferences.get().sound);
+        this.music.setValue(UserPreferences.get().music);
         this.langSelect.setSelected(UserPreferences.get().lang);
     }
 
@@ -120,10 +108,8 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     }
 
     public void save () {
-        UserPreferences.get().sound = this.soundChk.isChecked();
-        UserPreferences.get().volSound = (int)this.soundVol.getValue();
-        UserPreferences.get().music = this.musicChk.isChecked();
-        UserPreferences.get().volMusic = (int)this.musicVol.getValue();
+        UserPreferences.get().sound = (int)this.sound.getValue();
+        UserPreferences.get().music = (int)this.music.getValue();
         UserPreferences.get().lang = this.langSelect.getSelected();
 
         // Actually save it to the file

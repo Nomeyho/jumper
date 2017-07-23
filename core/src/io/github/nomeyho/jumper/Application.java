@@ -17,7 +17,7 @@ public class Application {
     private static Application INSTANCE = new Application();
 
     public static final float PI = 3.1415926f;
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final String TAG = "Jumper";
     public static final float SIZE = 1000;
     public static final float CELL = SIZE / 10;
@@ -29,8 +29,8 @@ public class Application {
     public static final String HITBOX_ATLAS = "hitbox/hitbox.json";
     public static final String LOCALES = "lang/locale";
     public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
-    public static final String SKIN = "UI/neutralizer-ui.json";
-    public static final String SKIN_ATLAS = "UI/neutralizer-ui.atlas";
+    public static final String SKIN = "UI/custom.json";
+    public static final String SKIN_ATLAS = "UI/custom.atlas";
     public static final String MUSIC = "sound/music.mp3";
 
     public AssetManager assetManager = new AssetManager();

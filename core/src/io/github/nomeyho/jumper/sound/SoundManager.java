@@ -39,18 +39,13 @@ public class SoundManager {
     public void playSound (SoundEnum name) {
         if(this.sounds.containsKey(name)) {
             Sound sound = this.sounds.get(name);
-            if(UserPreferences.get().sound) {
-                long id = sound.play(1.0f);
-                sound.setVolume(id, UserPreferences.get().volSound / 100f);
-            }
+            long id = sound.play(1.0f);
+            sound.setVolume(id, UserPreferences.get().sound / 100f);
         }
     }
 
     public void updateVolume () {
-        if(UserPreferences.get().music)
-            this.music.setVolume(UserPreferences.get().volMusic / 100f);
-        else
-            this.music.setVolume(0);
+        this.music.setVolume(UserPreferences.get().music / 100f);
     }
 
     // TODO use

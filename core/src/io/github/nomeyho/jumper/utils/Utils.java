@@ -45,7 +45,7 @@ public class Utils {
     public static <T> T getRandom(T[] array) {
         if(array == null || array.length == 0)
             throw new IllegalArgumentException();
-        return array[randomInt(0, array.length)];
+        return array[randomInt(0, array.length - 1)];
     }
 
 }

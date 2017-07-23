@@ -9,10 +9,8 @@ import io.github.nomeyho.jumper.lang.LanguageEnum;
 public class UserPreferences {
     private static final UserPreferences INSTANCE = new UserPreferences();
 
-    public boolean sound;
-    public boolean music;
-    public int volSound;
-    public int volMusic;
+    public int sound;
+    public int music;
     public LanguageEnum lang;
 
     private Preferences preferences;
@@ -26,17 +24,15 @@ public class UserPreferences {
     }
 
     public void load () {
-        this.sound = this.preferences.getBoolean("sound", true);
-        this.music = this.preferences.getBoolean("music", true);
+        this.sound = this.preferences.getInteger("volSound", 50);
+        this.sound = MathUtils.clamp(this.sound, 0, 100);
 
-        this.volSound = this.preferences.getInteger("volSound", 50);
-        this.volSound = MathUtils.clamp(this.volSound, 0, 100);
-
-        this.volMusic = this.preferences.getInteger("volMusic", 50);
-        this.volMusic = MathUtils.clamp(this.volMusic, 0, 100);
+        this.music = this.preferences.getInteger("volMusic", 50);
+        this.music = MathUtils.clamp(this.music, 0, 100);
 
         String langStr = this.preferences.getString("lang", LanguageEnum.English.name());
         this.lang = LanguageEnum.valueOf(langStr);
+        this.lang = LanguageEnum.Francais;
 
         if(Application.DEBUG)
             Gdx.app.log(Application.TAG, "Loaded preferences:\n" + this.toString());
@@ -46,10 +42,8 @@ public class UserPreferences {
         if(Application.DEBUG)
             Gdx.app.log(Application.TAG, "Saved preferences:\n" + this.toString());
 
-        this.preferences.putBoolean("sound", this.sound);
-        this.preferences.putBoolean("music", this.music);
-        this.preferences.putInteger("volSound", this.volSound);
-        this.preferences.putInteger("volMusic", this.volMusic);
+        this.preferences.putInteger("sound", this.sound);
+        this.preferences.putInteger("music", this.music);
         this.preferences.putString("lang", this.lang.name());
         this.preferences.flush();
     }
@@ -57,8 +51,8 @@ public class UserPreferences {
     @Override
     public String toString() {
         return ""
-        + "Sound: " + this.sound + " (" + this.volSound + "%)\n"
-        + "Music: " + this.music + " (" + this.volMusic + "%)\n"
+        + "Sound: " + this.sound + "%\n"
+        + "Music: " + this.music + "%\n"
         + "Lang: " + this.lang;
     }
 }

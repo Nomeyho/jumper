@@ -96,10 +96,8 @@ public class GameScreen extends ScreenAdapter {
         GameManager.get().drawUI(this.batch);
         this.batch.end();
         // Grid
-        /*
         if(Application.DEBUG)
             drawGrid();
-        */
     }
 
     /**

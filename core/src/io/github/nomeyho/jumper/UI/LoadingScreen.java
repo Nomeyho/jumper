@@ -119,7 +119,7 @@ public class LoadingScreen extends ScreenAdapter {
         }
     }
     private void clearScreen() {
-        Gdx.gl.glClearColor(Color.GRAY.r, Color.GRAY.g, Color.GRAY.b, Color.GRAY.a);
+        Gdx.gl.glClearColor(27 / 250f, 33 / 255f, 40 / 255f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT) ;
     }
 

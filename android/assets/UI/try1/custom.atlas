@@ -1,0 +1,75 @@
+
+custom.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+kenuector_128.png1
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+custom2.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+kenuector_128.png2
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+custom3.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+kenuector_title1
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+custom4.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+kenuector_title2
+  rotate: false
+  xy: 1, 303
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 1, 168
+  size: 300, 133
+  split: 18, 18, 18, 18
+  orig: 300, 133
+  offset: 0, 0
+  index: -1
+button_hover
+  rotate: false
+  xy: 515, 682
+  size: 300, 133
+  split: 18, 18, 18, 18
+  orig: 300, 133
+  offset: 0, 0
+  index: -1
+progress
+  rotate: false
+  xy: 1, 86
+  size: 298, 80
+  orig: 298, 80
+  offset: 0, 0
+  index: -1
