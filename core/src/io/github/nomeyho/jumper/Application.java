@@ -17,7 +17,7 @@ public class Application {
     private static Application INSTANCE = new Application();
 
     public static final float PI = 3.1415926f;
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final String TAG = "Jumper";
     public static final float SIZE = 1000;
     public static final float CELL = SIZE / 10;

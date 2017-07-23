@@ -6,64 +6,71 @@ filter: MipMapLinearNearest,Linear
 repeat: none
 bell
   rotate: false
-  xy: 2, 54
+  xy: 2, 68
   size: 200, 161
   orig: 200, 161
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 204, 57
+  xy: 204, 71
   size: 200, 158
   orig: 200, 158
   offset: 0, 0
   index: 1
 bell
   rotate: false
-  xy: 406, 66
+  xy: 406, 80
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 3
 bell_explosion
   rotate: false
-  xy: 406, 66
+  xy: 406, 80
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 777, 115
+  xy: 777, 129
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 bell_explosion
   rotate: false
-  xy: 608, 83
+  xy: 608, 97
   size: 167, 132
   orig: 167, 132
   offset: 0, 0
   index: 1
 orange
   rotate: false
-  xy: 879, 115
+  xy: 879, 129
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 777, 13
+  xy: 777, 27
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 snowflake
   rotate: false
-  xy: 2, 2
+  xy: 879, 77
   size: 50, 50
   orig: 50, 50
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 2, 2
+  size: 69, 64
+  orig: 69, 64
   offset: 0, 0
   index: -1

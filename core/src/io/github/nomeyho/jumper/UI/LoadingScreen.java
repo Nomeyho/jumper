@@ -83,7 +83,7 @@ public class LoadingScreen extends ScreenAdapter {
 
         // Progress bar
         Skin skin = Application.get().assetManager.get(Application.SKIN);
-        this.progressBar = new ProgressBar(0, 100,1,false, skin);
+        this.progressBar = new ProgressBar(0, 1,0.01f,false, skin);
         this.stage.addActor(this.progressBar);
 
         // Progress label
@@ -111,15 +111,17 @@ public class LoadingScreen extends ScreenAdapter {
     private void update() {
         if(Application.DEBUG) {
             long t2 = System.currentTimeMillis();
-            if (t2 - t1 > 50) { // +1% every 0.5sec
+            if (t2 - t1 > 50) { // +10% every 0.5sec
                 t1 = t2;
                 this.progress++;
                 this.progressBar.setValue(this.progress);
                 this.progressLabel.setText((int) this.progress + "%");
             }
-            if(this.progress == 100) {
+            if(this.progress >= 100 && Application.get().assetManager.update()) {
                 this.game.setScreen(new MenuScreen(this.game));
                 SoundManager.get().init();
+            } else {
+                Gdx.app.log(Application.TAG, "Loading: " + (int)(Application.get().assetManager.getProgress()*100) + "%");
             }
             return;
         }
@@ -133,7 +135,7 @@ public class LoadingScreen extends ScreenAdapter {
         } else {
             this.progress = Interpolation.linear.apply(this.progress, Application.get().assetManager.getProgress(), 0.1f);
             this.progressBar.setValue(this.progress);
-            this.progressLabel.setText((int)this.progress + "%");
+            this.progressLabel.setText((int)(this.progress*100) + "%");
         }
 
     }

@@ -6,8 +6,6 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.utils.Utils;
 
-import java.util.Random;
-
 public class SnowflakeManager {
 
     private int snowflakesNumber = 75;
@@ -19,36 +17,36 @@ public class SnowflakeManager {
     }
 
     public void init() {
-        snowflakes  = new Array<Snowflake>();
-        for(int i=1; i<= snowflakesNumber; i++) {
+        this.snowflakes  = new Array<Snowflake>();
+        for(int i=1; i<= this.snowflakesNumber; i++) {
             float x = Utils.randomFloat(0, Application.worldWidth);
-            // Ensure fall memory flakes positions.
+            // Ensure flakes are still visible when player falls
             float y = Utils.randomFloat(- Application.worldHeight / 2 , Application.worldHeight);
-            snowflakes.add(new Snowflake(x,y));
+            this.snowflakes.add(new Snowflake(x,y));
         }
     }
 
     public void update(float delta) {
 
-        counter += delta;
-        if(counter >= 2 * Application.PI * 100)
-            counter = 0;
+        this.counter += delta;
+        if(this.counter >= 2 * Application.PI * 100)
+            this.counter = 0;
 
-        for(int i=0; i < snowflakes.size; i++){
-            Snowflake snowflake = snowflakes.get(i);
+        for(int i=0; i < this.snowflakes.size; i++){
+            Snowflake snowflake = this.snowflakes.get(i);
             snowflake.update(delta);
             float min_height = GameManager.get().camera.position.y
                                 - Application.worldHeight - snowflake.getHeight() / 2;
             float max_height = GameManager.get().camera.position.y
                                 + Application.worldHeight / 2 + snowflake.getHeight() / 2;
-            // Reach bottom of screen repositionning at top.
+            // Reach bottom of screen repositioning at top.
             if(snowflake.location.getY() < min_height) {
                 float x= Utils.randomFloat(0, Application.worldWidth);
                 snowflake.location.setLocation(x, max_height);
                 snowflake.init();
                 snowflake.movementOriginX = x;
             }
-            // Reach top of screen repositionning at bottom.
+            // Reach top of screen repositioning at bottom.
             else if(snowflake.location.getY() > max_height) {
                 float x= Utils.randomFloat(0, Application.worldWidth);
                 snowflake.location.setLocation(snowflake.location.getX(), min_height);
@@ -59,11 +57,11 @@ public class SnowflakeManager {
     }
 
     public int getNumberOfSnowflakes(){
-        return snowflakes.size;
+        return this.snowflakes.size;
     }
 
-    public Snowflake getsnowflake(int index){
-        return snowflakes.get(index);
+    public Snowflake getSnowflake(int index){
+        return this.snowflakes.get(index);
     }
 
     public void resize(){

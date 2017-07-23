@@ -37,7 +37,8 @@ public class GameScreen extends ScreenAdapter {
         this.shapeRenderer.setProjectionMatrix(this.camera.combined);
         this.shapeRenderer.updateMatrices();
 
-        GameManager.get().snowflakeManager.resize();
+        // GameManager.get().snowflakeManager.resize();
+        GameManager.get().starManager.resize();
     }
 
     /**

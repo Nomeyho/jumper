@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.nomeyho.jumper.UI.FpsCounter;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
-import io.github.nomeyho.jumper.objects.AbstractGameObject;
-import io.github.nomeyho.jumper.objects.Player;
-import io.github.nomeyho.jumper.objects.Snowflake;
-import io.github.nomeyho.jumper.objects.SnowflakeManager;
+import io.github.nomeyho.jumper.objects.*;
 import io.github.nomeyho.jumper.sound.SoundEnum;
 import io.github.nomeyho.jumper.sound.SoundManager;
 
@@ -22,7 +19,7 @@ public class GameManager {
     private FpsCounter fpscounter;
     private InputController inputController;
     public static boolean GAME_STARTING = false;
-    public SnowflakeManager snowflakeManager;
+    public StarManager starManager;
 
     private GameManager() {}
 
@@ -42,15 +39,13 @@ public class GameManager {
         this.guiCamera = guiCamera;
         this.fpscounter = new FpsCounter();
         this.inputController = new InputController();
-        this.snowflakeManager = new SnowflakeManager();
+        this.starManager = new StarManager();
     }
 
     public void update (float delta) {
         this.player.update(delta);
-        this.level.update(this.player.location.getX(), this.player.location.getY());
-        for(AbstractGameObject go: this.level.objects)
-            go.update(delta);
-        this.snowflakeManager.update(delta);
+        this.level.update(delta, this.player.location.getX(), this.player.location.getY());
+        this.starManager.update(delta);
         checkForCollision();
     }
 
@@ -61,15 +56,8 @@ public class GameManager {
             if (this.player.location.getLayer() == layer)
                 this.player.draw(batch);
             // Draw objects
-            for(AbstractGameObject go: this.level.objects) {
-                if(go.location.getLayer() == layer)
-                    go.draw(batch);
-            }
-
-         /*  for(int i=0; i < snowflakeManager.getNumberOfSnowflakes(); i++){
-                if(snowflakeManager.getsnowflake(i).location.getLayer() == layer)
-                    snowflakeManager.getsnowflake(i).draw(batch);
-            }*/
+            this.level.draw(batch, layer);
+            this.starManager.draw(batch, layer);
         }
     }
 
@@ -77,8 +65,10 @@ public class GameManager {
         this.fpscounter.draw(batch);
     }
 
-    public void checkForCollision(){
-        for(AbstractGameObject go: this.level.objects) {
+    private void checkForCollision(){
+        AbstractGameObject go;
+        for(int i=0, end=this.level.objects.size; i<end; ++i) {
+            go = this.level.objects.get(i);
             if(this.player.hitbox.overlap(go.hitbox)) {
                 SoundManager.get().playSound(SoundEnum.TINK);
                 //  this.player.speed.y = 2500;

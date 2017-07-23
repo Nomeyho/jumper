@@ -10,11 +10,9 @@ import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.math.Location;
 import io.github.nomeyho.jumper.utils.Utils;
 
-import java.util.Random;
-
 public class Snowflake {
 
-    private float width = 15, height = 15;
+    private float width, height;
     public Location location = new Location(0, 0, 1);
     public Vector3 speed = new Vector3(0,-50,0);
     private TextureRegion snowflakeTexture;
@@ -22,8 +20,6 @@ public class Snowflake {
     public float movementAmplitudeX = 0;
     public float movementDistortionX = 0;
     public float movementPhaseX = 0;
-
-    private Random rand = new Random();
 
     public Snowflake(float x, float y) {
         this.location.setLocation(x,y);
@@ -45,9 +41,16 @@ public class Snowflake {
 
 
     public void update(float delta) {
+        /**
+         * DO NOT WORK WITHOUT snowflakeManager in the GameManager!
+         * Avoid creating dependencies with "containing" class
+         */
+        /*
         float x = movementAmplitudeX * MathUtils.sin(
                 movementDistortionX*GameManager.get().snowflakeManager.counter + movementPhaseX);
+
         this.location.setLocation(movementOriginX + x , this.location.getY() + this.speed.y * +delta);
+        */
     }
 
     public void draw(SpriteBatch batch) {
