@@ -53,10 +53,10 @@ public class LoadingScreen extends ScreenAdapter {
         float centerX = this.viewport.getWorldWidth() / 2;
         float centerY = this.viewport.getWorldHeight() / 2;
 
-        this.logo.setWidth(SIZE * 0.3f);
+        this.logo.setWidth(SIZE * 0.4f);
         this.logo.setScaling(Scaling.fillX);
         this.logo.setX(centerX - this.logo.getWidth()/2);
-        this.logo.setY(centerY - this.logo.getHeight()/2 + 200);
+        this.logo.setY(centerY - this.logo.getHeight()/2 + 130);
 
         this.progressBar.setSize(SIZE * 0.9f, 15);
         this.progressBar.setX(centerX - this.progressBar.getWidth()/2);
@@ -111,11 +111,15 @@ public class LoadingScreen extends ScreenAdapter {
     private void update() {
         if(Application.DEBUG) {
             long t2 = System.currentTimeMillis();
-            if (t2 - t1 > 500) { // +1% every 0.5sec
+            if (t2 - t1 > 50) { // +1% every 0.5sec
                 t1 = t2;
                 this.progress++;
                 this.progressBar.setValue(this.progress);
                 this.progressLabel.setText((int) this.progress + "%");
+            }
+            if(this.progress == 100) {
+                this.game.setScreen(new MenuScreen(this.game));
+                SoundManager.get().init();
             }
             return;
         }
