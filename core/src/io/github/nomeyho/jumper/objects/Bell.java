@@ -39,7 +39,7 @@ public class Bell extends AbstractGameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(this.bellTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
-        // this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
+       // batch.draw(this.bellTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
+        this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
     }
 }

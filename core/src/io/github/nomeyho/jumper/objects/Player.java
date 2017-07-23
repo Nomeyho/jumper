@@ -8,17 +8,19 @@ import com.badlogic.gdx.math.Vector3;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
+import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.DirectionEnum;
 import io.github.nomeyho.jumper.utils.Utils;
 
 public class Player extends AbstractGameObject {
-    public static final float WIDTH = 100;
-    public static final float HEIGHT = 180;
+    public static final float WIDTH = 55;
+    public static final float HEIGHT = 130;
     public static final float SPEED_MAX_Y_DOWN = -2000;
     public static final float ACCELY = -2000;
-    public static final float SPEED_MAX_X = 1000;
+    public static final float SPEED_MAX_X = 500;
     private Vector3 touchedPos =  new Vector3();
     private float previous_touchedPos;
+    private AnimationWrapper walk;
 
     private TextureRegion playerTexture;
     private DirectionEnum direction = DirectionEnum.RIGHT;
@@ -28,7 +30,7 @@ public class Player extends AbstractGameObject {
     public Player(float x, float y, int layer) {
         super(x, y, layer);
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
-        this.playerTexture =  atlas.findRegion("player");
+        this.playerTexture =  atlas.findRegion("player2");
         // Initial touch = initial player position
         this.touchedPos.x = x + WIDTH * 0.5f;
         this.touchedPos.y = y;
@@ -36,6 +38,9 @@ public class Player extends AbstractGameObject {
 
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("player");
+
+        TextureAtlas walkAtlas = Application.get().assetManager.get(Application.TEXTURE_PLAYER_WALK);
+        this.walk = new AnimationWrapper(1f / 60, walkAtlas.findRegions("player_walk"));
     }
 
     @Override
@@ -45,7 +50,7 @@ public class Player extends AbstractGameObject {
         if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5) > precision){
            // Get direction
            this.direction = DirectionEnum.toDirection(this.touchedPos.x - this.location.getX() - WIDTH * 0.5);
-           // Slowdown
+           /* Slowdown
            if(touchedPos.x == previous_touchedPos && Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5)< Application.worldWidth/5){
                float newSpeed;
                if(this.direction == DirectionEnum.RIGHT)
@@ -54,7 +59,7 @@ public class Player extends AbstractGameObject {
                    newSpeed = MathUtils.clamp(this.speed.x + SPEED_MAX_X / 10, -SPEED_MAX_X, -SPEED_MAX_X /4);
                this.speed.x = newSpeed;
            }
-           else
+           else*/
               this.speed.x = this.direction.getSign() * SPEED_MAX_X;
            previous_touchedPos = touchedPos.x;
            // Ensure that the new position do not overextend the arrival point (delta)
@@ -85,11 +90,17 @@ public class Player extends AbstractGameObject {
             GameManager.GAME_STARTING = false;
 
         this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY());
+
+        this.walk.update(delta);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(this.playerTexture,this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
+        //batch.draw(this.playerTexture,this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
+        float w = (float) walk.animation.getKeyFrame(walk.stateTime).getRegionWidth() / (float) walk.animation.getKeyFrame(walk.stateTime).getRegionHeight()
+                * HEIGHT;
+        System.out.println(walk.animation.getKeyFrame(walk.stateTime).getRegionWidth());
+        this.walk.draw(batch, this.location.getX(), this.location.getY() -3, w, HEIGHT);
     }
 
     public void setTouchedPos(Vector3 pos) {
@@ -97,7 +108,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void jump(){
-        this.speed.y += 3000;
+        this.speed.y += 1000;
     }
 
 }

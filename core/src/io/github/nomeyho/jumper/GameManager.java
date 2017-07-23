@@ -66,10 +66,10 @@ public class GameManager {
                     go.draw(batch);
             }
 
-           for(int i=0; i < snowflakeManager.getNumberOfSnowflakes(); i++){
+         /*  for(int i=0; i < snowflakeManager.getNumberOfSnowflakes(); i++){
                 if(snowflakeManager.getsnowflake(i).location.getLayer() == layer)
                     snowflakeManager.getsnowflake(i).draw(batch);
-            }
+            }*/
         }
     }
 

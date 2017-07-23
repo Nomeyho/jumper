@@ -26,6 +26,7 @@ public class Application {
     public static float worldHeight = SIZE;
     public static float worldWidth = SIZE;
     public static final String TEXTURE_ATLAS = "assets.atlas";
+    public static final String TEXTURE_PLAYER_WALK = "animation/player_walk.atlas";
     public static final String HITBOX_ATLAS = "hitbox/hitbox.json";
     public static final String LOCALES = "lang/locale";
     public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
@@ -51,12 +52,13 @@ public class Application {
 
     public void loadAssets () {
         // java -jar runnable-texturepacker.jar ./Jumper/android/assets/img/ ./Jumper/android/assets/ assets
+        // java -jar runnable-texturepacker.jar ./Jumper/android/assets/animation/player_walk/ ./Jumper/android/assets/animation/ player_walk
         if(DEBUG)
             this.assetManager.getLogger().setLevel(Logger.DEBUG);
 
         // Textures
         this.assetManager.load(TEXTURE_ATLAS, TextureAtlas.class);
-
+        this.assetManager.load(TEXTURE_PLAYER_WALK, TextureAtlas.class);
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
         this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class, parameter);
