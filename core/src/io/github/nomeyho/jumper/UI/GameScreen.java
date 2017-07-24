@@ -1,24 +1,29 @@
-package io.github.nomeyho.jumper;
+package io.github.nomeyho.jumper.UI;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import io.github.nomeyho.jumper.Application;
+import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.sound.SoundManager;
 
 
-public class GameScreen extends ScreenAdapter {
+public class GameScreen extends AbstractGameScreen {
+    private static float FADE_DURATION = 2f;
     private ShapeRenderer shapeRenderer;
     private ExtendViewport viewport;
     private OrthographicCamera camera;
     private OrthographicCamera guiCamera;
     private SpriteBatch batch;
 
-    public GameScreen() {}
+    public GameScreen(Game game) {
+        super(game);
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -39,6 +44,11 @@ public class GameScreen extends ScreenAdapter {
 
         // GameManager.get().snowflakeManager.resize();
         GameManager.get().starManager.resize();
+    }
+
+    @Override
+    public InputProcessor getInputProcessor() {
+        return GameManager.get().inputController;
     }
 
     /**
@@ -63,6 +73,18 @@ public class GameScreen extends ScreenAdapter {
 
         SoundManager.get().playMusic();
     }
+
+    @Override
+    public void hide() {
+        this.batch.dispose();
+        this.shapeRenderer.dispose();
+    }
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
 
     /**
      * Called 60 times per sec
@@ -110,12 +132,6 @@ public class GameScreen extends ScreenAdapter {
         updateCamera(delta);
         updateGuiCamera(delta);
         this.camera.update();
-    }
-
-    @Override
-    public void dispose () {
-        this.batch.dispose();
-        this.shapeRenderer.dispose();
     }
 
     private void updateCamera (float delta) {

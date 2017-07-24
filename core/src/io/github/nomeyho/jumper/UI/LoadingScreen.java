@@ -1,12 +1,13 @@
 package io.github.nomeyho.jumper.UI;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -14,20 +15,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
-import io.github.nomeyho.jumper.JumperGame;
-import io.github.nomeyho.jumper.lang.LanguageManager;
 import io.github.nomeyho.jumper.sound.SoundManager;
-import io.github.nomeyho.jumper.utils.Utils;
 
-
-public class LoadingScreen extends ScreenAdapter {
+public class LoadingScreen extends AbstractGameScreen {
     // View
     private static float SIZE = Application.SIZE;
     private static float CELL = Application.CELL;
+    private static float FADE_IN_DURATION = 0.05f;
+    private static float FADE_OUT_DURATION = 0.15f;
     private ExtendViewport viewport;
     private Camera camera;
     // State
-    private JumperGame game;
     private float progress = 0;
     // UI
     private ShapeRenderer shapeRenderer;
@@ -37,8 +35,8 @@ public class LoadingScreen extends ScreenAdapter {
     private ProgressBar progressBar;
     private Label progressLabel;
 
-    public LoadingScreen(JumperGame game) {
-        this.game = game;
+    public LoadingScreen(Game game) {
+        super(game);
     }
 
     @Override
@@ -74,6 +72,8 @@ public class LoadingScreen extends ScreenAdapter {
         this.shapeRenderer = new ShapeRenderer();
         this.stage = new Stage(this.viewport);
         this.stage.setDebugAll(Application.DEBUG);
+        this.stage.getRoot().getColor().a = 0;
+        this.stage.getRoot().addAction(Actions.fadeIn(FADE_IN_DURATION));
 
         // Logo
         this.logoTexture = new Texture(Gdx.files.internal("logo.png"), true);
@@ -95,6 +95,19 @@ public class LoadingScreen extends ScreenAdapter {
     }
 
     @Override
+    public void hide() {
+        this.logoTexture.dispose();
+        this.shapeRenderer.dispose();
+        this.stage.dispose();
+    }
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    @Override
     public void render(float delta) {
         update();
         clearScreen();
@@ -102,9 +115,8 @@ public class LoadingScreen extends ScreenAdapter {
     }
 
     @Override
-    public void dispose() {
-        this.logoTexture.dispose();
-        this.shapeRenderer.dispose();
+    public InputProcessor getInputProcessor() {
+        return null;
     }
 
     private long t1 = System.currentTimeMillis();
@@ -118,7 +130,16 @@ public class LoadingScreen extends ScreenAdapter {
                 this.progressLabel.setText((int) this.progress + "%");
             }
             if(this.progress >= 100 && Application.get().assetManager.update()) {
-                this.game.setScreen(new MenuScreen(this.game));
+                // Fade out effect
+                this.stage.addAction(Actions.sequence(
+                        Actions.fadeOut(FADE_OUT_DURATION),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.setScreen(new MenuScreen(game));
+                            }
+                        })
+                ));
                 SoundManager.get().init();
             } else {
                 Gdx.app.log(Application.TAG, "Loading: " + (int)(Application.get().assetManager.getProgress()*100) + "%");
@@ -129,7 +150,16 @@ public class LoadingScreen extends ScreenAdapter {
         if (Application.get().assetManager.update()) {
             this.progressBar.setValue(1);
             this.progressLabel.setText("100%");
-            this.game.setScreen(new MenuScreen(this.game));
+            // Fade out effect
+            this.stage.addAction(Actions.sequence(
+                Actions.fadeOut(FADE_OUT_DURATION),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setScreen(new MenuScreen(game));
+                    }
+                })
+            ));
             // Init managers depending on the assets
             SoundManager.get().init();
         } else {

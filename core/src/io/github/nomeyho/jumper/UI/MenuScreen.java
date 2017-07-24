@@ -1,13 +1,14 @@
 package io.github.nomeyho.jumper.UI;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.Align;
@@ -15,20 +16,18 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import io.github.nomeyho.jumper.Application;
-import io.github.nomeyho.jumper.GameScreen;
-import io.github.nomeyho.jumper.JumperGame;
+import io.github.nomeyho.jumper.*;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
 
 
-public class MenuScreen extends ScreenAdapter implements ITranslatable {
+public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     public static final float SIZE = Application.SIZE;
+    private static float FADE_IN_DURATION = 0.05f;
+    private static float FADE_OUT_DURATION = 0.15f;
     // View
     private ExtendViewport viewport;
     private Camera camera;
-    // State
-    private JumperGame game;
     // UI
     private ShapeRenderer shapeRenderer;
     private Stage stage;
@@ -39,8 +38,8 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
     private TextButton settingsBtn;
     // TODO private SettingsMenu settingsMenu;
 
-    public MenuScreen(JumperGame game) {
-        this.game = game;
+    public MenuScreen(Game game) {
+        super(game);
         LanguageManager.get().register(this);
     }
 
@@ -57,6 +56,11 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
     }
 
     @Override
+    public InputProcessor getInputProcessor() {
+        return this.stage;
+    }
+
+    @Override
     public void show() {
         // View
         this.camera = new OrthographicCamera();
@@ -69,6 +73,9 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
         this.layout.setFillParent(true);
         this.layout.align(Align.center);
         this.stage.setDebugAll(Application.DEBUG);
+        // Fade in effect
+        this.stage.getRoot().getColor().a = 0;
+        this.stage.getRoot().addAction(Actions.fadeIn(FADE_IN_DURATION));
 
         Skin skin = Application.get().assetManager.get(Application.SKIN);
 
@@ -83,7 +90,16 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                game.setScreen(new GameScreen());
+                // Fade out effect
+                stage.addAction(Actions.sequence(
+                        Actions.fadeOut(FADE_OUT_DURATION),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.setScreen(new GameScreen(game));
+                            }
+                        })
+                ));
             }
         });
         this.layout.add(this.playBtn).padBottom(75);
@@ -116,16 +132,23 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
     }
 
     @Override
+    public void hide() {
+        this.shapeRenderer.dispose();
+        this.stage.dispose();
+    }
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    @Override
     public void render(float delta) {
         this.stage.act(delta);
         update();
         clearScreen();
         draw();
-    }
-
-    @Override
-    public void dispose() {
-        this.shapeRenderer.dispose();
     }
 
     private void update() {
@@ -182,7 +205,6 @@ public class MenuScreen extends ScreenAdapter implements ITranslatable {
         }
 
         // Padding:
-        System.out.println(width);
         width += 30;
 
         // Set width

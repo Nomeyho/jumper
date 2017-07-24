@@ -3,7 +3,6 @@ package io.github.nomeyho.jumper.objects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;

@@ -17,7 +17,7 @@ public class GameManager {
     public Camera camera;
     public Camera guiCamera;
     private FpsCounter fpscounter;
-    private InputController inputController;
+    public InputController inputController;
     public static boolean GAME_STARTING = false;
     public StarManager starManager;
 

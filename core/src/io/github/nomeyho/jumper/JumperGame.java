@@ -11,6 +11,7 @@ import io.github.nomeyho.jumper.lang.LanguageManager;
 import io.github.nomeyho.jumper.sound.SoundManager;
 
 public class JumperGame extends Game {
+
 	@Override
 	public void create () {
 		if(Application.DEBUG)
@@ -27,25 +28,24 @@ public class JumperGame extends Game {
 
 	@Override
 	public void resume () {
-		// init();
+		super.pause();
 	}
 
 	@Override
 	public void pause () {
-		// Application.get().assetManager.clear();
+		super.pause();
 	}
 
 	@Override
 	public void dispose () {
-		// TODO dispose everything
+		super.dispose(); // = screen.dispose() = screen.hide()
+		// TODO dispose everything (game objects, managers? not only screens)
 		SoundManager.get().dispose();
+		Application.get().assetManager.dispose();
 	}
 
-	public void init () {
-		Application.get().assetManager.setLoader(HitboxAtlas.class, new HitboxLoader(new InternalFileHandleResolver()));
-		Application.get().loadUIAssets();
-		UserPreferences.get().load();
-		LanguageManager.get().setLang(UserPreferences.get().lang);
-		setScreen(new LoadingScreen(this));
+	@Override
+	public void render () {
+		super.render();
 	}
 }

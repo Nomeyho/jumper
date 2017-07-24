@@ -60,17 +60,38 @@ player
   orig: 100, 100
   offset: 0, 0
   index: -1
-snowflake
-  rotate: false
-  xy: 879, 77
-  size: 50, 50
-  orig: 50, 50
-  offset: 0, 0
-  index: -1
-star
+shooting_star
   rotate: false
   xy: 2, 2
   size: 69, 64
   orig: 69, 64
   offset: 0, 0
   index: -1
+snowflake
+  rotate: false
+  xy: 215, 19
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 73, 2
+  size: 69, 64
+  orig: 69, 64
+  offset: 0, 0
+  index: 1
+star
+  rotate: false
+  xy: 879, 63
+  size: 69, 64
+  orig: 69, 64
+  offset: 0, 0
+  index: 2
+star
+  rotate: false
+  xy: 144, 2
+  size: 69, 64
+  orig: 69, 64
+  offset: 0, 0
+  index: 3
