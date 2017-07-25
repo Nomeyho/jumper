@@ -1,0 +1,1 @@
+ffmpeg -i player_walk_%03d.png -vf scale=-1:200 final/player_walk_%03d.png

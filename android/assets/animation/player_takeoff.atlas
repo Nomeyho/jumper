@@ -1,0 +1,376 @@
+
+player_takeoff.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+player_takeoff
+  rotate: false
+  xy: 2, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 1
+player_takeoff
+  rotate: false
+  xy: 2, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 2
+player_takeoff
+  rotate: false
+  xy: 116, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 3
+player_takeoff
+  rotate: false
+  xy: 2, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 4
+player_takeoff
+  rotate: false
+  xy: 116, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 5
+player_takeoff
+  rotate: false
+  xy: 230, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 6
+player_takeoff
+  rotate: false
+  xy: 2, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 7
+player_takeoff
+  rotate: false
+  xy: 116, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 8
+player_takeoff
+  rotate: false
+  xy: 230, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 9
+player_takeoff
+  rotate: false
+  xy: 344, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 10
+player_takeoff
+  rotate: false
+  xy: 2, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 11
+player_takeoff
+  rotate: false
+  xy: 116, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 12
+player_takeoff
+  rotate: false
+  xy: 230, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 13
+player_takeoff
+  rotate: false
+  xy: 344, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 14
+player_takeoff
+  rotate: false
+  xy: 458, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 15
+player_takeoff
+  rotate: false
+  xy: 116, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 16
+player_takeoff
+  rotate: false
+  xy: 230, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 17
+player_takeoff
+  rotate: false
+  xy: 344, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 18
+player_takeoff
+  rotate: false
+  xy: 458, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 19
+player_takeoff
+  rotate: false
+  xy: 572, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 20
+player_takeoff
+  rotate: false
+  xy: 230, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 21
+player_takeoff
+  rotate: false
+  xy: 344, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 22
+player_takeoff
+  rotate: false
+  xy: 458, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 23
+player_takeoff
+  rotate: false
+  xy: 572, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 24
+player_takeoff
+  rotate: false
+  xy: 686, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 25
+player_takeoff
+  rotate: false
+  xy: 344, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 26
+player_takeoff
+  rotate: false
+  xy: 458, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 27
+player_takeoff
+  rotate: false
+  xy: 572, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 28
+player_takeoff
+  rotate: false
+  xy: 686, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 29
+player_takeoff
+  rotate: false
+  xy: 800, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 30
+player_takeoff
+  rotate: false
+  xy: 458, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 31
+player_takeoff
+  rotate: false
+  xy: 572, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 32
+player_takeoff
+  rotate: false
+  xy: 686, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 33
+player_takeoff
+  rotate: false
+  xy: 800, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 34
+player_takeoff
+  rotate: false
+  xy: 572, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 35
+player_takeoff
+  rotate: false
+  xy: 686, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 36
+player_takeoff
+  rotate: false
+  xy: 800, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 37
+player_takeoff
+  rotate: false
+  xy: 686, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 38
+player_takeoff
+  rotate: false
+  xy: 800, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 39
+player_takeoff
+  rotate: false
+  xy: 800, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 40
+
+player_takeoff2.png
+size: 1024,512
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+player_takeoff
+  rotate: false
+  xy: 2, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 41
+player_takeoff
+  rotate: false
+  xy: 2, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 42
+player_takeoff
+  rotate: false
+  xy: 116, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 43
+player_takeoff
+  rotate: false
+  xy: 116, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 44
+player_takeoff
+  rotate: false
+  xy: 230, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 45
+player_takeoff
+  rotate: false
+  xy: 230, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 46
+player_takeoff
+  rotate: false
+  xy: 344, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 47
+player_takeoff
+  rotate: false
+  xy: 344, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 48
+player_takeoff
+  rotate: false
+  xy: 458, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 49
+player_takeoff
+  rotate: false
+  xy: 458, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 50
+player_takeoff
+  rotate: false
+  xy: 572, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 51
+player_takeoff
+  rotate: false
+  xy: 572, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 52
