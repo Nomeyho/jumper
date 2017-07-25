@@ -96,8 +96,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.layout.row();
 
         // Planet
-        TextureAtlas planetAtlas = Application.get().assetManager.get(Application.PLANET_ANIM_ATLAS);
-        AnimationWrapper planetAnimation = new AnimationWrapper(0.08f, planetAtlas.findRegions("planet"));
+        AnimationWrapper planetAnimation = new AnimationWrapper(0.08f, "planet", Application.PLANET_ANIM_ATLAS);
         this.planetImage = new AnimatedImage(planetAnimation);
         this.planetImage.setScaling(Scaling.fit);
         this.layout.add(this.planetImage).padBottom(60);

@@ -1,114 +1,149 @@
 package io.github.nomeyho.jumper.objects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.DirectionEnum;
+import io.github.nomeyho.jumper.utils.PlayerEnum;
 import io.github.nomeyho.jumper.utils.Utils;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+import sun.security.krb5.internal.APOptions;
 
 public class Player extends AbstractGameObject {
-    public static final float WIDTH = 55;
-    public static final float HEIGHT = 130;
-    public static final float SPEED_MAX_Y_DOWN = -2000;
-    public static final float ACCELY = -2000;
-    public static final float SPEED_MAX_X = 500;
-    private Vector3 touchedPos =  new Vector3();
-    private float previous_touchedPos;
-    private AnimationWrapper walk;
-
+    public static final float WIDTH = 100;
+    public static final float HEIGHT = 160;
+    public static final float MAX_SPEED_X = 1200;
+    private Vector2 touchedPos =  new Vector2();
+    private AnimationWrapper groundAnimation;
+    private AnimationWrapper flyingAnimation;
     private TextureRegion playerTexture;
     private DirectionEnum direction = DirectionEnum.RIGHT;
-
+    public PlayerEnum state = PlayerEnum.WAITING;
+    private float startingPosition, endPosition;
 
 
     public Player(float x, float y, int layer) {
         super(x, y, layer);
-        TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
-        this.playerTexture =  atlas.findRegion("player2");
-        // Initial touch = initial player position
-        this.touchedPos.x = x + WIDTH * 0.5f;
-        this.touchedPos.y = y;
-        this.previous_touchedPos = x;
+        // Ensure looking right
+        this.touchedPos.x = x + WIDTH/2;
+        this.touchedPos.y = y + HEIGHT/2;
+        this.speed.set(0,0,0);
 
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("player");
 
-        TextureAtlas walkAtlas = Application.get().assetManager.get(Application.TEXTURE_PLAYER_WALK);
-        this.walk = new AnimationWrapper(1f / 60, walkAtlas.findRegions("player_walk"));
+
+        this.groundAnimation = new AnimationWrapper(1f / 70, "player_takeoff", Application.PLAYER_TAKEOFF_ATLAS,Animation.PlayMode.NORMAL);
+        this.playerTexture = this.groundAnimation.getCurrentTexture();
+
+        this.flyingAnimation = new AnimationWrapper(1f / 10, "player_flying", Application.PLAYER_FLYING_ATLAS, Animation.PlayMode.NORMAL);
     }
+
 
     @Override
     public void update(float delta) {
-        float precision = 0.01f;
-        // Handle x (0.001 = minimal position precision)
-        if( Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5) > precision){
-           // Get direction
-           this.direction = DirectionEnum.toDirection(this.touchedPos.x - this.location.getX() - WIDTH * 0.5);
-           /* Slowdown
-           if(touchedPos.x == previous_touchedPos && Math.abs(this.touchedPos.x - this.location.getX() - WIDTH * 0.5)< Application.worldWidth/5){
-               float newSpeed;
-               if(this.direction == DirectionEnum.RIGHT)
-                   newSpeed = MathUtils.clamp(this.speed.x - SPEED_MAX_X / 10, SPEED_MAX_X / 4, SPEED_MAX_X);
-               else
-                   newSpeed = MathUtils.clamp(this.speed.x + SPEED_MAX_X / 10, -SPEED_MAX_X, -SPEED_MAX_X /4);
-               this.speed.x = newSpeed;
-           }
-           else*/
-              this.speed.x = this.direction.getSign() * SPEED_MAX_X;
-           previous_touchedPos = touchedPos.x;
-           // Ensure that the new position do not overextend the arrival point (delta)
-           float x;
-           if(this.direction == DirectionEnum.RIGHT)
-             x = MathUtils.clamp(this.location.getX() + this.speed.x * delta, this.location.getX(), touchedPos.x - WIDTH * 0.5f);
-           else
-             x = MathUtils.clamp(this.location.getX() + this.speed.x * delta, touchedPos.x - WIDTH * 0.5f, this.location.getX());
-           // Ensure that the new position remains inside de viewport limits
-           x = MathUtils.clamp(x, 0, Application.worldWidth - WIDTH);
-           this.location.setLocation(x,this.location.getY());
+
+        flyingAnimation.update(delta);
+        // Direction
+        if(this.touchedPos.x >= this.location.getX() + WIDTH / 2f) {
+            // Direction switch reset starting pos
+            if(this.direction == DirectionEnum.LEFT)
+                this.startingPosition = this.location.getX();
+            this.direction = DirectionEnum.RIGHT;
         }
         else{
-            this.speed.x =0;
+            // Direction switch reset starting pos
+            if(this.direction == DirectionEnum.RIGHT)
+                this.startingPosition = this.location.getX();
+            this.direction = DirectionEnum.LEFT;
+        }
+        // Starting and end points
+        if(this.speed.x <= 0.01)
+            this.startingPosition = this.location.getX();
+        this.endPosition = this.touchedPos.x - WIDTH/2;
+
+        switch (state){
+            case WAITING:
+                break;
+            case GROUNDED:
+                this.groundAnimation.update(delta);
+                if(this.groundAnimation.animation.isAnimationFinished(this.groundAnimation.stateTime))
+                    this.state = PlayerEnum.TAKEOFF;
+                break;
+            case TAKEOFF:
+                break;
+            case FLYING:
+                /* Handle X movement */
+
+                // Speed interpolation
+                float avancement;
+                if(startingPosition == endPosition)
+                    avancement = 1;
+                else
+                    avancement = MathUtils.clamp(1 - (Math.abs(this.location.getX() - endPosition)
+                            / Math.abs(startingPosition - endPosition)), 0 ,1);
+                this.speed.x = Interpolation.pow3Out.apply(0, MAX_SPEED_X, 1 - avancement);
+                // Do not overextend arrival position
+                float posX;
+                if(this.direction == DirectionEnum.RIGHT)
+                    posX = MathUtils.clamp(this.location.getX() + this.direction.getSign() * this.speed.x * delta,
+                            this.location.getX(), this.endPosition);
+                else
+                    posX = MathUtils.clamp(this.location.getX() + this.direction.getSign() * this.speed.x * delta,
+                            this.endPosition, this.location.getX());
+                //Stay inside world
+                posX = MathUtils.clamp(posX,0,Application.worldWidth - WIDTH);
+                // Set location
+                this.location.setLocation(posX, 0);
+
+                /* Handle Y movement */
+
+
+                break;
         }
 
-        // Handle y
-        if(this.speed.y >= SPEED_MAX_Y_DOWN)
-            this.speed.y += ACCELY * delta;
-        float y = location.getY() + speed.y * delta;
-        if(y<=0){ y = 0; }
-        this.location.setLocation(location.getX(), y);
+        /* Reset state if player hit ground
         if(this.location.getY() == 0)
-            this.speed.y =0;
+            this.state = PlayerEnum.GROUNDED;*/
 
-        // If player hit the ground, reset position
-        if(this.location.getY()==0)
-            GameManager.GAME_STARTING = false;
-
+        // Hitbox
         this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY());
-
-        this.walk.update(delta);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        //batch.draw(this.playerTexture,this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
-        float w = (float) walk.animation.getKeyFrame(walk.stateTime).getRegionWidth() / (float) walk.animation.getKeyFrame(walk.stateTime).getRegionHeight()
-                * HEIGHT;
-        System.out.println(walk.animation.getKeyFrame(walk.stateTime).getRegionWidth());
-        this.walk.draw(batch, this.location.getX(), this.location.getY() -3, w, HEIGHT);
+        boolean flip = (this.direction == DirectionEnum.LEFT);
+        float x = this.location.getX();
+        float y = this.location.getY();
+        switch (state){
+            case WAITING:
+                this.flyingAnimation.draw(batch, flip ? x + WIDTH : x, y, flip ? -WIDTH : WIDTH, HEIGHT);
+                break;
+            case GROUNDED:
+                this.groundAnimation.draw(batch, flip ? x + WIDTH : x, y, flip ? -WIDTH : WIDTH, HEIGHT);
+                break;
+            case TAKEOFF:
+                this.flyingAnimation.draw(batch, flip ? x + WIDTH : x, y, flip ? -WIDTH : WIDTH, HEIGHT);
+                break;
+            case FLYING:
+
+                break;
+        }
     }
 
     public void setTouchedPos(Vector3 pos) {
-        this.touchedPos.set(pos);
-    }
-
-    public void jump(){
-        this.speed.y += 1000;
+        this.touchedPos.x = pos.x;
+        this.touchedPos.y = pos.y;
+        this.speed.x = 1000;
     }
 
 }

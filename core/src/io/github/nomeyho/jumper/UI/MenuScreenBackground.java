@@ -28,9 +28,7 @@ public class MenuScreenBackground extends Actor {
         this.time = 0;
 
         // Animation
-        TextureAtlas atlas = Application.get().assetManager.get(Application.ROCKET_ANIM_ATLAS);
-        this.animation = new AnimationWrapper(0.05f, atlas.findRegions("rocket"));
-        this.animation.animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        this.animation = new AnimationWrapper(0.05f, "rocket", Application.ROCKET_ANIM_ATLAS, Animation.PlayMode.LOOP_PINGPONG);
 
         // Size
         TextureRegion frame = this.animation.getCurrentTexture();

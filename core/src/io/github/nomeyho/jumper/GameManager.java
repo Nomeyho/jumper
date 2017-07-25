@@ -33,7 +33,7 @@ public class GameManager {
      * @param guiCamera
      */
     public void init (Camera camera, Camera guiCamera) {
-        this.player = new Player(Application.worldWidth / 2, 0, 0);
+        this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, 0, 0);
         this.level = new UsualLevel();
         this.camera = camera;
         this.guiCamera = guiCamera;

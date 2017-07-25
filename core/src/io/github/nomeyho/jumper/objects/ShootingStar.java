@@ -30,7 +30,7 @@ public class ShootingStar extends Star {
         // Random speed
         this.finalSpeed = - Utils.randomFloat(MIN_SPEED, MAX_SPEED);
         this.elapsed = 0;
-        this.visible = Utils.randomBool();
+        this.visible = Utils.randomFloat(0, 1) < 0.1;
 
         // Texture
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);

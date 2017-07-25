@@ -1,5 +1,6 @@
 package io.github.nomeyho.jumper.objects;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,7 +27,8 @@ public class Bell extends AbstractGameObject {
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("bell");
 
-        this.explosion = new AnimationWrapper(0.33f, textureAtlas.findRegions("bell_explosion"));
+        // TODO CHANGE ATLAS
+        this.explosion = new AnimationWrapper(0.33f, "bell_explosion", Application.TEXTURE_ATLAS);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class Bell extends AbstractGameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-       // batch.draw(this.bellTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
-        this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
+       batch.draw(this.bellTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
+      //  this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
     }
 }

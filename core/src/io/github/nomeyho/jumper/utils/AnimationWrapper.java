@@ -5,14 +5,20 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import io.github.nomeyho.jumper.Application;
 
 public class AnimationWrapper {
     public Animation<TextureRegion> animation;
     public float stateTime = 0;
 
-    public AnimationWrapper(float frameDuration, Array<TextureAtlas.AtlasRegion> textures) {
-        this.animation = new Animation<TextureRegion>(frameDuration, textures);
-        this.animation.setPlayMode(Animation.PlayMode.LOOP);
+    public AnimationWrapper(float frameDuration, String region, String atlasName) {
+        this(frameDuration, region, atlasName, Animation.PlayMode.LOOP);
+    }
+
+    public AnimationWrapper(float frameDuration, String region, String atlasName, Animation.PlayMode playmode) {
+        TextureAtlas atlas = Application.get().assetManager.get(atlasName);
+        this.animation = new Animation<TextureRegion>(frameDuration, atlas.findRegions(region));
+        this.animation.setPlayMode(playmode);
     }
 
     public void update(float delta) {
