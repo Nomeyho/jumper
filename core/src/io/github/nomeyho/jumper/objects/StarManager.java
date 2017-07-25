@@ -1,7 +1,6 @@
 package io.github.nomeyho.jumper.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
@@ -10,7 +9,7 @@ import io.github.nomeyho.jumper.utils.Utils;
 public class StarManager {
     // Keep a constant number of stars on memory
     // But a varying number of them are actually visible (location randomness)
-    private static final int NUMBER_STARS = 125;
+    private static final int NUMBER_STARS = 75;
     private static final int NUMBER_SHOOTING_STARS = 2;
     private Array<Star> stars;
 
@@ -32,27 +31,12 @@ public class StarManager {
         }
 
         // Shooting stars
-        ShootingStar shootingStar = new ShootingStar(500, 500);
-        shootingStar.init();
-        this.stars.add(shootingStar);
-        // this.stars.add( new ShootingStar(750, 750) );
-
-        // TODO
-        // Shooting stars
-        /*
-        this.shootingStars = new Array<ShootingStar_BACKUP>();
         for(int i=1; i<= NUMBER_SHOOTING_STARS; ++i) {
-            float length = Utils.randomFloat(0.05f * Application.worldWidth, 0.15f * Application.worldWidth);
-            float y = Utils.randomFloat(0, Application.worldHeight);
-            ShootingStar_BACKUP star = new ShootingStar_BACKUP(
-                    Application.worldWidth,
-                    y,
-                    Application.worldWidth - length * MathUtils.cos(30),
-                    y - length * MathUtils.sin(30)
-            );
-            this.shootingStars.add(star);
+            float y = Utils.randomFloat(- Application.worldHeight / 2 , Application.worldHeight);
+            ShootingStar shootingStar = new ShootingStar(y);
+            shootingStar.init();
+            this.stars.add(shootingStar);
         }
-        */
     }
 
     public void update (float delta) {

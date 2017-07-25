@@ -19,6 +19,10 @@ public class AnimationWrapper {
         this.stateTime = (this.stateTime + delta) % Float.MAX_VALUE;
     }
 
+    public TextureRegion getCurrentTexture () {
+        return this.animation.getKeyFrame(this.stateTime);
+    }
+
     public void draw(SpriteBatch batch, float x, float y, float width, float height) {
         TextureRegion frame = this.animation.getKeyFrame(this.stateTime, true);
         batch.draw(frame, x, y, width, height);

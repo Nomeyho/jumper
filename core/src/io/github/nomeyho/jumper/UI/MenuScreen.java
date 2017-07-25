@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,6 +20,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.*;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.utils.AnimatedImage;
+import io.github.nomeyho.jumper.utils.AnimationWrapper;
 
 
 public class MenuScreen extends AbstractGameScreen implements ITranslatable {
@@ -37,6 +40,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private TextButton buyBtn;
     private TextButton settingsBtn;
     // TODO private SettingsMenu settingsMenu;
+    private AnimatedImage planetImage;
 
     public MenuScreen(Game game) {
         super(game);
@@ -81,7 +85,15 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
         // Logo
         this.logo = new Label(Application.TAG, skin, "large");
-        this.layout.add(this.logo).padBottom(200);
+        this.layout.add(this.logo).padBottom(60);
+        this.layout.row();
+
+        //
+        TextureAtlas planetAtlas = Application.get().assetManager.get(Application.PLANET_ANIM_ATLAS);
+        AnimationWrapper planetAnimation = new AnimationWrapper(0.1f, planetAtlas.findRegions("planet"));
+        this.planetImage = new AnimatedImage(planetAnimation);
+        this.layout.addActor(this.planetImage);
+        this.layout.add(this.planetImage).padBottom(60);
         this.layout.row();
 
         // Play

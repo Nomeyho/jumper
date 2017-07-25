@@ -6,92 +6,92 @@ filter: MipMapLinearNearest,Linear
 repeat: none
 bell
   rotate: false
-  xy: 2, 68
+  xy: 2, 64
   size: 200, 161
   orig: 200, 161
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 204, 71
+  xy: 204, 67
   size: 200, 158
   orig: 200, 158
   offset: 0, 0
   index: 1
 bell
   rotate: false
-  xy: 406, 80
+  xy: 406, 76
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 3
 bell_explosion
   rotate: false
-  xy: 406, 80
+  xy: 406, 76
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 777, 129
+  xy: 879, 125
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 bell_explosion
   rotate: false
-  xy: 608, 97
+  xy: 608, 93
   size: 167, 132
   orig: 167, 132
   offset: 0, 0
   index: 1
 orange
   rotate: false
-  xy: 879, 129
+  xy: 777, 17
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 777, 27
+  xy: 879, 23
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 shooting_star
   rotate: false
-  xy: 2, 2
-  size: 69, 64
-  orig: 69, 64
+  xy: 406, 69
+  size: 1, 5
+  orig: 1, 5
   offset: 0, 0
   index: -1
 snowflake
   rotate: false
-  xy: 215, 19
+  xy: 64, 12
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 73, 2
-  size: 69, 64
-  orig: 69, 64
+  xy: 777, 119
+  size: 100, 106
+  orig: 100, 106
+  offset: 0, 0
+  index: 3
+star
+  rotate: false
+  xy: 2, 2
+  size: 60, 60
+  orig: 60, 60
   offset: 0, 0
   index: 1
 star
   rotate: false
-  xy: 879, 63
-  size: 69, 64
-  orig: 69, 64
+  xy: 981, 192
+  size: 33, 33
+  orig: 33, 33
   offset: 0, 0
   index: 2
-star
-  rotate: false
-  xy: 144, 2
-  size: 69, 64
-  orig: 69, 64
-  offset: 0, 0
-  index: 3

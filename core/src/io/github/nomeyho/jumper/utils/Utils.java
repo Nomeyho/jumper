@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -32,6 +33,10 @@ public class Utils {
         pixmap.dispose();
 
         return drawable;
+    }
+
+    public static boolean randomBool() {
+        return MathUtils.randomBoolean();
     }
 
     public static float randomFloat (float min, float max) {

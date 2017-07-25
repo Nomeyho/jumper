@@ -27,16 +27,13 @@ public class Star {
     // Should
     public void init() {
         // Random with and opacity
-        this.width = this.height = Utils.randomFloat(2, 15);
+        this.width = this.height = Utils.randomFloat(2, 12);
         this.opacity = Utils.randomFloat(0, 1);
 
         // Select new random image
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
         this.starTexture = atlas.findRegion("star", Utils.randomInt(1, 3));
-
-
     }
-
 
     public void update(float delta) {
         this.location.add(this.speed.x * delta, this.speed.y * delta);
