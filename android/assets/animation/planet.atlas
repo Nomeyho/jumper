@@ -13,162 +13,364 @@ planet
   index: 1
 planet
   rotate: false
-  xy: 2, 608
+  xy: 2, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 2
 planet
   rotate: false
-  xy: 204, 810
+  xy: 2, 810
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 52
+planet
+  rotate: false
+  xy: 2, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 3
 planet
   rotate: false
-  xy: 2, 406
+  xy: 204, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 4
 planet
   rotate: false
-  xy: 204, 608
+  xy: 2, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 5
 planet
   rotate: false
-  xy: 406, 810
+  xy: 204, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 6
 planet
   rotate: false
-  xy: 2, 204
+  xy: 406, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 7
 planet
   rotate: false
-  xy: 204, 406
+  xy: 2, 204
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 8
 planet
   rotate: false
-  xy: 406, 608
+  xy: 204, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 9
 planet
   rotate: false
-  xy: 608, 810
+  xy: 406, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 10
 planet
   rotate: false
-  xy: 2, 2
+  xy: 608, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 11
 planet
   rotate: false
-  xy: 204, 204
+  xy: 2, 2
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 12
 planet
   rotate: false
-  xy: 406, 406
+  xy: 204, 204
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 13
 planet
   rotate: false
-  xy: 608, 608
+  xy: 406, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 14
 planet
   rotate: false
-  xy: 810, 810
+  xy: 608, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 15
 planet
   rotate: false
-  xy: 204, 2
+  xy: 810, 810
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 16
 planet
   rotate: false
-  xy: 406, 204
+  xy: 204, 2
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 17
 planet
   rotate: false
-  xy: 608, 406
+  xy: 406, 204
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 18
 planet
   rotate: false
-  xy: 810, 608
+  xy: 608, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 19
 planet
   rotate: false
-  xy: 406, 2
+  xy: 810, 608
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 20
 planet
   rotate: false
-  xy: 608, 204
+  xy: 406, 2
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 21
 planet
   rotate: false
-  xy: 810, 406
+  xy: 608, 204
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 22
 planet
   rotate: false
-  xy: 608, 2
+  xy: 810, 406
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 23
 planet
   rotate: false
-  xy: 810, 204
+  xy: 608, 2
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: 24
+planet
+  rotate: false
+  xy: 810, 204
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 25
+planet
+  rotate: false
+  xy: 810, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 26
+
+planet2.png
+size: 1024,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+planet
+  rotate: false
+  xy: 2, 810
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 27
+planet
+  rotate: false
+  xy: 2, 608
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 28
+planet
+  rotate: false
+  xy: 204, 810
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 29
+planet
+  rotate: false
+  xy: 2, 406
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 30
+planet
+  rotate: false
+  xy: 204, 608
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 31
+planet
+  rotate: false
+  xy: 406, 810
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 32
+planet
+  rotate: false
+  xy: 2, 204
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 33
+planet
+  rotate: false
+  xy: 204, 406
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 34
+planet
+  rotate: false
+  xy: 406, 608
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 35
+planet
+  rotate: false
+  xy: 608, 810
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 36
+planet
+  rotate: false
+  xy: 2, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 37
+planet
+  rotate: false
+  xy: 204, 204
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 38
+planet
+  rotate: false
+  xy: 406, 406
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 39
+planet
+  rotate: false
+  xy: 608, 608
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 40
+planet
+  rotate: false
+  xy: 810, 810
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 41
+planet
+  rotate: false
+  xy: 204, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 42
+planet
+  rotate: false
+  xy: 406, 204
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 43
+planet
+  rotate: false
+  xy: 608, 406
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 44
+planet
+  rotate: false
+  xy: 810, 608
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 45
+planet
+  rotate: false
+  xy: 406, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 46
+planet
+  rotate: false
+  xy: 608, 204
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 47
+planet
+  rotate: false
+  xy: 810, 406
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 48
+planet
+  rotate: false
+  xy: 608, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 49
+planet
+  rotate: false
+  xy: 810, 204
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 50
+planet
+  rotate: false
+  xy: 810, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: 51

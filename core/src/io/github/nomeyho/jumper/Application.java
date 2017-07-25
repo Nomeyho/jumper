@@ -29,6 +29,7 @@ public class Application {
     // TODO RENAME!
     public static final String TEXTURE_PLAYER_WALK = "animation/player_walk.atlas";
     public static final String PLANET_ANIM_ATLAS = "animation/planet.atlas";
+    public static final String ROCKET_ANIM_ATLAS = "animation/rocket.atlas";
     public static final String HITBOX_ATLAS = "hitbox/hitbox.json";
     public static final String LOCALES = "lang/locale";
     public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
@@ -62,6 +63,7 @@ public class Application {
         this.assetManager.load(TEXTURE_ATLAS, TextureAtlas.class);
         this.assetManager.load(TEXTURE_PLAYER_WALK, TextureAtlas.class);
         this.assetManager.load(PLANET_ANIM_ATLAS, TextureAtlas.class);
+        this.assetManager.load(ROCKET_ANIM_ATLAS, TextureAtlas.class);
 
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();

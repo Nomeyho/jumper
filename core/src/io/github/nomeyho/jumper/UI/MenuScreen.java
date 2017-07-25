@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -12,10 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.I18NBundle;
-import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.*;
 import io.github.nomeyho.jumper.lang.ITranslatable;
@@ -41,6 +39,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private TextButton settingsBtn;
     // TODO private SettingsMenu settingsMenu;
     private AnimatedImage planetImage;
+    private MenuScreenBackground background;
 
     public MenuScreen(Game game) {
         super(game);
@@ -50,13 +49,19 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     @Override
     public void resize(int width, int height) {
         this.viewport.update(width, height);
+        Application.worldHeight = this.viewport.getWorldHeight();
+        Application.worldWidth = this.viewport.getWorldWidth();
+
         this.camera.position.set(this.camera.viewportWidth / 2,this.camera.viewportHeight /2,0);
         this.camera.update();
+
         this.shapeRenderer.setProjectionMatrix(this.camera.combined);
         this.shapeRenderer.updateMatrices();
 
         // TODO this.settingsMenu.setSize(this.viewport.getWorldWidth() - 10, this.viewport.getWorldHeight() - 10);
         // TODO this.settingsMenu.setPosition(centerX, centerY, Align.center);
+
+        this.background.init();
     }
 
     @Override
@@ -72,6 +77,8 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.shapeRenderer = new ShapeRenderer();
         // Layout & stage
         this.stage = new Stage(this.viewport);
+        this.background = new MenuScreenBackground();
+        this.stage.addActor(this.background); // The order matters
         this.layout = new Table();
         this.stage.addActor(this.layout);
         this.layout.setFillParent(true);
@@ -88,11 +95,11 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.layout.add(this.logo).padBottom(60);
         this.layout.row();
 
-        //
+        // Planet
         TextureAtlas planetAtlas = Application.get().assetManager.get(Application.PLANET_ANIM_ATLAS);
-        AnimationWrapper planetAnimation = new AnimationWrapper(0.1f, planetAtlas.findRegions("planet"));
+        AnimationWrapper planetAnimation = new AnimationWrapper(0.08f, planetAtlas.findRegions("planet"));
         this.planetImage = new AnimatedImage(planetAnimation);
-        this.layout.addActor(this.planetImage);
+        this.planetImage.setScaling(Scaling.fit);
         this.layout.add(this.planetImage).padBottom(60);
         this.layout.row();
 
@@ -158,13 +165,13 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     @Override
     public void render(float delta) {
         this.stage.act(delta);
-        update();
+        update(delta);
         clearScreen();
         draw();
     }
 
-    private void update() {
-        this.stage.act();
+    private void update(float delta) {
+        this.stage.act(delta);
     }
 
     private void clearScreen() {
