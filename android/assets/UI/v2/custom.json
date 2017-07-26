@@ -73,8 +73,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: normal
-		fontColor: white
-		downFontColor: white
+		fontColor: blue
+		downFontColor: blue
 		up: button
 		down: button_hover
 	}
