@@ -25,6 +25,7 @@ public class Player extends AbstractGameObject {
     public static final float MAX_SPEED_X = 1100;
     public static final float MAX_SPEED_Y = 2000;
     public static final float GRAVITY = 1000;
+    public static final float MIN_Y = 60;
     // State
     private Vector2 touchedPos =  new Vector2();
     private DirectionEnum direction = DirectionEnum.RIGHT;
@@ -107,7 +108,7 @@ public class Player extends AbstractGameObject {
                 else
                     avancement = MathUtils.clamp(1 - (Math.abs(this.location.getX() - endPosition)
                             / Math.abs(startingPosition - endPosition)), 0 ,1);
-                this.speed.x = Interpolation.pow3Out.apply(0, MAX_SPEED_X, 1 - avancement);
+                this.speed.x = Interpolation.swingOut.apply(0, MAX_SPEED_X, 1 - avancement);
 
                 /*  Y */
 
@@ -142,8 +143,8 @@ public class Player extends AbstractGameObject {
         /* Y */
         y =  this.location.getY() + this.speed.y * delta;
         // Hit ground
-        if(y <= 0 && this.speed.y < 0){
-            y = 0;
+        if(y <= MIN_Y && this.speed.y < 0){
+            y = MIN_Y;
             this.speed.y = 0;
             // Reset
             this.state = PlayerEnum.WAITING;

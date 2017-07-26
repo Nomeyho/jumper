@@ -4,33 +4,51 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.nomeyho.jumper.Application;
+import io.github.nomeyho.jumper.math.Location;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
 
 public class GameBackground {
 
-    private AnimationWrapper animation;
     private TextureRegion background;
+    private TextureRegion planet;
+    private TextureRegion satelite;
+    private float time =0;
+    private final static float PERIOD = 10;
+    private final static float SATELITEWIDTH = 32;
+    private final static float SATELITEHEIGHT = 70;
+    private final static float PLANETSIZE = Application.worldWidth / 2f;
+    private final static Location PLANETLOCATION =  new Location(Application.worldWidth / 4f, -50, -1);
+    private Location satelitePosition = new Location(PLANETLOCATION.getX()+ PLANETSIZE/2f - SATELITEWIDTH/2f,
+                                                       PLANETLOCATION.getY() - SATELITEHEIGHT / 2, -1);
+
 
     public GameBackground () {
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
         this.background = atlas.findRegion("background");
-
-        this.animation = new AnimationWrapper(0.33f, "background", Application.BACKGROUND_ANIM_ATLAS);
+        this.planet = atlas.findRegion("planet");
+        this.satelite = atlas.findRegion("satelite");
     }
 
     public void update (float delta) {
-        this.animation.update(delta);
+        this.time += delta;
+        float x, y;
+        x = (float) Math.cos(2 * Application.PI * time / PERIOD);
+        y = (float) Math.sin(2 * Application.PI * time / PERIOD);
+        x = x * PLANETSIZE / 2 + PLANETLOCATION.getX() + PLANETSIZE / 2 - SATELITEWIDTH / 2;
+        y = y * PLANETSIZE / 2 + PLANETLOCATION.getY() + PLANETSIZE / 2 - SATELITEHEIGHT / 2;
+
+        this.satelitePosition.setLocation(x,y);
+
     }
 
     public void draw (SpriteBatch batch) {
         float w = Application.worldWidth;
         float h = this.background.getRegionHeight() * (w / this.background.getRegionWidth());
 
-        // Animation
-        /*
-        TextureRegion frame = this.animation.getCurrentTexture();
-        batch.draw(frame, 0, 0, h, w);
-        */
+        batch.draw(this.planet, PLANETLOCATION.getX(), PLANETLOCATION.getY(), PLANETSIZE, PLANETSIZE);
+
+        float angle = (2 * Application.PI * time / PERIOD) % (2 * Application.PI);
+        batch.draw(this.satelite, satelitePosition.getX(), satelitePosition.getY(), SATELITEWIDTH / 2f, SATELITEHEIGHT / 2f, SATELITEWIDTH, SATELITEHEIGHT, 1f, 1f, (float) Math.toDegrees(angle) -90);
 
         // Background
         batch.draw(this.background, 0, 0, w, h);
