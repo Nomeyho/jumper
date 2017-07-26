@@ -42,6 +42,7 @@ public class JumperGame extends Game {
 		// TODO dispose everything (game objects, managers? not only screens)
 		SoundManager.get().dispose();
 		Application.get().assetManager.dispose();
+		Application.get().shapeRenderer.dispose();
 	}
 
 	@Override

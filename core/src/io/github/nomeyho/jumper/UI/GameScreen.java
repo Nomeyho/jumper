@@ -15,7 +15,6 @@ import io.github.nomeyho.jumper.sound.SoundManager;
 
 public class GameScreen extends AbstractGameScreen {
     private static float FADE_DURATION = 2f;
-    private ShapeRenderer shapeRenderer;
     private ExtendViewport viewport;
     private OrthographicCamera camera;
     private OrthographicCamera guiCamera;
@@ -39,8 +38,8 @@ public class GameScreen extends AbstractGameScreen {
         this.guiCamera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
         this.guiCamera.update();
 
-        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
-        this.shapeRenderer.updateMatrices();
+        Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
+        Application.get().shapeRenderer.updateMatrices();
 
         // GameManager.get().snowflakeManager.resize();
         GameManager.get().starManager.resize();
@@ -61,8 +60,6 @@ public class GameScreen extends AbstractGameScreen {
         this.guiCamera = new OrthographicCamera();
         // Application
         this.viewport = new ExtendViewport(Application.SIZE, Application.SIZE, this.camera);
-        // Grid
-        this.shapeRenderer = new ShapeRenderer();
         // Batch
         this.batch = new SpriteBatch();
 
@@ -77,7 +74,6 @@ public class GameScreen extends AbstractGameScreen {
     @Override
     public void hide() {
         this.batch.dispose();
-        this.shapeRenderer.dispose();
     }
 
     @Override
@@ -106,6 +102,9 @@ public class GameScreen extends AbstractGameScreen {
      * Render a new scene
      */
     private void draw() {
+        // Grid
+        if(Application.DEBUG)
+            drawGrid();
         // World
         this.batch.setProjectionMatrix(this.camera.projection);
         this.batch.setTransformMatrix(this.camera.view);
@@ -118,9 +117,6 @@ public class GameScreen extends AbstractGameScreen {
         this.batch.begin();
         GameManager.get().drawUI(this.batch);
         this.batch.end();
-        // Grid
-        if(Application.DEBUG)
-            drawGrid();
     }
 
     /**
@@ -149,12 +145,12 @@ public class GameScreen extends AbstractGameScreen {
     }
 
     private void drawGrid () {
-        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        Application.get().shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int x = 0; x < this.viewport.getWorldWidth(); x += Application.CELL) {
             for (int y = 0; y < this.viewport.getWorldHeight(); y += Application.CELL) {
-                this.shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
+                Application.get().shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
             }
         }
-        this.shapeRenderer.end();
+        Application.get().shapeRenderer.end();
     }
 }

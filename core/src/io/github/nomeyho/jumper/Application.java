@@ -7,17 +7,20 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.sound.SoundEnum;
 
+import java.awt.*;
+
 public class Application {
     private static Application INSTANCE = new Application();
 
     public static final float PI = 3.1415926f;
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
     public static final String TAG = "Jumper";
     public static final float SIZE = 1000;
     public static final float CELL = SIZE / 10;
@@ -36,8 +39,8 @@ public class Application {
     public static final String SKIN = "UI/custom.json";
     public static final String SKIN_ATLAS = "UI/custom.atlas";
     public static final String MUSIC = "sound/music.mp3";
-
     public AssetManager assetManager = new AssetManager();
+    public ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     public void loadUIAssets () {
         if(DEBUG)

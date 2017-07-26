@@ -4,8 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -30,7 +28,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private ExtendViewport viewport;
     private Camera camera;
     // UI
-    private ShapeRenderer shapeRenderer;
     private Stage stage;
     private Table layout;
     private Label logo;
@@ -55,8 +52,8 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.camera.position.set(this.camera.viewportWidth / 2,this.camera.viewportHeight /2,0);
         this.camera.update();
 
-        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
-        this.shapeRenderer.updateMatrices();
+        Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
+        Application.get().shapeRenderer.updateMatrices();
 
         // TODO this.settingsMenu.setSize(this.viewport.getWorldWidth() - 10, this.viewport.getWorldHeight() - 10);
         // TODO this.settingsMenu.setPosition(centerX, centerY, Align.center);
@@ -74,7 +71,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         // View
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(SIZE, SIZE, this.camera);
-        this.shapeRenderer = new ShapeRenderer();
         // Layout & stage
         this.stage = new Stage(this.viewport);
         this.background = new MenuScreenBackground();
@@ -151,7 +147,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
     @Override
     public void hide() {
-        this.shapeRenderer.dispose();
         this.stage.dispose();
     }
 
@@ -180,23 +175,21 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
     private void draw() {
         // Draw the grid
-        if(Application.DEBUG) {
+        if(Application.DEBUG)
             this.drawGrid();
-            this.background.drawDebug(this.shapeRenderer);
-        }
-        this.background.drawDebug(this.shapeRenderer);
         // Show the loading screen
         this.stage.draw();
     }
 
     private void drawGrid () {
-        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        ShapeRenderer shapeRenderer = Application.get().shapeRenderer;
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int x = 0; x < this.viewport.getWorldWidth(); x += Application.CELL) {
             for (int y = 0; y < this.viewport.getWorldHeight(); y += Application.CELL) {
-                this.shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
+                shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
             }
         }
-        this.shapeRenderer.end();
+        shapeRenderer.end();
     }
 
     public void updateLang() {

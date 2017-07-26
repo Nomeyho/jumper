@@ -28,7 +28,6 @@ public class LoadingScreen extends AbstractGameScreen {
     // State
     private float progress = 0;
     // UI
-    private ShapeRenderer shapeRenderer;
     private Stage stage;
     private Texture logoTexture;
     private Image logo;
@@ -44,8 +43,8 @@ public class LoadingScreen extends AbstractGameScreen {
         this.viewport.update(width, height);
         this.camera.position.set(this.camera.viewportWidth / 2,this.camera.viewportHeight /2,0);
         this.camera.update();
-        this.shapeRenderer.setProjectionMatrix(this.camera.combined);
-        this.shapeRenderer.updateMatrices();
+        Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
+        Application.get().shapeRenderer.updateMatrices();
 
         // Position widgets
         float centerX = this.viewport.getWorldWidth() / 2;
@@ -69,7 +68,6 @@ public class LoadingScreen extends AbstractGameScreen {
         // View
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(SIZE, SIZE, this.camera);
-        this.shapeRenderer = new ShapeRenderer();
         this.stage = new Stage(this.viewport);
         this.stage.setDebugAll(Application.DEBUG);
         this.stage.getRoot().getColor().a = 0;
@@ -97,7 +95,6 @@ public class LoadingScreen extends AbstractGameScreen {
     @Override
     public void hide() {
         this.logoTexture.dispose();
-        this.shapeRenderer.dispose();
         this.stage.dispose();
     }
 
@@ -123,7 +120,7 @@ public class LoadingScreen extends AbstractGameScreen {
     private void update() {
         if(Application.DEBUG) {
             long t2 = System.currentTimeMillis();
-            if (t2 - t1 > 50) { // +10% every 0.5sec
+            if (t2 - t1 > 5) { // Loading time...
                 t1 = t2;
                 this.progress++;
                 this.progressBar.setValue(this.progress);
@@ -140,6 +137,7 @@ public class LoadingScreen extends AbstractGameScreen {
                             }
                         })
                 ));
+                // Init managers depending on the assets
                 SoundManager.get().init();
             } else {
                 Gdx.app.log(Application.TAG, "Loading: " + (int)(Application.get().assetManager.getProgress()*100) + "%");
@@ -184,12 +182,13 @@ public class LoadingScreen extends AbstractGameScreen {
     }
 
     private void drawGrid () {
-        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        ShapeRenderer shapeRenderer = Application.get().shapeRenderer;
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int x = 0; x < this.viewport.getWorldWidth(); x += CELL) {
             for (int y = 0; y < this.viewport.getWorldHeight(); y += CELL) {
-                this.shapeRenderer.rect(x,y, CELL, CELL);
+                shapeRenderer.rect(x,y, CELL, CELL);
             }
         }
-        this.shapeRenderer.end();
+        shapeRenderer.end();
     }
 }

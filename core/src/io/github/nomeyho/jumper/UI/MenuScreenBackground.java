@@ -158,9 +158,8 @@ public class MenuScreenBackground extends Actor {
     }
     */
 
+    @Override
     public void drawDebug(ShapeRenderer shapeRenderer) {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-
         int k = 100;
         Vector2 tmp1 = new Vector2();
         Vector2 tmp2 = new Vector2();
@@ -172,7 +171,5 @@ public class MenuScreenBackground extends Actor {
                     this.spline.valueAt(tmp2, ((float)(i+1))/((float)k-1))
             );
         }
-
-        shapeRenderer.end();
     }
 }
