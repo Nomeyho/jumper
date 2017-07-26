@@ -65,31 +65,30 @@ kenuector_96
   index: -1
 S
   rotate: false
-  xy: 228, 151
+  xy: 515, 610
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 515, 640
-  size: 225, 100
-  split: 12, 12, 12, 12
-  orig: 225, 100
+  xy: 515, 687
+  size: 225, 53
+  split: 6, 6, 6, 6
+  orig: 225, 53
   offset: 0, 0
   index: -1
 button_hover
   rotate: false
-  xy: 1, 126
-  size: 225, 100
-  split: 12, 12, 0, 12
-  pad: 12, 12, 12, 12
-  orig: 225, 100
+  xy: 1, 173
+  size: 225, 53
+  split: 6, 6, 6, 6
+  orig: 225, 53
   offset: 0, 0
   index: -1
 progress
   rotate: false
-  xy: 515, 605
+  xy: 228, 193
   size: 29, 33
   split: 0, 0, 0, 0
   orig: 29, 33
@@ -97,7 +96,7 @@ progress
   index: -1
 progress_bg
   rotate: false
-  xy: 1, 79
+  xy: 1, 126
   size: 168, 45
   split: 5, 5, 5, 5
   orig: 168, 45

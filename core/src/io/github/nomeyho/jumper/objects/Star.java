@@ -19,6 +19,9 @@ public class Star {
     public Vector3 speed = new Vector3(0,0,0);
     protected TextureRegion starTexture;
     protected float opacity;
+    private boolean blink = false; // is this star blinking
+    private float blinkTime = 0;   // for how long the star is blinking
+    private float nextBlink = 0;   // how long before next blink
 
     public Star(float x, float y) {
         this.location.setLocation(x,y);
@@ -26,9 +29,12 @@ public class Star {
 
     // Should
     public void init() {
-        // Random with and opacity
+        // Random values
         this.width = this.height = Utils.randomFloat(2, 12);
         this.opacity = Utils.randomFloat(0, 1);
+        this.blink = false;
+        this.blinkTime = 0;
+        this.nextBlink = Utils.randomFloat(10, 40);
 
         // Select new random image
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
@@ -37,9 +43,27 @@ public class Star {
 
     public void update(float delta) {
         this.location.add(this.speed.x * delta, this.speed.y * delta);
+        this.blinkTime += delta;
+
+        if(this.blink) {
+            // Blink to 0.1 sec at most
+            if(this.blinkTime > 0.1) {
+                this.blink = false;
+                this.blinkTime = 0;
+                this.nextBlink = Utils.randomFloat(10, 40);
+            }
+        } else {
+            if(this.blinkTime > this.nextBlink) {
+                this.blink = true;
+                this.blinkTime = 0;
+            }
+        }
     }
 
     public void draw(SpriteBatch batch) {
+        if(this.blink)
+            return;
+
         Color color = batch.getColor();
         batch.setColor(color.r, color.g, color.b, this.opacity);
         batch.draw(this.starTexture, this.location.getX(), this.location.getY(), width, height);
