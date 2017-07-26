@@ -34,7 +34,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private TextButton playBtn;
     private TextButton buyBtn;
     private TextButton settingsBtn;
-    // TODO private SettingsMenu settingsMenu;
+    private SettingsMenu settingsMenu;
     private AnimatedImage planetImage;
     private MenuScreenBackground background;
 
@@ -55,8 +55,8 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
         Application.get().shapeRenderer.updateMatrices();
 
-        // TODO this.settingsMenu.setSize(this.viewport.getWorldWidth() - 10, this.viewport.getWorldHeight() - 10);
-        // TODO this.settingsMenu.setPosition(centerX, centerY, Align.center);
+        this.settingsMenu.setSize(this.viewport.getWorldWidth() - 10, this.viewport.getWorldHeight() - 10);
+        this.settingsMenu.setPosition(this.viewport.getWorldWidth() / 2, this.viewport.getMaxWorldHeight() / 2, Align.center);
 
         this.background.init();
     }
@@ -116,11 +116,13 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
                 ));
             }
         });
+        this.playBtn.getLabelCell().padBottom(5).padTop(5);
         this.layout.add(this.playBtn).padBottom(100);
         this.layout.row();
 
         // Buy
         this.buyBtn = new TextButton("", skin);
+        this.buyBtn.getLabelCell().padBottom(5).padTop(5);
         this.layout.add(this.buyBtn).padBottom(100);
         this.layout.row();
 
@@ -130,12 +132,13 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                // TODO settingsMenu.setVisible(true);
+                settingsMenu.setVisible(true);
             }
         });
+        this.settingsBtn.getLabelCell().padBottom(5).padTop(5);
         this.layout.add(this.settingsBtn).padBottom(100);
-        // TODO this.settingsMenu = new SettingsMenu("", skin);
-        // TODO this.stage.addActor(this.settingsMenu);
+        this.settingsMenu = new SettingsMenu("", skin);
+        this.stage.addActor(this.settingsMenu);
 
         // Lang
         updateLang();

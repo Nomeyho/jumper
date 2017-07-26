@@ -11,7 +11,7 @@ import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.Utils;
 
 public class MenuScreenBackground extends Actor {
-    private static final float TIME = 5;
+    private static final float TIME = 50;
     private float time;
     private AnimationWrapper animation;
     private float width;
@@ -54,7 +54,7 @@ public class MenuScreenBackground extends Actor {
         this.spline.valueAt(this.tmp, progress);
 
         // Make sur the rocket leave the screen and restart with a new path
-        if(progress >= 1) {
+        if(progress > 1 && (this.tmp.x < -this.width || this.tmp.x > Application.worldWidth || this.tmp.y < -this.height || this.tmp.y > Application.worldHeight)) {
             init();
             this.time = 0;
         }

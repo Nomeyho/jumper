@@ -3,6 +3,7 @@ package io.github.nomeyho.jumper.UI;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
@@ -41,26 +42,29 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.getContentTable().defaults().padBottom(10); // space between rows
         this.getContentTable().setFillParent(true);
 
+        // Title
+        this.getTitleLabel().setAlignment(Align.center);
+
         // Sound
         this.soundLabel = new Label("", skin);
         this.sound = new Slider(0, 100, 1, false, skin);
-        this.getContentTable().add(this.soundLabel);
-        this.getContentTable().add(this.sound);
+        this.getContentTable().add(this.soundLabel).expandX().align(Align.left).padLeft(50);
+        this.getContentTable().add(this.sound).expandX().fillX().padRight(50);
         this.getContentTable().row();
 
         // Music
         this.musicLabel = new Label("", skin);
         this.music = new Slider(0, 100, 1, false, skin);
-        this.getContentTable().add(this.musicLabel).expandX();
-        this.getContentTable().add(this.music).expandX().fillX();
+        this.getContentTable().add(this.musicLabel).expandX().align(Align.left).padLeft(50);
+        this.getContentTable().add(this.music).expandX().fillX().padRight(50);
         this.getContentTable().row();
 
         // Language select
         this.langLabel = new Label("", skin);
         this.langSelect = new SelectBox<LanguageEnum>(skin);
         this.langSelect.setItems(LanguageEnum.toList());
-        this.getContentTable().add(this.langLabel);
-        this.getContentTable().add(this.langSelect);
+        this.getContentTable().add(this.langLabel).align(Align.left).padLeft(50);
+        this.getContentTable().add(this.langSelect).align(Align.left);
         this.getContentTable().row();
 
         // Save button
@@ -74,7 +78,8 @@ public class SettingsMenu extends Dialog implements ITranslatable {
                 setVisible(false);
             }
         });
-        this.getButtonTable().add(this.saveBtn);
+        this.saveBtn.getLabelCell().padLeft(12f).padRight(12f);
+        this.getButtonTable().add(this.saveBtn).padRight(50);
 
         // Cancel button
         this.cancelBtn = new TextButton("", skin);
@@ -85,7 +90,9 @@ public class SettingsMenu extends Dialog implements ITranslatable {
                 setVisible(false);
             }
         });
+        this.cancelBtn.getLabelCell().padLeft(12f).padRight(12f);
         this.getButtonTable().add(this.cancelBtn);
+        this.getButtonTable().padBottom(50);
 
         // Lang
         this.updateLang();
@@ -107,7 +114,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.cancelBtn.setText(bundle.get("cancel"));
     }
 
-    public void save () {
+    private void save () {
         UserPreferences.get().sound = (int)this.sound.getValue();
         UserPreferences.get().music = (int)this.music.getValue();
         UserPreferences.get().lang = this.langSelect.getSelected();

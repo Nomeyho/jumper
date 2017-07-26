@@ -58,16 +58,43 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		fontColor: white
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: normal
+		fontColorSelected: blue
+		fontColorUnselected: white
+		selection: selection
+		background: list
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: {
 		background: progress_bg
 		knobBefore: progress
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		hScroll: h_scroll
+		hScrollKnob: h_scroll_bg
+		vScroll: v_scroll
+		vScrollKnob: v_scroll_bg
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: normal
+		fontColor: white
+		background: dropdown
+		scrollStyle: default
+		listStyle: default
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: {
-		background: progress
-		knob: S
+		background: slider_bg
+		knob: knob
+		knobBefore: slider
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -82,6 +109,13 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window
+		titleFont: normal
+		titleFontColor: white
 	}
 }
 }
