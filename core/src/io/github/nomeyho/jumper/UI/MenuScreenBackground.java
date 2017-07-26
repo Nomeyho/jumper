@@ -2,26 +2,22 @@ package io.github.nomeyho.jumper.UI;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.CatmullRomSpline;
-import com.badlogic.gdx.math.ConvexHull;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.FloatArray;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.Utils;
 
 public class MenuScreenBackground extends Actor {
-    private static final int NB_POINTS = 20;
-    private static final float TIME = 200; // 1000 sec to finish the full path
+    private static final float TIME = 10;
     private float time;
     private AnimationWrapper animation;
     private float width;
     private float height;
     private Vector2[] path;
-    private CatmullRomSpline<Vector2> spline;
+    private Bezier<Vector2> spline;
     private Vector2 tmp;
 
     public MenuScreenBackground () {
@@ -52,11 +48,10 @@ public class MenuScreenBackground extends Actor {
         float progress = this.time / TIME;
 
         // Make sur the rocket leave the screen and restart with a new path
-        if(progress >= 1.2) {
+        if(progress >= 1.3) {
             init();
             this.time = 0;
         }
-        // System.out.println("ici " + progress);
 
         // Angle
         this.spline.derivativeAt(tmp, progress);
@@ -80,27 +75,48 @@ public class MenuScreenBackground extends Actor {
 
     /**
      * Mandatory to be called before being usable
-     * Based on:
-     * http://blog.meltinglogic.com/2013/12/how-to-generate-procedural-racetracks/
      */
     public void init () {
-        float border = Math.max(this.width, this.height);
-        float w = Application.worldWidth - border;
-        float h = Application.worldHeight - border;
+        float w = Application.worldWidth;
+        float h = Application.worldHeight;
+
+        this.path = new Vector2[4];
+        this.path[0] = new Vector2(
+                Utils.randomFloat(- w / 2, 0), // outside
+                Utils.randomFloat(- h / 2, 0)
+        );
+        this.path[1] = new Vector2(
+                Utils.randomFloat(w / 2, w + w/2),
+                Utils.randomFloat(0, h / 2)
+        );
+        this.path[2] = new Vector2(
+                Utils.randomFloat(w / 2, w + w/2),
+                Utils.randomFloat(h / 2, h)
+        );
+        this.path[3] = new Vector2(
+                Utils.randomFloat(0, w / 2),
+                Utils.randomFloat(h / 2, h)
+        );
+
+        this.spline = new Bezier<Vector2>(this.path);
+
+        /*
+        http://blog.meltinglogic.com/2013/12/how-to-generate-procedural-racetracks/
 
         // Generate randoms points
         FloatArray points = new FloatArray(2 * NB_POINTS);
-        for (int i = points.size, end = 2 * NB_POINTS; i < end; i=i+2) {
+        for (int i = 0, end = 2 * NB_POINTS; i < end; i=i+2) {
             points.add(Utils.randomFloat(border, w));
             points.add(Utils.randomFloat(border, h));
         }
 
         // Avoid "little loops" and "turn around"
-        smoothPoints(points);
+        for(int i=0; i<100; ++i)
+            smoothPoints(points, 15);
 
         // Compute convex hull
         ConvexHull convexHull = new ConvexHull();
-        FloatArray polygon = convexHull.computePolygon(points, true);
+        FloatArray polygon = convexHull.computePolygon(points, false);
 
         // Convert
         this.path = new Vector2[polygon.size / 2];
@@ -108,11 +124,12 @@ public class MenuScreenBackground extends Actor {
             this.path[i / 2] = new Vector2(polygon.get(i), polygon.get(i + 1));
 
         // Compute spline for smooth curves
-        this.spline = new CatmullRomSpline<Vector2>(this.path, true);
+        this.spline = new Bezier<Vector2>(this.path);
+        */
     }
 
-    private void smoothPoints(FloatArray points) {
-        float MIN_DIST = 60;
+    /*
+    private void smoothPoints(FloatArray points, int dst) {
         float hx, hy, hl;
 
         for(int i = 0, end1 = points.size;  i < end1; i = i + 2) {
@@ -122,8 +139,8 @@ public class MenuScreenBackground extends Actor {
                 hl = (float) Math.sqrt(hx*hx + hy*hy);
 
                 // Too close
-                if(hl < MIN_DIST) {
-                    float dif = MIN_DIST - hl;
+                if(hl < dst) {
+                    float dif = dst - hl;
                     hx = (hx / hl) * dif;
                     hy = (hy / hl) * dif;
                     points.set(i, points.get(i) + hx);
@@ -133,5 +150,24 @@ public class MenuScreenBackground extends Actor {
                 }
             }
         }
+    }
+    */
+
+    public void drawDebug(ShapeRenderer shapeRenderer) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+        int k = 100;
+        Vector2 tmp1 = new Vector2();
+        Vector2 tmp2 = new Vector2();
+
+        for(int i = 0; i < k-1; ++i)
+        {
+            shapeRenderer.line(
+                    this.spline.valueAt(tmp1, ((float)i)/((float)k-1)),
+                    this.spline.valueAt(tmp2, ((float)(i+1))/((float)k-1))
+            );
+        }
+
+        shapeRenderer.end();
     }
 }
