@@ -88,14 +88,14 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
         // Logo
         this.logo = new Label(Application.TAG, skin, "large");
-        this.layout.add(this.logo).padBottom(60);
+        this.layout.add(this.logo).padBottom(130);
         this.layout.row();
 
         // Planet
         AnimationWrapper planetAnimation = new AnimationWrapper(0.08f, "planet", Application.PLANET_ANIM_ATLAS);
         this.planetImage = new AnimatedImage(planetAnimation);
         this.planetImage.setScaling(Scaling.fit);
-        this.layout.add(this.planetImage).padBottom(60);
+        this.layout.add(this.planetImage).padBottom(150);
         this.layout.row();
 
         // Play
@@ -116,12 +116,12 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
                 ));
             }
         });
-        this.layout.add(this.playBtn).padBottom(75);
+        this.layout.add(this.playBtn).padBottom(100);
         this.layout.row();
 
         // Buy
         this.buyBtn = new TextButton("", skin);
-        this.layout.add(this.buyBtn).padBottom(75);
+        this.layout.add(this.buyBtn).padBottom(100);
         this.layout.row();
 
         // Settings
@@ -133,7 +133,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
                 // TODO settingsMenu.setVisible(true);
             }
         });
-        this.layout.add(this.settingsBtn).padBottom(75);
+        this.layout.add(this.settingsBtn).padBottom(100);
         // TODO this.settingsMenu = new SettingsMenu("", skin);
         // TODO this.stage.addActor(this.settingsMenu);
 
@@ -219,7 +219,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         }
 
         // Padding:
-        width += 30;
+        width += 50;
 
         // Set width
         Array<Cell> cells = this.layout.getCells();
