@@ -31,6 +31,7 @@ public class Application {
     public static final String TEXTURE_ATLAS = "assets.atlas";
     public static final String PLANET_ANIM_ATLAS = "animation/planet.atlas";
     public static final String PLAYER_TAKEOFF_ATLAS = "animation/player_takeoff.atlas";
+    public static final String PLAYER_FALL_ATLAS = "animation/player_fall.atlas";
     public static final String PLAYER_FLYING_ATLAS = "animation/player_flying.atlas";
     public static final String ROCKET_ANIM_ATLAS = "animation/rocket.atlas";
     public static final String HITBOX_ATLAS = "hitbox/hitbox.json";
@@ -66,6 +67,7 @@ public class Application {
         this.assetManager.load(TEXTURE_ATLAS, TextureAtlas.class);
         this.assetManager.load(PLAYER_FLYING_ATLAS, TextureAtlas.class);
         this.assetManager.load(PLAYER_TAKEOFF_ATLAS, TextureAtlas.class);
+        this.assetManager.load(PLAYER_FALL_ATLAS, TextureAtlas.class);
         this.assetManager.load(PLANET_ANIM_ATLAS, TextureAtlas.class);
         this.assetManager.load(ROCKET_ANIM_ATLAS, TextureAtlas.class);
 

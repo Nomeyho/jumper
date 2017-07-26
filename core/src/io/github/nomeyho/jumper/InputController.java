@@ -32,7 +32,7 @@ public class InputController implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(!GameManager.GAME_STARTING) {
             GameManager.GAME_STARTING = true;
-            GameManager.get().player.state = PlayerEnum.GROUNDED;
+            GameManager.get().player.state = PlayerEnum.TAKEOFF;
             GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
         }
         return true;
