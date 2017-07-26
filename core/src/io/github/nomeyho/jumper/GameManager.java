@@ -3,6 +3,7 @@ package io.github.nomeyho.jumper;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.nomeyho.jumper.UI.FpsCounter;
+import io.github.nomeyho.jumper.UI.GameBackground;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
 import io.github.nomeyho.jumper.objects.*;
@@ -20,6 +21,7 @@ public class GameManager {
     public InputController inputController;
     public static boolean GAME_STARTING = false;
     public StarManager starManager;
+    public GameBackground background;
 
     private GameManager() {}
 
@@ -40,24 +42,28 @@ public class GameManager {
         this.fpscounter = new FpsCounter();
         this.inputController = new InputController();
         this.starManager = new StarManager();
+        this.background = new GameBackground();
     }
 
     public void update (float delta) {
         this.player.update(delta);
         this.level.update(delta, this.player.location.getX(), this.player.location.getY());
         this.starManager.update(delta);
+        this.background.update(delta);
         checkForCollision();
     }
 
     public void draw (SpriteBatch batch) {
+        this.background.draw(batch);
+
         // Draw layer per layer
         for(int layer = Application.MIN_LAYER; layer <= Application.MAX_LAYER; ++layer) {
-            // Draw player
-            if (this.player.location.getLayer() == layer)
-                this.player.draw(batch);
             // Draw objects
             this.level.draw(batch, layer);
             this.starManager.draw(batch, layer);
+            // Draw player
+            if (this.player.location.getLayer() == layer)
+                this.player.draw(batch);
         }
     }
 

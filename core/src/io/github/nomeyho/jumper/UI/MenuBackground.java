@@ -10,7 +10,7 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.Utils;
 
-public class MenuScreenBackground extends Actor {
+public class MenuBackground extends Actor {
     private static final float TIME = 50;
     private float time;
     private AnimationWrapper animation;
@@ -20,7 +20,7 @@ public class MenuScreenBackground extends Actor {
     private Bezier<Vector2> spline;
     private Vector2 tmp;
 
-    public MenuScreenBackground () {
+    public MenuBackground() {
         this.time = 0;
 
         // Animation

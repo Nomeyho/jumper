@@ -36,7 +36,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private TextButton settingsBtn;
     private SettingsMenu settingsMenu;
     private AnimatedImage planetImage;
-    private MenuScreenBackground background;
+    private MenuBackground background;
 
     public MenuScreen(Game game) {
         super(game);
@@ -73,7 +73,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.viewport = new ExtendViewport(SIZE, SIZE, this.camera);
         // Layout & stage
         this.stage = new Stage(this.viewport);
-        this.background = new MenuScreenBackground();
+        this.background = new MenuBackground();
         this.stage.addActor(this.background); // The order matters
         this.layout = new Table();
         this.stage.addActor(this.layout);

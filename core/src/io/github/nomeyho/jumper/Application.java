@@ -34,6 +34,7 @@ public class Application {
     public static final String PLAYER_FALL_ATLAS = "animation/player_fall.atlas";
     public static final String PLAYER_FLYING_ATLAS = "animation/player_flying.atlas";
     public static final String ROCKET_ANIM_ATLAS = "animation/rocket.atlas";
+    public static final String BACKGROUND_ANIM_ATLAS = "animation/background.atlas";
     public static final String HITBOX_ATLAS = "hitbox/hitbox.json";
     public static final String LOCALES = "lang/locale";
     public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
@@ -70,6 +71,7 @@ public class Application {
         this.assetManager.load(PLAYER_FALL_ATLAS, TextureAtlas.class);
         this.assetManager.load(PLANET_ANIM_ATLAS, TextureAtlas.class);
         this.assetManager.load(ROCKET_ANIM_ATLAS, TextureAtlas.class);
+        this.assetManager.load(BACKGROUND_ANIM_ATLAS, TextureAtlas.class);
 
         // Fonts
         BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
