@@ -54,13 +54,13 @@ public class GameManager {
     }
 
     public void draw (SpriteBatch batch) {
+        this.starManager.draw(batch);
         this.background.draw(batch);
 
         // Draw layer per layer
         for(int layer = Application.MIN_LAYER; layer <= Application.MAX_LAYER; ++layer) {
             // Draw objects
             this.level.draw(batch, layer);
-            this.starManager.draw(batch, layer);
             // Draw player
             if (this.player.location.getLayer() == layer)
                 this.player.draw(batch);

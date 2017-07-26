@@ -60,12 +60,9 @@ public class StarManager {
         }
     }
 
-    public void draw(SpriteBatch batch, int layer) {
-        Star star;
+    public void draw(SpriteBatch batch) {
         for(int i=0, end = this.stars.size; i<end; ++i) {
-            star = this.stars.get(i);
-            if(star.location.getLayer() == layer)
-                star.draw(batch);
+            this.stars.get(i).draw(batch);
         }
     }
 
