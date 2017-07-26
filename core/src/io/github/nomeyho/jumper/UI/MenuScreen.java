@@ -184,6 +184,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             this.drawGrid();
             this.background.drawDebug(this.shapeRenderer);
         }
+        this.background.drawDebug(this.shapeRenderer);
         // Show the loading screen
         this.stage.draw();
     }

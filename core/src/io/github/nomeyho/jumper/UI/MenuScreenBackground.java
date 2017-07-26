@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.FloatArray;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.Utils;
@@ -17,7 +18,7 @@ public class MenuScreenBackground extends Actor {
     private float width;
     private float height;
     private Vector2[] path;
-    private Bezier<Vector2> spline;
+    private CatmullRomSpline<Vector2> spline;
     private Vector2 tmp;
 
     public MenuScreenBackground () {
@@ -76,7 +77,7 @@ public class MenuScreenBackground extends Actor {
     /**
      * Mandatory to be called before being usable
      */
-    public void init () {
+    public void init2 () {
         float w = Application.worldWidth;
         float h = Application.worldHeight;
 
@@ -98,10 +99,15 @@ public class MenuScreenBackground extends Actor {
                 Utils.randomFloat(h / 2, h)
         );
 
-        this.spline = new Bezier<Vector2>(this.path);
+        this.spline = new CatmullRomSpline<Vector2>(this.path, true);
+    }
 
-        /*
-        http://blog.meltinglogic.com/2013/12/how-to-generate-procedural-racetracks/
+    public void init () {
+        // http://blog.meltinglogic.com/2013/12/how-to-generate-procedural-racetracks/
+        final int NB_POINTS = 20;
+        float border = Math.max(this.width, this.height);
+        float w = Application.worldWidth - border;
+        float h = Application.worldHeight - border;
 
         // Generate randoms points
         FloatArray points = new FloatArray(2 * NB_POINTS);
@@ -124,11 +130,9 @@ public class MenuScreenBackground extends Actor {
             this.path[i / 2] = new Vector2(polygon.get(i), polygon.get(i + 1));
 
         // Compute spline for smooth curves
-        this.spline = new Bezier<Vector2>(this.path);
-        */
+        this.spline = new CatmullRomSpline<Vector2>(this.path, true);
     }
 
-    /*
     private void smoothPoints(FloatArray points, int dst) {
         float hx, hy, hl;
 
@@ -151,7 +155,6 @@ public class MenuScreenBackground extends Actor {
             }
         }
     }
-    */
 
     public void drawDebug(ShapeRenderer shapeRenderer) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
