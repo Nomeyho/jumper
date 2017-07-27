@@ -13,10 +13,7 @@ import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.math.Location;
 import io.github.nomeyho.jumper.particles.ParticleEnum;
 import io.github.nomeyho.jumper.particles.ParticleManager;
-import io.github.nomeyho.jumper.utils.AnimationWrapper;
-import io.github.nomeyho.jumper.utils.DirectionEnum;
-import io.github.nomeyho.jumper.utils.PlayerEnum;
-import io.github.nomeyho.jumper.utils.Utils;
+import io.github.nomeyho.jumper.utils.*;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import sun.security.krb5.internal.APOptions;
 
@@ -26,7 +23,7 @@ public class Player extends AbstractGameObject {
     public static final float HEIGHT = 160;
     public static final float MAX_SPEED_X = 1100;
     public static final float MAX_SPEED_Y = 2000;
-    public static final float GRAVITY = 1000;
+    public static final float GRAVITY = 400;
     public static final float MIN_Y = 60;
     // State
     private Vector2 touchedPos =  new Vector2();
@@ -61,6 +58,7 @@ public class Player extends AbstractGameObject {
 
         this.smokeEffect = ParticleManager.get().getEffect(ParticleEnum.SMOKE);
         this.fireEffect = ParticleManager.get().getEffect(ParticleEnum.FIRE);
+        this.fireEffect.start();
     }
 
 
@@ -94,10 +92,8 @@ public class Player extends AbstractGameObject {
             case FLYING:
                 setSpeedX(delta);
                 setSpeedY(delta);
-                // Particle
-                playParticle(this.fireEffect);
-                // Animation
                 if(this.speed.y >= 0) {
+                    // Animation
                     this.flyingAnimation.update(delta);
                     this.fallAnimation.stateTime = 0;
                 }
@@ -128,13 +124,14 @@ public class Player extends AbstractGameObject {
                 this.takeoffAnimation.draw(batch, flip ? x + WIDTH : x, y, flip ? -WIDTH : WIDTH, HEIGHT);
                 break;
             case FLYING:
+                // Animation
+                    this.fireEffect.draw(batch);
                 TextureRegion frame = getFlyingframe();
                 batch.draw(frame, flip ? x + WIDTH : x, y, WIDTH /2, HEIGHT /2, flip ? -WIDTH : WIDTH, HEIGHT, 1, 1, getAngle());
                 break;
         }
 
         this.smokeEffect.draw(batch);
-        this.fireEffect.draw(batch);
     }
 
     public void setTouchedPos(Vector3 pos) {
@@ -237,7 +234,8 @@ public class Player extends AbstractGameObject {
             this.location.setLocation(this.location.getX(), MIN_Y);
             this.speed.y = 0;
             this.state = PlayerEnum.WAITING;
-            GameManager.GAME_STARTING = false;
+            // TODO
+            GameManager.get().state = GameState.READY;
             playParticle(this.smokeEffect);
         }
     }
@@ -246,12 +244,18 @@ public class Player extends AbstractGameObject {
         this.smokeEffect.update(delta);
         this.smokeEffect.setPosition(location.getX() + WIDTH/2, location.getY());
         this.fireEffect.update(delta);
-        this.fireEffect.setPosition(location.getX() + WIDTH/2, location.getY());
+        boolean flip = (this.direction == DirectionEnum.LEFT);
+        if(flip)
+            this.fireEffect.setPosition(location.getX() + (4*WIDTH)/5f, location.getY() + HEIGHT / 3.5f);
+        else
+           this.fireEffect.setPosition(location.getX() + WIDTH/5f, location.getY()+ HEIGHT / 3.5f);
+        //System.out.println(getAngle());
     }
 
     public void playParticle(ParticleEffect particleEffect){
         if(particleEffect.isComplete())
             particleEffect.start();
     }
+
 
 }

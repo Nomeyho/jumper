@@ -367,10 +367,3 @@ player_takeoff
   orig: 112, 200
   offset: 0, 0
   index: 51
-player_takeoff
-  rotate: false
-  xy: 572, 2
-  size: 112, 200
-  orig: 112, 200
-  offset: 0, 0
-  index: 52

@@ -172,3 +172,52 @@ player_fall
   orig: 112, 200
   offset: 0, 0
   index: 24
+player_fall
+  rotate: false
+  xy: 686, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 25
+player_fall
+  rotate: false
+  xy: 344, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 26
+player_fall
+  rotate: false
+  xy: 458, 204
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 27
+player_fall
+  rotate: false
+  xy: 572, 406
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 28
+player_fall
+  rotate: false
+  xy: 686, 608
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 29
+player_fall
+  rotate: false
+  xy: 800, 810
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 30
+player_fall
+  rotate: false
+  xy: 458, 2
+  size: 112, 200
+  orig: 112, 200
+  offset: 0, 0
+  index: 31
