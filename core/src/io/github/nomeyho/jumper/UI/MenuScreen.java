@@ -110,6 +110,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
                         Actions.run(new Runnable() {
                             @Override
                             public void run() {
+                                Application.get().inputMultiplexer.clear();
                                 game.setScreen(new GameScreen(game));
                             }
                         })

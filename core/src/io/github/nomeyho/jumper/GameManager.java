@@ -11,10 +11,12 @@ import io.github.nomeyho.jumper.levels.UsualLevel;
 import io.github.nomeyho.jumper.objects.*;
 import io.github.nomeyho.jumper.sound.SoundEnum;
 import io.github.nomeyho.jumper.sound.SoundManager;
+import io.github.nomeyho.jumper.utils.GameState;
 
 public class GameManager {
     private static GameManager INSTANCE = new GameManager();
 
+    public GameState state = GameState.READY;
     public Player player;
     public AbstractLevel level;
     public Game game;
@@ -23,9 +25,9 @@ public class GameManager {
     public Camera guiCamera;
     public GameUI gameUI;
     public InputController inputController;
-    public static boolean GAME_STARTING = false;
     public StarManager starManager;
     public GameBackground background;
+    public SpriteBatch batch;
 
     private GameManager() {}
 
@@ -36,23 +38,24 @@ public class GameManager {
     /**
      * MUST BE CALLED at GameScreen CREATION !
      */
-    public void init (Game game, Viewport viewport, Camera camera, Camera guiCamera) {
+    public void init (Game game, Viewport viewport, Camera camera, Camera guiCamera, SpriteBatch batch) {
         this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
         this.level = new UsualLevel();
         this.game = game;
         this.viewport = viewport;
         this.camera = camera;
         this.guiCamera = guiCamera;
+        this.batch = batch;
         this.gameUI = new GameUI();
-
-        Application.get().inputMultiplexer.removeProcessor(this.inputController);
         this.inputController = new InputController();
-
         this.starManager = new StarManager();
         this.background = new GameBackground();
     }
 
     public void update (float delta) {
+        if(this.state == GameState.PAUSED)
+            return;
+
         this.player.update(delta);
         this.level.update(delta, this.player.location.getX(), this.player.location.getY());
         this.starManager.update(delta);
@@ -61,7 +64,11 @@ public class GameManager {
         checkForCollision();
     }
 
-    public void draw (SpriteBatch batch) {
+    public void draw () {
+        this.viewport.setCamera(this.camera);
+        this.batch.setProjectionMatrix(this.camera.projection);
+        this.batch.setTransformMatrix(this.camera.view);
+
         this.starManager.draw(batch);
         this.background.draw(batch);
 
@@ -79,8 +86,12 @@ public class GameManager {
      * Use a separated draw method because the batch is bound to the UI viewport
      * this time (even if both have the same size, the camera is different).
      */
-    public void drawUI (SpriteBatch batch) {
-        this.gameUI.draw(batch);
+    public void drawUI () {
+        this.viewport.setCamera(this.guiCamera);
+        this.batch.setProjectionMatrix(this.guiCamera.projection);
+        this.batch.setTransformMatrix(this.guiCamera.view);
+
+        this.gameUI.draw();
     }
 
     private void checkForCollision(){
@@ -94,15 +105,17 @@ public class GameManager {
         }
     }
 
+    public void pause () {
+        this.state = GameState.PAUSED;
+    }
+
     public void resume () {
-        // TODO
+        this.state = GameState.STARTED;
     }
 
     public void restart () {
-        // TODO
-    }
-
-    public void pause () {
-        // TODO
+        this.state = GameState.READY;
+        this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
+        this.level = new UsualLevel();
     }
 }

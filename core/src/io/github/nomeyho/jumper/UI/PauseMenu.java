@@ -79,8 +79,7 @@ public class PauseMenu extends Dialog implements ITranslatable {
                 super.tap(event, x, y, count, button);
                 setVisible(false);
                 // Remove event listeners
-                Application.get().inputMultiplexer.removeProcessor(PauseMenu.super.getStage());
-                Application.get().inputMultiplexer.removeProcessor(GameManager.get().inputController);
+                Application.get().inputMultiplexer.clear();
                 // New screen
                 GameManager.get().game.setScreen(new MenuScreen(GameManager.get().game));
             }

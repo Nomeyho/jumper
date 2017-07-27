@@ -68,7 +68,8 @@ public class GameScreen extends AbstractGameScreen {
         Application.worldHeight = Application.worldWidth / Gdx.graphics.getWidth() * Gdx.graphics.getHeight();
 
         // /!\ if not called here, NULL reference
-        GameManager.get().init(this.game, this.viewport, this.camera, this.guiCamera);
+        GameManager.get().init(this.game, this.viewport, this.camera, this.guiCamera, this.batch);
+        Application.get().inputMultiplexer.addProcessor(GameManager.get().inputController);
         SoundManager.get().playMusic();
     }
 
@@ -107,17 +108,11 @@ public class GameScreen extends AbstractGameScreen {
         if(Application.DEBUG)
             drawGrid();
         // World
-        this.batch.setProjectionMatrix(this.camera.projection);
-        this.batch.setTransformMatrix(this.camera.view);
         this.batch.begin();
-        GameManager.get().draw(this.batch);
+        GameManager.get().draw();
         this.batch.end();
         // UI
-        this.batch.setProjectionMatrix(this.guiCamera.projection);
-        this.batch.setTransformMatrix(this.guiCamera.view);
-        this.batch.begin();
-        GameManager.get().drawUI(this.batch);
-        this.batch.end();
+        GameManager.get().drawUI();
     }
 
     /**
@@ -128,11 +123,10 @@ public class GameScreen extends AbstractGameScreen {
         // Re-center camera
         updateCamera(delta);
         updateGuiCamera(delta);
-        this.camera.update();
     }
 
     private void updateCamera (float delta) {
-        float x = camera.viewportWidth / 2;
+        float x = this.camera.viewportWidth / 2;
         float y = GameManager.get().player.location.getY();
 
        if (y < Application.worldHeight / 2)

@@ -1,8 +1,8 @@
 package io.github.nomeyho.jumper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
+import io.github.nomeyho.jumper.utils.GameState;
 import io.github.nomeyho.jumper.utils.PlayerEnum;
 
 public class InputController implements InputProcessor {
@@ -29,8 +29,8 @@ public class InputController implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(!GameManager.GAME_STARTING) {
-            GameManager.GAME_STARTING = true;
+        if(GameManager.get().state == GameState.READY) {
+            GameManager.get().state = GameState.STARTED;
             GameManager.get().player.state = PlayerEnum.TAKEOFF;
             GameManager.get().player.setTouchedPos(toWorld(screenX, screenY));
         }
@@ -62,7 +62,7 @@ public class InputController implements InputProcessor {
     private Vector3 toWorld (float screenX, float screenY) {
         Vector3 touchPos = new Vector3();
         touchPos.set(screenX, screenY, 0);
-        GameManager.get().camera.unproject(touchPos); // convert pixels to World units
+        GameManager.get().viewport.getCamera().unproject(touchPos); // convert pixels to World units
         return touchPos;
     }
 }

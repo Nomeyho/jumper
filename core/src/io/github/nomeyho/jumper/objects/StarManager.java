@@ -46,9 +46,9 @@ public class StarManager {
             star = this.stars.get(i);
             star.update(delta);
             // Compute limits
-            float minHeight = GameManager.get().camera.position.y
+            float minHeight = GameManager.get().viewport.getCamera().position.y
                     - Application.worldHeight - star.getSize() / 2;
-            float maxHeight = GameManager.get().camera.position.y
+            float maxHeight = GameManager.get().viewport.getCamera().position.y
                     + Application.worldHeight / 2 + star.getSize() / 2;
             // Below or above
             if(star.location.getY() < minHeight || star.location.getY() > maxHeight) {

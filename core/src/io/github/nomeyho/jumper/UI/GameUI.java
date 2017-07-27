@@ -1,6 +1,7 @@
 package io.github.nomeyho.jumper.UI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.utils.GameState;
 
 public class GameUI {
     private static final int ICON_SIZE = 30;
@@ -29,8 +31,8 @@ public class GameUI {
         Skin skin = Application.get().assetManager.get(Application.SKIN);
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
 
-        this.stage = new Stage();
-        this.stage.setViewport(GameManager.get().viewport);
+        // TODO constructor args
+        this.stage = new Stage(GameManager.get().viewport, GameManager.get().batch);
 
         this.fps = new Label("", skin, "small");
         this.stage.addActor(this.fps);
@@ -55,6 +57,7 @@ public class GameUI {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                GameManager.get().state = GameState.PAUSED;
                 pauseMenu.setVisible(true);
             }
         });
@@ -72,7 +75,7 @@ public class GameUI {
         this.stage.act(delta);
     }
 
-    public void draw (SpriteBatch batch) {
+    public void draw () {
         // Update texts
         this.fps.setText("Fps: " + Gdx.graphics.getFramesPerSecond());
         this.score.setText("123");
