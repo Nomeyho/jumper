@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.Application;
+import io.github.nomeyho.jumper.particles.ParticleManager;
 import io.github.nomeyho.jumper.sound.SoundManager;
 
 public class LoadingScreen extends AbstractGameScreen {
@@ -139,6 +140,7 @@ public class LoadingScreen extends AbstractGameScreen {
                 ));
                 // Init managers depending on the assets
                 SoundManager.get().init();
+                ParticleManager.get().init();
             } else {
                 Gdx.app.log(Application.TAG, "Loading: " + (int)(Application.get().assetManager.getProgress()*100) + "%");
             }
@@ -160,6 +162,7 @@ public class LoadingScreen extends AbstractGameScreen {
             ));
             // Init managers depending on the assets
             SoundManager.get().init();
+            ParticleManager.get().init();
         } else {
             this.progress = Interpolation.linear.apply(this.progress, Application.get().assetManager.getProgress(), 0.1f);
             this.progressBar.setValue(this.progress);

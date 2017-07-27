@@ -6,112 +6,112 @@ filter: MipMapLinearNearest,Linear
 repeat: none
 background
   rotate: false
-  xy: 2, 509
+  xy: 2, 511
   size: 1000, 500
   orig: 1000, 500
   offset: 0, 0
   index: -1
 bell
   rotate: false
-  xy: 504, 346
+  xy: 504, 146
   size: 200, 161
   orig: 200, 161
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 504, 186
+  xy: 706, 351
   size: 200, 158
   orig: 200, 158
   offset: 0, 0
   index: 1
 bell
   rotate: false
-  xy: 706, 358
+  xy: 706, 200
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 3
 bell_explosion
   rotate: false
-  xy: 706, 358
+  xy: 706, 200
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 2
 bell_explosion
   rotate: false
-  xy: 504, 52
+  xy: 504, 12
   size: 167, 132
   orig: 167, 132
   offset: 0, 0
   index: 1
 heart
   rotate: false
-  xy: 795, 198
+  xy: 768, 148
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 908, 395
+  xy: 820, 148
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 planet
   rotate: false
-  xy: 2, 7
+  xy: 2, 9
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 satelite
   rotate: false
-  xy: 706, 156
+  xy: 908, 309
   size: 87, 200
   orig: 87, 200
   offset: 0, 0
   index: -1
 score
   rotate: false
-  xy: 504, 2
+  xy: 872, 150
   size: 50, 48
   orig: 50, 48
   offset: 0, 0
   index: -1
 shooting_star
   rotate: false
-  xy: 1004, 1004
+  xy: 2, 2
   size: 1, 5
   orig: 1, 5
   offset: 0, 0
   index: -1
-snowflake
+smoke
   rotate: false
-  xy: 847, 198
-  size: 50, 50
-  orig: 50, 50
+  xy: 504, 309
+  size: 200, 200
+  orig: 200, 200
   offset: 0, 0
   index: -1
 star
   rotate: false
-  xy: 795, 250
+  xy: 908, 201
   size: 100, 106
   orig: 100, 106
   offset: 0, 0
   index: 3
 star
   rotate: false
-  xy: 908, 447
+  xy: 706, 138
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: 1
 star
   rotate: false
-  xy: 795, 163
+  xy: 924, 166
   size: 33, 33
   orig: 33, 33
   offset: 0, 0
