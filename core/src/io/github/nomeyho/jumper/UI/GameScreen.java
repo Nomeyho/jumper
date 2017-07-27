@@ -41,9 +41,9 @@ public class GameScreen extends AbstractGameScreen {
         Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
         Application.get().shapeRenderer.updateMatrices();
 
-        // GameManager.get().snowflakeManager.resize();
         GameManager.get().starManager.resize();
         GameManager.get().background.resize();
+        GameManager.get().gameUI.resize();
     }
 
     @Override
@@ -66,9 +66,9 @@ public class GameScreen extends AbstractGameScreen {
 
         Application.worldWidth = Application.SIZE;
         Application.worldHeight = Application.worldWidth / Gdx.graphics.getWidth() * Gdx.graphics.getHeight();
-        // /!\ if not called here, NULL reference
-        GameManager.get().init(this.camera, this.guiCamera);
 
+        // /!\ if not called here, NULL reference
+        GameManager.get().init(this.game, this.viewport, this.camera, this.guiCamera);
         SoundManager.get().playMusic();
     }
 

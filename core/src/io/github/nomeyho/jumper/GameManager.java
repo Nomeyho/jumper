@@ -1,8 +1,10 @@
 package io.github.nomeyho.jumper;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.nomeyho.jumper.UI.FpsCounter;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.nomeyho.jumper.UI.GameUI;
 import io.github.nomeyho.jumper.UI.GameBackground;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
@@ -15,9 +17,11 @@ public class GameManager {
 
     public Player player;
     public AbstractLevel level;
+    public Game game;
+    public Viewport viewport;
     public Camera camera;
     public Camera guiCamera;
-    private FpsCounter fpscounter;
+    public GameUI gameUI;
     public InputController inputController;
     public static boolean GAME_STARTING = false;
     public StarManager starManager;
@@ -31,15 +35,15 @@ public class GameManager {
 
     /**
      * MUST BE CALLED at GameScreen CREATION !
-     * @param camera
-     * @param guiCamera
      */
-    public void init (Camera camera, Camera guiCamera) {
+    public void init (Game game, Viewport viewport, Camera camera, Camera guiCamera) {
         this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
         this.level = new UsualLevel();
+        this.game = game;
+        this.viewport = viewport;
         this.camera = camera;
         this.guiCamera = guiCamera;
-        this.fpscounter = new FpsCounter();
+        this.gameUI = new GameUI();
         this.inputController = new InputController();
         this.starManager = new StarManager();
         this.background = new GameBackground();
@@ -50,6 +54,7 @@ public class GameManager {
         this.level.update(delta, this.player.location.getX(), this.player.location.getY());
         this.starManager.update(delta);
         this.background.update(delta);
+        this.gameUI.update(delta);
         checkForCollision();
     }
 
@@ -67,8 +72,12 @@ public class GameManager {
         }
     }
 
+    /**
+     * Use a separated draw method because the batch is bound to the UI viewport
+     * this time (even if both have the same size, the camera is different).
+     */
     public void drawUI (SpriteBatch batch) {
-        this.fpscounter.draw(batch);
+        this.gameUI.draw(batch);
     }
 
     private void checkForCollision(){
@@ -80,5 +89,17 @@ public class GameManager {
                 //  this.player.speed.y = 2500;
             }
         }
+    }
+
+    public void resume () {
+        // TODO
+    }
+
+    public void restart () {
+        // TODO
+    }
+
+    public void pause () {
+        // TODO
     }
 }

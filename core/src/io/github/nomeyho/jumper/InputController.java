@@ -3,14 +3,13 @@ package io.github.nomeyho.jumper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
-import io.github.nomeyho.jumper.objects.Player;
 import io.github.nomeyho.jumper.utils.PlayerEnum;
 
 public class InputController implements InputProcessor {
 
 
     public InputController () {
-        Gdx.input.setInputProcessor(this);
+        Application.get().inputMultiplexer.addProcessor(this);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class InputController implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
+        return false;
     }
 
     @Override

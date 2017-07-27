@@ -23,6 +23,7 @@ public class JumperGame extends Game {
 		Application.get().loadUIAssets();
 		UserPreferences.get().load();
 		LanguageManager.get().setLang(UserPreferences.get().lang);
+		Gdx.input.setInputProcessor(Application.get().inputMultiplexer);
 		setScreen(new LoadingScreen(this));
 	}
 

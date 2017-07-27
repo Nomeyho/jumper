@@ -1,5 +1,6 @@
 package io.github.nomeyho.jumper;
 
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
@@ -43,6 +44,8 @@ public class Application {
     public static final String MUSIC = "sound/music.mp3";
     public AssetManager assetManager = new AssetManager();
     public ShapeRenderer shapeRenderer = new ShapeRenderer();
+    public PlayerStats stats = new PlayerStats();
+    public InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
     public void loadUIAssets () {
         if(DEBUG)
@@ -73,10 +76,6 @@ public class Application {
         this.assetManager.load(ROCKET_ANIM_ATLAS, TextureAtlas.class);
         this.assetManager.load(BACKGROUND_ANIM_ATLAS, TextureAtlas.class);
 
-        // Fonts
-        BitmapFontLoader.BitmapFontParameter parameter = new BitmapFontLoader.BitmapFontParameter();
-        this.assetManager.load("fonts/dejavu.fnt", BitmapFont.class, parameter);
-
         // Hitbox
         this.assetManager.load(HITBOX_ATLAS, HitboxAtlas.class);
 
@@ -85,6 +84,9 @@ public class Application {
         Array<SoundEnum> sounds = SoundEnum.toList();
         for(int i=0; i<sounds.size; ++i)
             this.assetManager.load(sounds.get(i).getFileName(), Sound.class);
+
+        // Statistics
+        this.stats.load();
     }
 
     private Application() {}

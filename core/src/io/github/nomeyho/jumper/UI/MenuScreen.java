@@ -18,6 +18,7 @@ import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
 import io.github.nomeyho.jumper.utils.AnimatedImage;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
+import io.github.nomeyho.jumper.utils.Utils;
 
 
 public class MenuScreen extends AbstractGameScreen implements ITranslatable {
@@ -55,8 +56,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
         Application.get().shapeRenderer.updateMatrices();
 
-        this.settingsMenu.setSize(this.viewport.getWorldWidth() - 10, this.viewport.getWorldHeight() - 10);
-        this.settingsMenu.setPosition(this.viewport.getWorldWidth() / 2, this.viewport.getMaxWorldHeight() / 2, Align.center);
+        this.settingsMenu.setSize(this.viewport.getWorldWidth(), this.viewport.getWorldHeight());
 
         this.background.init();
     }
@@ -116,13 +116,13 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
                 ));
             }
         });
-        this.playBtn.getLabelCell().padBottom(5).padTop(5);
+        this.playBtn.getLabelCell().padBottom(7).padTop(7);
         this.layout.add(this.playBtn).padBottom(100);
         this.layout.row();
 
         // Buy
         this.buyBtn = new TextButton("", skin);
-        this.buyBtn.getLabelCell().padBottom(5).padTop(5);
+        this.buyBtn.getLabelCell().padBottom(7).padTop(7);
         this.layout.add(this.buyBtn).padBottom(100);
         this.layout.row();
 
@@ -135,7 +135,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
                 settingsMenu.setVisible(true);
             }
         });
-        this.settingsBtn.getLabelCell().padBottom(5).padTop(5);
+        this.settingsBtn.getLabelCell().padBottom(7).padTop(7);
         this.layout.add(this.settingsBtn).padBottom(100);
         this.settingsMenu = new SettingsMenu("", skin);
         this.stage.addActor(this.settingsMenu);
@@ -145,7 +145,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         LanguageManager.get().register(this);
 
         // Start taking input from the UI
-        Gdx.input.setInputProcessor(this.stage);
+        Application.get().inputMultiplexer.addProcessor(this.stage);
     }
 
     @Override
@@ -202,40 +202,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.settingsBtn.setText(bundle.get("settings"));
 
         // Set button width depending on the contained text
-        this.setButtonWidth();
-    }
-
-    private void setButtonWidth () {
-        this.layout.layout();
-
-        // Get width
-        float width = 0;
-        SnapshotArray<Actor> children = this.layout.getChildren();
-        Actor child;
-        for(int i=0, end = children.size; i<end; ++i) {
-            child = children.get(i);
-            if(child instanceof TextButton) {
-                TextButton button = (TextButton) child;
-                if(button.getLabel().getWidth() > width)
-                    width = button.getLabel().getWidth();
-            }
-        }
-
-        // Padding:
-        width += 50;
-
-        // Set width
-        Array<Cell> cells = this.layout.getCells();
-        for(int i=0, end = cells.size; i<end; ++i) {
-            Cell cell = cells.get(i);
-            if(cell.getActor() instanceof Button)
-                cell.width(width).expandX();
-            this.layout.layout();
-            // Effectively apply new style
-            cell.getActor().setSize(width, cell.getActorHeight());
-        }
-
-        // Effectively apply new style
-        this.layout.layout();
+        Utils.setButtonWidth(this.layout);
     }
 }

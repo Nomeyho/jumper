@@ -24,7 +24,7 @@ public class MenuBackground extends Actor {
         this.time = 0;
 
         // Animation
-        this.animation = new AnimationWrapper(0.05f, "rocket", Application.ROCKET_ANIM_ATLAS, Animation.PlayMode.LOOP_PINGPONG);
+        this.animation = new AnimationWrapper(0.15f, "rocket", Application.ROCKET_ANIM_ATLAS, Animation.PlayMode.LOOP_PINGPONG);
 
         // Size
         TextureRegion frame = this.animation.getCurrentTexture();

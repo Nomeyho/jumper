@@ -117,5 +117,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		titleFont: normal
 		titleFontColor: white
 	}
+	transparent: {
+		background: window_transparent
+		titleFont: normal
+	}
 }
 }

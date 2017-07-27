@@ -5,8 +5,15 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 
 import java.util.Random;
 
@@ -53,4 +60,32 @@ public class Utils {
         return array[randomInt(0, array.length - 1)];
     }
 
+    public static void setButtonWidth (Table table) {
+        table.layout();
+
+        // Get width
+        float width = 0;
+        SnapshotArray<Actor> children = table.getChildren();
+        Actor child;
+        for(int i=0, end = children.size; i<end; ++i) {
+            child = children.get(i);
+            if(child instanceof TextButton) {
+                TextButton button = (TextButton) child;
+                if(button.getLabel().getWidth() > width)
+                    width = button.getLabel().getWidth();
+            }
+        }
+
+        // Padding:
+        width += 50;
+
+        // Set width
+        Array<Cell> cells = table.getCells();
+        for(int i=0, end = cells.size; i<end; ++i) {
+            Cell cell = cells.get(i);
+            if(cell.getActor() instanceof Button)
+                cell.width(width).expandX();
+            cell.getActor().setSize(width, cell.getActorHeight());
+        }
+    }
 }
