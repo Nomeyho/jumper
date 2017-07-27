@@ -44,7 +44,10 @@ public class GameManager {
         this.camera = camera;
         this.guiCamera = guiCamera;
         this.gameUI = new GameUI();
+
+        Application.get().inputMultiplexer.removeProcessor(this.inputController);
         this.inputController = new InputController();
+
         this.starManager = new StarManager();
         this.background = new GameBackground();
     }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.SnapshotArray;
+import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
@@ -77,7 +78,10 @@ public class PauseMenu extends Dialog implements ITranslatable {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 setVisible(false);
-                // TODO bugged
+                // Remove event listeners
+                Application.get().inputMultiplexer.removeProcessor(PauseMenu.super.getStage());
+                Application.get().inputMultiplexer.removeProcessor(GameManager.get().inputController);
+                // New screen
                 GameManager.get().game.setScreen(new MenuScreen(GameManager.get().game));
             }
         });
