@@ -10,7 +10,7 @@ background
   size: 1000, 500
   orig: 1000, 500
   offset: 0, 0
-  index: 0
+  index: -1
 bell
   rotate: false
   xy: 504, 341

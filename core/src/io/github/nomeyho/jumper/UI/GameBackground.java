@@ -16,10 +16,9 @@ public class GameBackground {
     private final static float PERIOD = 10;
     private final static float SATELITEWIDTH = 32;
     private final static float SATELITEHEIGHT = 70;
-    private final static float PLANETSIZE = Application.worldWidth / 2f;
-    private final static Location PLANETLOCATION =  new Location(Application.worldWidth / 4f, -50, -1);
-    private Location satelitePosition = new Location(PLANETLOCATION.getX()+ PLANETSIZE/2f - SATELITEWIDTH/2f,
-                                                       PLANETLOCATION.getY() - SATELITEHEIGHT / 2, -1);
+    private static float PLANETSIZE;
+    private static Location PLANETLOCATION;
+    private Location satelitePosition;
 
 
     public GameBackground () {
@@ -27,6 +26,16 @@ public class GameBackground {
         this.background = atlas.findRegion("background");
         this.planet = atlas.findRegion("planet");
         this.satelite = atlas.findRegion("satelite");
+        init();
+    }
+
+    public void init () {
+        PLANETSIZE = Application.worldWidth / 2f;
+        PLANETLOCATION = new Location(Application.worldWidth / 4f, -50, -1);
+        satelitePosition = new Location(
+                PLANETLOCATION.getX()+ PLANETSIZE/2f - SATELITEWIDTH/2f,
+                PLANETLOCATION.getY() - SATELITEHEIGHT / 2, -1
+        );
     }
 
     public void update (float delta) {
@@ -52,5 +61,9 @@ public class GameBackground {
 
         // Background
         batch.draw(this.background, 0, 0, w, h);
+    }
+
+    public void resize () {
+        init();
     }
 }

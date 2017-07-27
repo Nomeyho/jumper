@@ -43,6 +43,7 @@ public class GameScreen extends AbstractGameScreen {
 
         // GameManager.get().snowflakeManager.resize();
         GameManager.get().starManager.resize();
+        GameManager.get().background.resize();
     }
 
     @Override
