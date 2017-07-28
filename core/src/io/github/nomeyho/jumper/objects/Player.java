@@ -1,21 +1,16 @@
 package io.github.nomeyho.jumper.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
-import io.github.nomeyho.jumper.math.Location;
 import io.github.nomeyho.jumper.particles.ParticleEnum;
 import io.github.nomeyho.jumper.particles.ParticleManager;
 import io.github.nomeyho.jumper.utils.*;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-import sun.security.krb5.internal.APOptions;
 
 public class Player extends AbstractGameObject {
     // Const
@@ -31,6 +26,7 @@ public class Player extends AbstractGameObject {
     public PlayerEnum state = PlayerEnum.WAITING;
     private float startingPosition, endPosition;
     private Vector2 deltaPos = new Vector2();
+    private float angle =0;
     // Graphics
     private AnimationWrapper takeoffAnimation;
     private AnimationWrapper flyingAnimation;
@@ -58,7 +54,6 @@ public class Player extends AbstractGameObject {
 
         this.smokeEffect = ParticleManager.get().getEffect(ParticleEnum.SMOKE);
         this.fireEffect = ParticleManager.get().getEffect(ParticleEnum.FIRE);
-        this.fireEffect.start();
     }
 
 
@@ -85,6 +80,7 @@ public class Player extends AbstractGameObject {
                 if(this.takeoffAnimation.animation.isAnimationFinished(this.takeoffAnimation.stateTime)){
                     this.state = PlayerEnum.FLYING;
                     giveImpulse();
+                    this.fireEffect.start();
                 }
                 // Animation
                 this.takeoffAnimation.update(delta);
@@ -96,15 +92,21 @@ public class Player extends AbstractGameObject {
                     // Animation
                     this.flyingAnimation.update(delta);
                     this.fallAnimation.stateTime = 0;
+                    // Particle
+                    if(this.fireEffect.getEmitters().first().durationTimer > 0.8* this.fireEffect.getEmitters().first().duration)
+                        this.fireEffect.getEmitters().first().durationTimer = 0.2f * this.fireEffect.getEmitters().first().duration;
                 }
                 else {
                     this.fallAnimation.update(delta);
                     this.flyingAnimation.stateTime = 0;
+                    if(this.speed.y > -10)
+                        this.fireEffect.getEmitters().first().durationTimer = 0.9f * this.fireEffect.getEmitters().first().duration;
                 }
                 break;
         }
 
         setPosition(delta);
+        setAngle();
         hasHitGround();
         updateEffect(delta);
 
@@ -113,6 +115,7 @@ public class Player extends AbstractGameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
+
         boolean flip = (this.direction == DirectionEnum.LEFT);
         float x = this.location.getX();
         float y = this.location.getY();
@@ -124,10 +127,15 @@ public class Player extends AbstractGameObject {
                 this.takeoffAnimation.draw(batch, flip ? x + WIDTH : x, y, flip ? -WIDTH : WIDTH, HEIGHT);
                 break;
             case FLYING:
+                //Particle
+                this.fireEffect.draw(batch);
                 // Animation
-                    this.fireEffect.draw(batch);
                 TextureRegion frame = getFlyingframe();
-                batch.draw(frame, flip ? x + WIDTH : x, y, WIDTH /2, HEIGHT /2, flip ? -WIDTH : WIDTH, HEIGHT, 1, 1, getAngle());
+                if(flip && !frame.isFlipX())
+                    frame.flip(true, false);
+                else if (!flip && frame.isFlipX())
+                    frame.flip(true, false);
+                batch.draw(frame, x, y, WIDTH /2, HEIGHT /2, WIDTH, HEIGHT, 1, 1, this.angle);
                 break;
         }
 
@@ -140,10 +148,10 @@ public class Player extends AbstractGameObject {
     }
 
     public void giveImpulse(){
-        this.speed.y += 300;
+        this.speed.y += 1000;
     }
 
-    public float getAngle(){
+    public void setAngle(){
         if(this.touchedPos.x == this.location.getX() + WIDTH / 2f){}
         else if(this.touchedPos.x > this.location.getX() + WIDTH / 2f) {
             if(this.direction == DirectionEnum.LEFT) {
@@ -158,8 +166,8 @@ public class Player extends AbstractGameObject {
             }
         }
         deltaPos.set(this.touchedPos.x - this.location.getX() - WIDTH / 2,
-                    (this.speed.y * this.speed.y) / (2 * GRAVITY) + HEIGHT);
-        return (MathUtils.clamp(deltaPos.angle(), 25, 155)-90);
+                (this.speed.y * this.speed.y) / (2 * GRAVITY) + HEIGHT);
+        this.angle = (MathUtils.clamp(deltaPos.angle(), 25, 155)-90);
     }
 
     public TextureRegion getFlyingframe(){
@@ -237,6 +245,7 @@ public class Player extends AbstractGameObject {
             // TODO
             GameManager.get().state = GameState.ENDED;
             playParticle(this.smokeEffect);
+            this.fireEffect.reset();
         }
     }
 
@@ -244,12 +253,17 @@ public class Player extends AbstractGameObject {
         this.smokeEffect.update(delta);
         this.smokeEffect.setPosition(location.getX() + WIDTH/2, location.getY());
         this.fireEffect.update(delta);
-        boolean flip = (this.direction == DirectionEnum.LEFT);
-        if(flip)
-            this.fireEffect.setPosition(location.getX() + (4*WIDTH)/5f, location.getY() + HEIGHT / 3.5f);
+        float radius = WIDTH / 2.55f;
+        if(this.direction == DirectionEnum.LEFT)
+            this.fireEffect.setPosition(this.location.getX() + WIDTH/2 + radius*MathUtils.cosDeg(320 + this.angle),
+                    this.location.getY() + HEIGHT/2 + radius*MathUtils.sinDeg(320 + this.angle));
         else
-           this.fireEffect.setPosition(location.getX() + WIDTH/5f, location.getY()+ HEIGHT / 3.5f);
-        //System.out.println(getAngle());
+            this.fireEffect.setPosition(this.location.getX() + WIDTH/2 + radius*MathUtils.cosDeg(230 + this.angle),
+                    this.location.getY() + HEIGHT/2 + radius*MathUtils.sinDeg(230 + this.angle));
+        this.fireEffect.getEmitters().first().getRotation().setLow( this.angle, this.angle);
+        this.fireEffect.getEmitters().first().getRotation().setHigh( this.angle, this.angle);
+        this.fireEffect.getEmitters().first().getAngle().setLow(90 + this.angle,90 + this.angle);
+        this.fireEffect.getEmitters().first().getAngle().setHigh(45 + this.angle, 135 + this.angle);;
     }
 
     public void playParticle(ParticleEffect particleEffect){

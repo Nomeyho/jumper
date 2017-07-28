@@ -8,7 +8,6 @@ import io.github.nomeyho.jumper.objects.Player;
 import io.github.nomeyho.jumper.utils.Utils;
 
 import java.util.Iterator;
-import java.util.Random;
 
 public class UsualLevel extends AbstractLevel {
     private float currentBellHeight = Player.HEIGHT;
