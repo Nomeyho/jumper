@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundEnum;
 import io.github.nomeyho.jumper.sound.SoundManager;
 
 
@@ -73,6 +74,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 // Save new parameters and close window
                 save();
                 SettingsMenu.super.hide();
@@ -87,6 +89,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 SettingsMenu.super.hide();
             }
         });

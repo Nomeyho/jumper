@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.*;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundEnum;
+import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.AnimatedImage;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.Utils;
@@ -103,6 +105,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 // Fade out effect
                 stage.addAction(Actions.sequence(
                         Actions.fadeOut(FADE_OUT_DURATION),
@@ -132,6 +135,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 settingsMenu.show(stage);
             }
         });

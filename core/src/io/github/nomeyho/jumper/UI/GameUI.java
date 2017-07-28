@@ -2,23 +2,36 @@ package io.github.nomeyho.jumper.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.lang.ITranslatable;
+import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundEnum;
+import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.GameState;
+import io.github.nomeyho.jumper.utils.Utils;
 
-public class GameUI {
+import static io.github.nomeyho.jumper.utils.GameState.READY;
+
+public class GameUI implements ITranslatable {
     private static final int ICON_SIZE = 30;
     private Stage stage;
+    private Label start;
     private Label fps;
     private Image scoreIcon;
     private Label score;
@@ -27,13 +40,27 @@ public class GameUI {
     private ImageButton pauseIcon;
     private PauseMenu pauseMenu;
     private GameoverMenu gameoverMenu;
+    private I18NBundle bundle = LanguageManager.get().getBundle();
 
     public GameUI () {
+        LanguageManager.get().register(this);
+
         Skin skin = Application.get().assetManager.get(Application.SKIN);
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
 
         this.stage = new Stage(GameManager.get().viewport, GameManager.get().batch);
         this.stage.setDebugAll(Application.DEBUG);
+
+        this.start = new Label("", skin);
+        this.start.setAlignment(Align.center);
+        this.start.addAction(Actions.repeat(
+                50,
+                Actions.sequence(
+                        Actions.fadeOut( 1.5f),
+                        Actions.fadeIn(1.5f)
+                )
+        ));
+        this.stage.addActor(this.start);
 
         this.fps = new Label("", skin, "small");
         this.stage.addActor(this.fps);
@@ -61,6 +88,7 @@ public class GameUI {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 GameManager.get().pause();
                 pauseMenu.setVisible(true);
             }
@@ -85,6 +113,11 @@ public class GameUI {
         this.score.setText("123");
         this.lives.setText("8");
 
+        if(GameManager.get().state == READY)
+            this.start.setText(this.bundle.get("touch_to_start"));
+        else
+            this.start.setText("");
+
         if(GameManager.get().state == GameState.ENDED)
             this.gameoverMenu.show();
 
@@ -92,6 +125,7 @@ public class GameUI {
     }
 
     public void resize () {
+        this.start.setPosition(Application.worldWidth / 2, 0.7f * Application.worldHeight);
         this.fps.setPosition(20, Application.worldHeight - 40);
         this.scoreIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
         this.score.setPosition(60, Application.worldHeight - 80);
@@ -105,4 +139,7 @@ public class GameUI {
         this.pauseMenu.setWidth(Application.worldWidth);
         this.pauseMenu.setHeight(Application.worldHeight);
     }
+
+    @Override
+    public void updateLang() {}
 }

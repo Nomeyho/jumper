@@ -3,7 +3,8 @@ package io.github.nomeyho.jumper.sound;
 import com.badlogic.gdx.utils.Array;
 
 public enum SoundEnum {
-    TINK("sound/tink.mp3");
+    CLICK("sound/click.mp3"),
+    TINK("sound/tink.wav");
 
     private String fileName;
 

@@ -140,7 +140,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void giveImpulse(){
-        this.speed.y += 1000;
+        this.speed.y += 300;
     }
 
     public float getAngle(){
@@ -235,7 +235,7 @@ public class Player extends AbstractGameObject {
             this.speed.y = 0;
             this.state = PlayerEnum.WAITING;
             // TODO
-            GameManager.get().state = GameState.READY;
+            GameManager.get().state = GameState.ENDED;
             playParticle(this.smokeEffect);
         }
     }

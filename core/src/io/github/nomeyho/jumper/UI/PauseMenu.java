@@ -14,6 +14,8 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.sound.SoundEnum;
+import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.Utils;
 
 public class PauseMenu extends Dialog implements ITranslatable {
@@ -50,6 +52,7 @@ public class PauseMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 PauseMenu.super.setVisible(false);
                 GameManager.get().resume();
             }
@@ -64,6 +67,7 @@ public class PauseMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 GameManager.get().restart();
                 PauseMenu.super.setVisible(false);
             }
@@ -78,6 +82,7 @@ public class PauseMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                SoundManager.get().playSound(SoundEnum.CLICK);
                 PauseMenu.super.setVisible(false);
                 // Remove event listeners
                 Application.get().inputMultiplexer.clear();
