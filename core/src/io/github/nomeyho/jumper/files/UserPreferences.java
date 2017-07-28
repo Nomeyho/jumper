@@ -24,23 +24,21 @@ public class UserPreferences {
     }
 
     public void load () {
-        this.sound = this.preferences.getInteger("volSound", 50);
+        this.sound = this.preferences.getInteger("sound", 50);
         this.sound = MathUtils.clamp(this.sound, 0, 100);
 
-        this.music = this.preferences.getInteger("volMusic", 50);
+        this.music = this.preferences.getInteger("music", 50);
         this.music = MathUtils.clamp(this.music, 0, 100);
 
         String langStr = this.preferences.getString("lang", LanguageEnum.English.name());
         this.lang = LanguageEnum.valueOf(langStr);
         this.lang = LanguageEnum.Francais;
 
-        if(Application.DEBUG)
-            Gdx.app.log(Application.TAG, "Loaded preferences:\n" + this.toString());
+        Gdx.app.log(Application.TAG, "Loaded preferences:\n" + this.toString());
     }
 
     public void save () {
-        if(Application.DEBUG)
-            Gdx.app.log(Application.TAG, "Saved preferences:\n" + this.toString());
+        Gdx.app.log(Application.TAG, "Saved preferences:\n" + this.toString());
 
         this.preferences.putInteger("sound", this.sound);
         this.preferences.putInteger("music", this.music);
@@ -51,8 +49,8 @@ public class UserPreferences {
     @Override
     public String toString() {
         return ""
-        + "Sound: " + this.sound + "%\n"
-        + "Music: " + this.music + "%\n"
-        + "Lang: " + this.lang;
+        + "\tSound: " + this.sound + "%\n"
+        + "\tMusic: " + this.music + "%\n"
+        + "\tLang: " + this.lang;
     }
 }

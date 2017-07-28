@@ -2,20 +2,17 @@ package io.github.nomeyho.jumper;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
+import io.github.nomeyho.jumper.files.PlayerStats;
 import io.github.nomeyho.jumper.sound.SoundEnum;
-
-import java.awt.*;
 
 public class Application {
     private static Application INSTANCE = new Application();
@@ -87,6 +84,7 @@ public class Application {
 
         // Statistics
         PlayerStats.get().load();
+        PlayerStats.get().save();
     }
 
     private Application() {}
