@@ -39,12 +39,12 @@ public class Application {
     public static final String HITBOX_ATLAS = "hitbox/hitbox.json";
     public static final String LOCALES = "lang/locale";
     public static final String PREFERENCES =  "settings.prefs"; // ~/.prefs or %UserProfile%/.prefs
+    public static final String STATISTICS =  "stats.prefs";
     public static final String SKIN = "UI/custom.json";
     public static final String SKIN_ATLAS = "UI/custom.atlas";
     public static final String MUSIC = "sound/music.mp3";
     public AssetManager assetManager = new AssetManager();
     public ShapeRenderer shapeRenderer = new ShapeRenderer();
-    public PlayerStats stats = new PlayerStats();
     public InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
     public void loadUIAssets () {
@@ -86,7 +86,7 @@ public class Application {
             this.assetManager.load(sounds.get(i).getFileName(), Sound.class);
 
         // Statistics
-        this.stats.load();
+        PlayerStats.get().load();
     }
 
     private Application() {}

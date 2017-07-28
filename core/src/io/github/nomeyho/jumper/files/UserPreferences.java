@@ -1,4 +1,4 @@
-package io.github.nomeyho.jumper.UI;
+package io.github.nomeyho.jumper.files;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;

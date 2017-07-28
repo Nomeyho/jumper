@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import io.github.nomeyho.jumper.Application;
-import io.github.nomeyho.jumper.UI.UserPreferences;
+import io.github.nomeyho.jumper.files.UserPreferences;
 
 public class SoundManager {
     private static SoundManager INSTANCE = new SoundManager();

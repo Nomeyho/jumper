@@ -101,9 +101,9 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.updateLang();
 
         /* Bind values to UI elements */
-        this.sound.setValue(UserPreferences.get().sound);
-        this.music.setValue(UserPreferences.get().music);
-        this.langSelect.setSelected(UserPreferences.get().lang);
+        this.sound.setValue(io.github.nomeyho.jumper.files.UserPreferences.get().sound);
+        this.music.setValue(io.github.nomeyho.jumper.files.UserPreferences.get().music);
+        this.langSelect.setSelected(io.github.nomeyho.jumper.files.UserPreferences.get().lang);
     }
 
     @Override
@@ -118,15 +118,15 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     }
 
     private void save () {
-        UserPreferences.get().sound = (int)this.sound.getValue();
-        UserPreferences.get().music = (int)this.music.getValue();
-        UserPreferences.get().lang = this.langSelect.getSelected();
+        io.github.nomeyho.jumper.files.UserPreferences.get().sound = (int)this.sound.getValue();
+        io.github.nomeyho.jumper.files.UserPreferences.get().music = (int)this.music.getValue();
+        io.github.nomeyho.jumper.files.UserPreferences.get().lang = this.langSelect.getSelected();
 
         // Actually save it to the file
-        UserPreferences.get().save();
+        io.github.nomeyho.jumper.files.UserPreferences.get().save();
 
         // Perform UI changes
-        LanguageManager.get().setLang(UserPreferences.get().lang);
+        LanguageManager.get().setLang(io.github.nomeyho.jumper.files.UserPreferences.get().lang);
         SoundManager.get().updateVolume();
     }
 }

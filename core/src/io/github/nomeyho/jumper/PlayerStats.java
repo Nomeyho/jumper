@@ -1,17 +1,26 @@
 package io.github.nomeyho.jumper;
 
-public class PlayerStats {
-    public int remainingLives;
-    public int bestHeight;
-    public int bestScore;
-    public int currentHeight;
-    public int currentScore;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 
-    public PlayerStats () {
+public class PlayerStats {
+
+    private static PlayerStats INSTANCE = new PlayerStats();
+    private Preferences preferences;
+    public int remainingLives = 0;
+    public int bestScore = 0;
+    public int currentScore = 0;
+
+    private PlayerStats () {
+        this.preferences = Gdx.app.getPreferences(Application.STATISTICS);
+    }
+
+    public static PlayerStats get () {
+        return INSTANCE;
     }
 
     public void load () {
-
+        this.remainingLives = this.preferences.getInteger("lives", 0);
     }
 
     public void save () {
@@ -19,4 +28,12 @@ public class PlayerStats {
     }
 
     // TODO encrypt/decrypt
+
+    private void encrypt () {
+
+    }
+
+    public void decrypt () {
+
+    }
 }
