@@ -50,6 +50,7 @@ public class GameManager {
         this.inputController = new InputController();
         this.starManager = new StarManager();
         this.background = new GameBackground();
+        this.state = GameState.READY;
     }
 
     public void update (float delta) {
@@ -68,6 +69,7 @@ public class GameManager {
         this.viewport.setCamera(this.camera);
         this.batch.setProjectionMatrix(this.camera.projection);
         this.batch.setTransformMatrix(this.camera.view);
+        this.viewport.apply(true);
 
         this.starManager.draw(batch);
         this.background.draw(batch);
@@ -90,6 +92,7 @@ public class GameManager {
         this.viewport.setCamera(this.guiCamera);
         this.batch.setProjectionMatrix(this.guiCamera.projection);
         this.batch.setTransformMatrix(this.guiCamera.view);
+        this.viewport.apply(true);
 
         this.gameUI.draw();
     }
@@ -105,15 +108,18 @@ public class GameManager {
         }
     }
 
+    private GameState previousState = null;
     public void pause () {
+        this.previousState = this.state;
         this.state = GameState.PAUSED;
     }
 
     public void resume () {
-        this.state = GameState.STARTED;
+        this.state = this.previousState;
     }
 
     public void restart () {
+        this.previousState = null;
         this.state = GameState.READY;
         this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
         this.level = new UsualLevel();

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -31,8 +32,8 @@ public class GameUI {
         Skin skin = Application.get().assetManager.get(Application.SKIN);
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
 
-        // TODO constructor args
         this.stage = new Stage(GameManager.get().viewport, GameManager.get().batch);
+        this.stage.setDebugAll(Application.DEBUG);
 
         this.fps = new Label("", skin, "small");
         this.stage.addActor(this.fps);
@@ -51,20 +52,21 @@ public class GameUI {
         this.lives = new Label("", skin, "small");
         this.stage.addActor(this.lives);
 
+        this.pauseMenu = new PauseMenu("", skin);
+        // TODO this.stage.addActor(this.pauseMenu);
+
         this.pauseIcon = new ImageButton(new TextureRegionDrawable(atlas.findRegion("pause")));
         this.pauseIcon.setSize(2 * ICON_SIZE, 2 * ICON_SIZE);
         this.pauseIcon.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                GameManager.get().state = GameState.PAUSED;
-                pauseMenu.setVisible(true);
+                GameManager.get().pause();
+                // TODO pauseMenu.setVisible(true);
+                pauseMenu.show(stage);
             }
         });
         this.stage.addActor(this.pauseIcon);
-
-        this.pauseMenu = new PauseMenu("", skin);
-        this.stage.addActor(this.pauseMenu);
 
         Application.get().inputMultiplexer.addProcessor(this.stage);
 

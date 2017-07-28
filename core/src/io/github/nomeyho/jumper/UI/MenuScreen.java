@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -133,13 +132,12 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                settingsMenu.setVisible(true);
+                settingsMenu.show(stage);
             }
         });
         this.settingsBtn.getLabelCell().padBottom(7).padTop(7);
         this.layout.add(this.settingsBtn).padBottom(100);
         this.settingsMenu = new SettingsMenu("", skin);
-        this.stage.addActor(this.settingsMenu);
 
         // Lang
         updateLang();

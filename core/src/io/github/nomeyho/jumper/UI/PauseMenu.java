@@ -1,9 +1,11 @@
 package io.github.nomeyho.jumper.UI;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.Align;
@@ -34,7 +36,10 @@ public class PauseMenu extends Dialog implements ITranslatable {
         this.setResizable(false);
         this.setMovable(false);
         this.setModal(true);
-        this.setVisible(false);
+        this.setFillParent(true);
+        // TODO
+        // this.setVisible(false);
+
         this.getButtonTable().padBottom(20);
         this.getContentTable().defaults().padBottom(10); // space between rows
         this.getContentTable().setFillParent(true);
@@ -49,8 +54,9 @@ public class PauseMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                // TODO PauseMenu.super.setVisible(false);
                 GameManager.get().resume();
-                setVisible(false);
+                PauseMenu.super.hide();
             }
         });
         this.getContentTable().add(this.continueBtn).padBottom(100);
@@ -64,7 +70,8 @@ public class PauseMenu extends Dialog implements ITranslatable {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 GameManager.get().restart();
-                setVisible(false);
+                // TODO PauseMenu.super.setVisible(false);
+                PauseMenu.super.hide();
             }
         });
         this.getContentTable().add(this.restartBtn).padBottom(100);
@@ -77,8 +84,9 @@ public class PauseMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                setVisible(false);
+                // TODO PauseMenu.super.setVisible(false);
                 // Remove event listeners
+                PauseMenu.super.setVisible(false);
                 Application.get().inputMultiplexer.clear();
                 // New screen
                 GameManager.get().game.setScreen(new MenuScreen(GameManager.get().game));

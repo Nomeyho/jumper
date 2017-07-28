@@ -37,9 +37,9 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.setResizable(false);
         this.setMovable(false);
         this.setModal(true);
-        this.setVisible(false);
+        this.setFillParent(true);
         this.getButtonTable().padBottom(20);
-        this.getContentTable().defaults().padBottom(10); // space between rows
+        this.getContentTable().defaults().padBottom(50); // space between rows
         this.getContentTable().setFillParent(true);
 
         // Title
@@ -75,7 +75,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
                 super.tap(event, x, y, count, button);
                 // Save new parameters and close window
                 save();
-                setVisible(false);
+                SettingsMenu.super.hide();
             }
         });
         this.saveBtn.getLabelCell().padLeft(12f).padRight(12f);
@@ -87,7 +87,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                setVisible(false);
+                SettingsMenu.super.hide();
             }
         });
         this.cancelBtn.getLabelCell().padLeft(12f).padRight(12f);
