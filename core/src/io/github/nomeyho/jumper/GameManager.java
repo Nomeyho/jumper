@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.nomeyho.jumper.UI.GameUI;
 import io.github.nomeyho.jumper.UI.GameBackground;
+import io.github.nomeyho.jumper.files.PlayerStats;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
 import io.github.nomeyho.jumper.objects.*;
@@ -29,6 +30,9 @@ public class GameManager {
     public GameBackground background;
     public SpriteBatch batch;
 
+    private GameState previousState = null;
+    private boolean savedStats;
+
     private GameManager() {}
 
     public static GameManager get() {
@@ -51,6 +55,7 @@ public class GameManager {
         this.starManager = new StarManager();
         this.background = new GameBackground();
         this.state = GameState.READY;
+        this.savedStats = false;
     }
 
     public void update (float delta) {
@@ -61,6 +66,16 @@ public class GameManager {
         this.level.update(delta, this.player.location.getX(), this.player.location.getY());
         this.starManager.update(delta);
         this.background.update(delta);
+
+        if(this.state == GameState.ENDED && !this.savedStats) {
+            // Save stats (but only once)
+            PlayerStats stats = PlayerStats.get();
+            stats.bestScore = Math.max(stats.bestScore, stats.currentScore);
+            stats.decreaseLifes();
+            stats.save();
+            this.savedStats = true;
+        }
+
         this.gameUI.update(delta);
         checkForCollision();
     }
@@ -104,11 +119,11 @@ public class GameManager {
             if(this.player.hitbox.overlap(go.hitbox)) {
                 SoundManager.get().playSound(SoundEnum.TINK);
                 //  this.player.speed.y = 2500;
+                PlayerStats.get().currentScore += 1; // TODO generalize with a valuator
             }
         }
     }
 
-    private GameState previousState = null;
     public void pause () {
         this.previousState = this.state;
         this.state = GameState.PAUSED;
@@ -120,6 +135,7 @@ public class GameManager {
 
     public void restart () {
         this.previousState = null;
+        this.savedStats = false;
         this.state = GameState.READY;
         this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
         this.level = new UsualLevel();

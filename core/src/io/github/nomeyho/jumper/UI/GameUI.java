@@ -1,11 +1,7 @@
 package io.github.nomeyho.jumper.UI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -17,16 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.StringBuilder;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.files.PlayerStats;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.objects.Player;
 import io.github.nomeyho.jumper.sound.SoundEnum;
 import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.GameState;
-import io.github.nomeyho.jumper.utils.Utils;
-
-import static io.github.nomeyho.jumper.utils.GameState.READY;
 
 public class GameUI implements ITranslatable {
     private static final int ICON_SIZE = 30;
@@ -105,19 +101,20 @@ public class GameUI implements ITranslatable {
 
     public void update (float delta) {
         this.stage.act(delta);
+
+        // Update texts
+        this.fps.setText("Fps: " + Gdx.graphics.getFramesPerSecond());
+        this.score.setText(PlayerStats.get().currentScore + "");
+        this.lives.setText(PlayerStats.get().remainingLifes + "");
+
+        if(GameManager.get().state == GameState.READY)
+            this.start.setText(this.bundle.get("touch_to_start"));
+        else
+            this.start.setText(null);
     }
 
     public void draw () {
-        // Update texts
-        this.fps.setText("Fps: " + Gdx.graphics.getFramesPerSecond());
-        this.score.setText("123");
-        this.lives.setText("8");
-
-        if(GameManager.get().state == READY)
-            this.start.setText(this.bundle.get("touch_to_start"));
-        else
-            this.start.setText("");
-
+        // Show game over
         if(GameManager.get().state == GameState.ENDED)
             this.gameoverMenu.show();
 

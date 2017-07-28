@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.files.PlayerStats;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
 import io.github.nomeyho.jumper.sound.SoundEnum;
@@ -111,11 +112,11 @@ public class GameoverMenu extends Dialog implements ITranslatable {
     }
 
     public void show () {
-
-        // TODO logic (replay if lifes, high score)
         this.scoreTitle.setText("Score");
-        this.score.setText("3");
-        this.bestScore.setText(this.bestScorePrefix + " 123");
+        this.score.setText(PlayerStats.get().currentScore + "");
+        this.bestScore.setText(this.bestScorePrefix + " " + PlayerStats.get().bestScore);
+
+        // TODO only show replay if lives>0, watch add otherwise
 
         this.setVisible(true);
     }
