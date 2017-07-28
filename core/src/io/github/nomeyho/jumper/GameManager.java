@@ -137,6 +137,10 @@ public class GameManager {
         this.previousState = null;
         this.savedStats = false;
         this.state = GameState.READY;
+
+        PlayerStats.get().decreaseLifes();
+        PlayerStats.get().save();
+
         this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
         this.level = new UsualLevel();
     }

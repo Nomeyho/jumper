@@ -69,6 +69,10 @@ public class GameoverMenu extends Dialog implements ITranslatable {
         this.restartBtn.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
+                // Prevent playing without lifes
+                if(PlayerStats.get().remainingLifes <= 0)
+                    return;
+
                 super.tap(event, x, y, count, button);
                 SoundManager.get().playSound(SoundEnum.CLICK);
                 GameManager.get().restart();
@@ -111,12 +115,16 @@ public class GameoverMenu extends Dialog implements ITranslatable {
         Utils.setButtonWidth(this.getContentTable());
     }
 
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        this.restartBtn.setDisabled(PlayerStats.get().remainingLifes <= 0);
+    }
+
     public void show () {
         this.scoreTitle.setText("Score");
         this.score.setText(PlayerStats.get().currentScore + "");
         this.bestScore.setText(this.bestScorePrefix + " " + PlayerStats.get().bestScore);
-
-        // TODO only show replay if lives>0, watch add otherwise
 
         this.setVisible(true);
     }

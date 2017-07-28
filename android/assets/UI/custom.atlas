@@ -71,6 +71,14 @@ button
   orig: 257, 80
   offset: 0, 0
   index: -1
+button_disabled
+  rotate: false
+  xy: 515, 714
+  size: 257, 80
+  split: 10, 10, 10, 10
+  orig: 257, 80
+  offset: 0, 0
+  index: -1
 button_hover
   rotate: false
   xy: 515, 796
@@ -81,7 +89,7 @@ button_hover
   index: -1
 dropdown
   rotate: false
-  xy: 515, 724
+  xy: 515, 642
   size: 225, 70
   split: 22, 65, 12, 50
   pad: 22, 64, 12, 12
@@ -90,7 +98,7 @@ dropdown
   index: -1
 h_scroll_bg
   rotate: false
-  xy: 515, 669
+  xy: 515, 587
   size: 112, 6
   orig: 112, 6
   offset: 0, 0
@@ -128,7 +136,7 @@ selection
   index: -1
 progress_bg
   rotate: false
-  xy: 515, 677
+  xy: 515, 595
   size: 168, 45
   split: 5, 5, 5, 5
   orig: 168, 45

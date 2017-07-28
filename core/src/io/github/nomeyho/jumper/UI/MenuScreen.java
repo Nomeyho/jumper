@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import io.github.nomeyho.jumper.*;
+import io.github.nomeyho.jumper.files.PlayerStats;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
+import io.github.nomeyho.jumper.objects.Player;
 import io.github.nomeyho.jumper.sound.SoundEnum;
 import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.AnimatedImage;
@@ -24,6 +27,7 @@ import io.github.nomeyho.jumper.utils.Utils;
 
 public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     public static final float SIZE = Application.SIZE;
+    private static final int ICON_SIZE = 30;
     private static float FADE_IN_DURATION = 0.05f;
     private static float FADE_OUT_DURATION = 0.15f;
     // View
@@ -40,6 +44,15 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private AnimatedImage planetImage;
     private MenuBackground background;
 
+    private Image scoreIcon;
+    private Label score;
+    private Image livesIcon;
+    private Label lives;
+    private Label nextLives;
+    private Label countdown;
+
+    private I18NBundle bundle = LanguageManager.get().getBundle();
+
     public MenuScreen(Game game) {
         super(game);
         LanguageManager.get().register(this);
@@ -47,19 +60,25 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
     @Override
     public void resize(int width, int height) {
+        // Viewport
         this.viewport.update(width, height);
         Application.worldHeight = this.viewport.getWorldHeight();
         Application.worldWidth = this.viewport.getWorldWidth();
 
+        // Camera
         this.camera.position.set(this.camera.viewportWidth / 2,this.camera.viewportHeight /2,0);
         this.camera.update();
 
+        // Shapes
         Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
         Application.get().shapeRenderer.updateMatrices();
 
         this.settingsMenu.setSize(this.viewport.getWorldWidth(), this.viewport.getWorldHeight());
-
         this.background.init();
+        this.scoreIcon.setPosition(20, Application.worldHeight - 40 - ICON_SIZE/2);
+        this.score.setPosition(60, Application.worldHeight - 40);
+        this.livesIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
+        this.lives.setPosition(60, Application.worldHeight - 80);
     }
 
     @Override
@@ -86,17 +105,25 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.stage.getRoot().addAction(Actions.fadeIn(FADE_IN_DURATION));
 
         Skin skin = Application.get().assetManager.get(Application.SKIN);
+        TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
 
         // Logo
         this.logo = new Label(Application.TAG, skin, "large");
-        this.layout.add(this.logo).padBottom(130);
+        this.layout.add(this.logo).padBottom(80);
         this.layout.row();
 
         // Planet
         AnimationWrapper planetAnimation = new AnimationWrapper(0.08f, "planet", Application.PLANET_ANIM_ATLAS);
         this.planetImage = new AnimatedImage(planetAnimation);
         this.planetImage.setScaling(Scaling.fit);
-        this.layout.add(this.planetImage).padBottom(150);
+        this.layout.add(this.planetImage).padBottom(80);
+        this.layout.row();
+
+        this.nextLives = new Label("", skin, "small");
+        this.layout.add(this.nextLives);
+        this.layout.row();
+        this.countdown = new Label("", skin);
+        this.layout.add(this.countdown).padBottom(80);
         this.layout.row();
 
         // Play
@@ -104,6 +131,10 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.playBtn.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
+                // Prevent playing without lifes
+                if(PlayerStats.get().remainingLifes <= 0)
+                    return;
+
                 super.tap(event, x, y, count, button);
                 SoundManager.get().playSound(SoundEnum.CLICK);
                 // Fade out effect
@@ -143,6 +174,21 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.layout.add(this.settingsBtn).padBottom(100);
         this.settingsMenu = new SettingsMenu("", skin);
 
+        // Life & score
+        this.scoreIcon = new Image(atlas.findRegion("score"));
+        this.scoreIcon.setSize(ICON_SIZE, ICON_SIZE);
+        this.stage.addActor(this.scoreIcon);
+
+        this.score = new Label("", skin, "small");
+        this.stage.addActor(this.score);
+
+        this.livesIcon = new Image(atlas.findRegion("heart"));
+        this.livesIcon.setSize(ICON_SIZE, ICON_SIZE);
+        this.stage.addActor(this.livesIcon);
+
+        this.lives = new Label("", skin, "small");
+        this.stage.addActor(this.lives);
+
         // Lang
         updateLang();
         LanguageManager.get().register(this);
@@ -171,6 +217,12 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     }
 
     private void update(float delta) {
+        this.score.setText(PlayerStats.get().currentScore + "");
+        this.lives.setText(PlayerStats.get().remainingLifes + "");
+        this.countdown.setText(PlayerStats.get().getCountdown(this.bundle));
+
+        this.playBtn.setDisabled(PlayerStats.get().remainingLifes <= 0);
+
         this.stage.act(delta);
     }
 
@@ -199,10 +251,10 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     }
 
     public void updateLang() {
-        I18NBundle bundle = LanguageManager.get().getBundle();
-        this.playBtn.setText(bundle.get("play"));
-        this.buyBtn.setText(bundle.get("buy"));
-        this.settingsBtn.setText(bundle.get("settings"));
+        this.playBtn.setText(this.bundle.get("play"));
+        this.buyBtn.setText(this.bundle.get("buy"));
+        this.settingsBtn.setText(this.bundle.get("settings"));
+        this.nextLives.setText(this.bundle.get("daily_lives"));
 
         // Set button width depending on the contained text
         Utils.setButtonWidth(this.layout);

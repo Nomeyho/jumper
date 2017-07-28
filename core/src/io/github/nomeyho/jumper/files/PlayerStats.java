@@ -4,16 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Base64Coder;
+import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.TimeUtils;
 import io.github.nomeyho.jumper.Application;
 
-public class PlayerStats {
+import java.util.Date;
 
+public class PlayerStats {
     private static PlayerStats INSTANCE = new PlayerStats();
-    private static final int INITIAL_LIVES = 10;
+    private static final int INITIAL_LIFES = 50;
+    private static final int DAILY_LIFES = 25;
+    private static final int TIME_LIFES = 1 / 60; // 50 lives + 25 every 12h
     private Preferences preferences;
     private String hash;
     public int remainingLifes = 0;
     public int bestScore = 0;
+    public Date last = null;
     public int currentScore = 0; // non persistent
 
     private PlayerStats () {
@@ -25,18 +31,21 @@ public class PlayerStats {
     }
 
     public void load () {
-        this.remainingLifes = this.preferences.getInteger("lifes", INITIAL_LIVES);
+        this.remainingLifes = this.preferences.getInteger("lives", INITIAL_LIFES);
         this.remainingLifes = MathUtils.clamp(this.remainingLifes, 0, Integer.MAX_VALUE);
 
         this.bestScore = this.preferences.getInteger("best", 0);
         this.bestScore = MathUtils.clamp(this.bestScore, 0, Integer.MAX_VALUE);
+
+        long tmp = this.preferences.getLong("last", TimeUtils.millis());
+        this.last = new Date(tmp);
 
         this.hash = this.preferences.getString("hash", "");
 
         // If the file was modified, reset it
         if(!this.checkHash()) {
             Gdx.app.log(Application.TAG, "Invalid hash, reset");
-            this.remainingLifes = INITIAL_LIVES;
+            this.remainingLifes = INITIAL_LIFES;
             this.bestScore = 0;
             this.save();
         }
@@ -49,6 +58,7 @@ public class PlayerStats {
 
         this.preferences.putInteger("lives", this.remainingLifes);
         this.preferences.putInteger("best", this.bestScore);
+        this.preferences.putLong("last", this.last.getTime());
         // Compute hash before storing
         this.preferences.putString("hash", hash());
         this.preferences.flush();
@@ -56,7 +66,7 @@ public class PlayerStats {
 
     private String hash () {
         int hash = 7;
-        String clearText = this.remainingLifes + "-" + this.bestScore;
+        String clearText = this.remainingLifes + "-" + this.bestScore + "-" + this.last;
 
         for(int i=0, end=clearText.length(); i<end; ++i)
             hash = hash * 31 + clearText.charAt(i);
@@ -76,6 +86,7 @@ public class PlayerStats {
         return ""
         + "\tlives: " + this.remainingLifes
         + "\n\tbest score: " + this.bestScore
+        + "\n\tlast: " + this.last
         + "\n\thash: " + this.hash;
     }
 
@@ -86,5 +97,28 @@ public class PlayerStats {
     public void increaseLifes (int nb) {
         nb = nb < 0 ? 0 : nb;
         this.remainingLifes += nb;
+    }
+
+    private void getDailyLifes () {
+            this.last = new Date();
+            this.remainingLifes += DAILY_LIFES;
+            save();
+    }
+
+    public String getCountdown(I18NBundle bundle) {
+        long time = TimeUtils.timeSinceMillis(this.last.getTime()) - TIME_LIFES*60*60*1000;
+
+        if(time > 0) {
+            getDailyLifes();
+            return null;
+        } else {
+            time = -time;
+            int minutes = (int) ((time / (1000*60)) % 60);
+            int hours   = (int) ((time / (1000*60*60)) % 24);
+            if(hours > 0)
+                return hours + " " + bundle.get("hours") + " " + minutes + bundle.get("minutes");
+            else
+                return minutes + bundle.get("minutes");
+        }
     }
 }

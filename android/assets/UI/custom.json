@@ -17,6 +17,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.15686275
 		a: 1
 	}
+	disabled: {
+		r: 0.73333335
+		g: 0.73333335
+		b: 0.73333335
+		a: 1
+	}
 	white: {
 		r: 1
 		g: 1
@@ -28,12 +34,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
 		up: button
 		down: button_hover
+		disabled: button_disabled
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
 		up: button
 		down: button_hover
+		disabled: button_disabled
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
@@ -102,8 +110,10 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: normal
 		fontColor: white
 		downFontColor: blue
+		disabledFontColor: disabled
 		up: button
 		down: button_hover
+		disabled: button_disabled
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {

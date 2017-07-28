@@ -13,13 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.badlogic.gdx.utils.StringBuilder;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.files.PlayerStats;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
-import io.github.nomeyho.jumper.objects.Player;
 import io.github.nomeyho.jumper.sound.SoundEnum;
 import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.GameState;
@@ -103,7 +101,8 @@ public class GameUI implements ITranslatable {
         this.stage.act(delta);
 
         // Update texts
-        this.fps.setText("Fps: " + Gdx.graphics.getFramesPerSecond());
+        if(Application.DEBUG)
+            this.fps.setText("Fps: " + Gdx.graphics.getFramesPerSecond());
         this.score.setText(PlayerStats.get().currentScore + "");
         this.lives.setText(PlayerStats.get().remainingLifes + "");
 
@@ -123,11 +122,11 @@ public class GameUI implements ITranslatable {
 
     public void resize () {
         this.start.setPosition(Application.worldWidth / 2, 0.7f * Application.worldHeight);
-        this.fps.setPosition(20, Application.worldHeight - 40);
-        this.scoreIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
-        this.score.setPosition(60, Application.worldHeight - 80);
-        this.livesIcon.setPosition(20, Application.worldHeight - 120 - ICON_SIZE/2);
-        this.lives.setPosition(60, Application.worldHeight - 120);
+        this.scoreIcon.setPosition(20, Application.worldHeight - 40 - ICON_SIZE/2);
+        this.score.setPosition(60, Application.worldHeight - 40);
+        this.livesIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
+        this.lives.setPosition(60, Application.worldHeight - 80);
+        this.fps.setPosition(20, Application.worldHeight - 120);
         this.pauseIcon.setPosition(
                 Application.worldWidth - 50 - ICON_SIZE,
                 Application.worldHeight - 50 - ICON_SIZE
