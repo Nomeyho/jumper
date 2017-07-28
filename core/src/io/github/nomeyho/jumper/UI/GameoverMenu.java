@@ -1,12 +1,12 @@
 package io.github.nomeyho.jumper.UI;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -16,12 +16,16 @@ import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageManager;
 import io.github.nomeyho.jumper.utils.Utils;
 
-public class PauseMenu extends Dialog implements ITranslatable {
-    private TextButton continueBtn;
+public class GameoverMenu extends Dialog implements ITranslatable {
+
+    private Label scoreTitle;
+    private Label score;
+    private Label bestScore;
+    private String bestScorePrefix = "";
     private TextButton restartBtn;
     private TextButton mainBtn;
 
-    public PauseMenu(String title, Skin skin) {
+    public GameoverMenu(String title, Skin skin) {
         super(title, skin, "transparent");
         init(skin);
     }
@@ -43,18 +47,16 @@ public class PauseMenu extends Dialog implements ITranslatable {
         // Title
         this.getTitleLabel().setAlignment(Align.center);
 
-        // Continue
-        this.continueBtn = new TextButton("", skin);
-        this.continueBtn.getLabelCell().padBottom(7).padTop(7);
-        this.continueBtn.addListener(new ActorGestureListener() {
-            @Override
-            public void tap(InputEvent event, float x, float y, int count, int button) {
-                super.tap(event, x, y, count, button);
-                PauseMenu.super.setVisible(false);
-                GameManager.get().resume();
-            }
-        });
-        this.getContentTable().add(this.continueBtn).padBottom(100);
+        this.scoreTitle = new Label("", skin);
+        this.getContentTable().add(this.scoreTitle);
+        this.getContentTable().row();
+
+        this.score = new Label("", skin, "large");
+        this.getContentTable().add(this.score).padBottom(30);
+        this.getContentTable().row();
+
+        this.bestScore = new Label("", skin, "small");
+        this.getContentTable().add(this.bestScore).padBottom(200);
         this.getContentTable().row();
 
         // Restart
@@ -65,7 +67,7 @@ public class PauseMenu extends Dialog implements ITranslatable {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 GameManager.get().restart();
-                PauseMenu.super.setVisible(false);
+                hide();
             }
         });
         this.getContentTable().add(this.restartBtn).padBottom(100);
@@ -78,7 +80,7 @@ public class PauseMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                PauseMenu.super.setVisible(false);
+                hide();
                 // Remove event listeners
                 Application.get().inputMultiplexer.clear();
                 // New screen
@@ -95,10 +97,25 @@ public class PauseMenu extends Dialog implements ITranslatable {
     @Override
     public void updateLang() {
         I18NBundle bundle = LanguageManager.get().getBundle();
-        this.continueBtn.setText(bundle.get("continue"));
-        this.restartBtn.setText(bundle.get("restart"));
+        this.restartBtn.setText(bundle.get("retry"));
         this.mainBtn.setText(bundle.get("menu"));
+        this.scoreTitle.setText(bundle.get("score"));
+        this.bestScorePrefix = bundle.get("best_score");
 
         Utils.setButtonWidth(this.getContentTable());
+    }
+
+    public void show () {
+
+        // TODO logic (replay if lifes, high score)
+        this.scoreTitle.setText("Score");
+        this.score.setText("3");
+        this.bestScore.setText(this.bestScorePrefix + " 123");
+
+        this.setVisible(true);
+    }
+
+    public void hide () {
+        setVisible(false);
     }
 }
