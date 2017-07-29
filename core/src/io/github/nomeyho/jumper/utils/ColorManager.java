@@ -42,8 +42,7 @@ public class ColorManager {
 
     public Color getColor(float y){
         myCatmull.valueAt(out, (y/70000f)%1);
-      //  return new Color(out.x,out.y,out.z,1);
-        return new Color(192/255f,67/255f,32/255f,1);
+        return new Color(out.x,out.y,out.z,1);
     }
 
 }
