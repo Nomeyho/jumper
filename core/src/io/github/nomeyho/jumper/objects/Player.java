@@ -39,7 +39,6 @@ public class Player extends AbstractGameObject {
 
     public Player(float x, float y) {
 
-
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("player");
 
@@ -51,6 +50,8 @@ public class Player extends AbstractGameObject {
 
         this.smokeEffect = ParticleManager.get().getEffect(ParticleEnum.SMOKE);
         this.fireEffect = ParticleManager.get().getEffect(ParticleEnum.FIRE);
+
+        init(x, y);
     }
 
     @Override
@@ -157,7 +158,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void giveImpulse(){
-        this.speed.y += 1000;
+        this.speed.y += 3000;
     }
 
     public void setAngle(){

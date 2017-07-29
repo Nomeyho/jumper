@@ -51,7 +51,7 @@ public class Portal extends AbstractGameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.setColor(1,0,0,1);
+        batch.setColor(color);
        batch.draw(this.frontTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
         batch.setColor(1,1,1,1);
       //  this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
@@ -59,7 +59,7 @@ public class Portal extends AbstractGameObject {
 
     @Override
     public void drawBackground(SpriteBatch batch) {
-        batch.setColor(1,0,0,1);
+        batch.setColor(color);
         batch.draw(this.backTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
         batch.setColor(1,1,1,1);
         //  this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);

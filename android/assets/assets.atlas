@@ -6,134 +6,147 @@ filter: MipMapLinearNearest,Linear
 repeat: none
 background
   rotate: false
-  xy: 2, 511
+  xy: 2, 519
   size: 988, 494
   orig: 988, 494
   offset: 0, 0
   index: -1
-bell
-  rotate: false
-  xy: 504, 146
-  size: 200, 161
-  orig: 200, 161
-  offset: 0, 0
-  index: 2
-bell
-  rotate: false
-  xy: 706, 351
-  size: 200, 158
-  orig: 200, 158
-  offset: 0, 0
-  index: 1
-bell
-  rotate: false
-  xy: 706, 200
-  size: 200, 149
-  orig: 200, 149
-  offset: 0, 0
-  index: 3
-bell_explosion
-  rotate: false
-  xy: 706, 200
-  size: 200, 149
-  orig: 200, 149
-  offset: 0, 0
-  index: 2
-bell_explosion
-  rotate: false
-  xy: 504, 12
-  size: 167, 132
-  orig: 167, 132
-  offset: 0, 0
-  index: 1
 fire
   rotate: false
-  xy: 861, 6
+  xy: 900, 114
   size: 63, 93
   orig: 63, 93
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 956, 149
+  xy: 965, 157
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 956, 97
+  xy: 965, 105
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 planet
   rotate: false
-  xy: 2, 9
+  xy: 504, 123
+  size: 394, 394
+  orig: 394, 394
+  offset: 0, 0
+  index: -1
+planet2
+  rotate: false
+  xy: 2, 17
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
   index: -1
 portal_back
   rotate: false
-  xy: 706, 101
+  xy: 504, 24
   size: 186, 97
   orig: 186, 97
   offset: 0, 0
   index: -1
 portal_front
   rotate: false
-  xy: 673, 2
+  xy: 692, 24
   size: 186, 97
   orig: 186, 97
   offset: 0, 0
   index: -1
 satelite
   rotate: false
-  xy: 908, 309
+  xy: 900, 317
   size: 87, 200
   orig: 87, 200
   offset: 0, 0
   index: -1
 score
   rotate: false
-  xy: 926, 47
+  xy: 880, 2
   size: 50, 48
   orig: 50, 48
   offset: 0, 0
   index: -1
 shooting_star
   rotate: false
-  xy: 992, 1000
+  xy: 880, 116
   size: 1, 5
   orig: 1, 5
   offset: 0, 0
   index: -1
-smoke
-  rotate: false
-  xy: 504, 309
-  size: 200, 200
-  orig: 200, 200
-  offset: 0, 0
-  index: -1
 star
   rotate: false
-  xy: 908, 201
+  xy: 900, 209
   size: 100, 106
   orig: 100, 106
   offset: 0, 0
   index: 3
 star
   rotate: false
-  xy: 894, 138
+  xy: 880, 52
   size: 60, 60
   orig: 60, 60
   offset: 0, 0
   index: 1
 star
   rotate: false
-  xy: 894, 103
+  xy: 989, 484
   size: 33, 33
   orig: 33, 33
   offset: 0, 0
   index: 2
+
+assets2.png
+size: 1024,256
+format: RGBA8888
+filter: MipMapLinearNearest,Linear
+repeat: none
+bell
+  rotate: false
+  xy: 204, 41
+  size: 200, 161
+  orig: 200, 161
+  offset: 0, 0
+  index: 2
+bell
+  rotate: false
+  xy: 406, 44
+  size: 200, 158
+  orig: 200, 158
+  offset: 0, 0
+  index: 1
+bell
+  rotate: false
+  xy: 608, 53
+  size: 200, 149
+  orig: 200, 149
+  offset: 0, 0
+  index: 3
+bell_explosion
+  rotate: false
+  xy: 608, 53
+  size: 200, 149
+  orig: 200, 149
+  offset: 0, 0
+  index: 2
+bell_explosion
+  rotate: false
+  xy: 810, 70
+  size: 167, 132
+  orig: 167, 132
+  offset: 0, 0
+  index: 1
+smoke
+  rotate: false
+  xy: 2, 2
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1

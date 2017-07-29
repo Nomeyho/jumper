@@ -12,6 +12,7 @@ import io.github.nomeyho.jumper.levels.UsualLevel;
 import io.github.nomeyho.jumper.objects.*;
 import io.github.nomeyho.jumper.sound.SoundEnum;
 import io.github.nomeyho.jumper.sound.SoundManager;
+import io.github.nomeyho.jumper.utils.ColorManager;
 import io.github.nomeyho.jumper.utils.GameState;
 
 public class GameManager {
@@ -56,6 +57,7 @@ public class GameManager {
         this.background = new GameBackground();
         this.state = GameState.READY;
         this.savedStats = false;
+        ColorManager.get().shuffle();
     }
 
     public void update (float delta) {
@@ -134,7 +136,9 @@ public class GameManager {
         PlayerStats.get().decreaseLifes();
         PlayerStats.get().save();
 
+        ColorManager.get().shuffle();
         this.player.init(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
+        // TODO
         this.level = new UsualLevel();
     }
 }

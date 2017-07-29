@@ -11,7 +11,7 @@ import io.github.nomeyho.jumper.utils.Utils;
 import java.util.Iterator;
 
 public class UsualLevel extends AbstractLevel {
-    private float currentBellHeight = Player.HEIGHT;
+    private float currentBellHeight = MIN_HEIGHT;
 
 
     public UsualLevel () {

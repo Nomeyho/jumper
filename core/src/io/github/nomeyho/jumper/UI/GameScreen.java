@@ -96,7 +96,7 @@ public class GameScreen extends AbstractGameScreen {
     }
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(27 / 250f, 33 / 255f, 40 / 255f, 0);
+        Gdx.gl.glClearColor(27 / 255f, 33 / 255f, 40 / 255f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 

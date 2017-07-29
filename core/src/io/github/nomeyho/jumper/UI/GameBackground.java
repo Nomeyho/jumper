@@ -4,8 +4,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.nomeyho.jumper.Application;
+import io.github.nomeyho.jumper.GameManager;
+import io.github.nomeyho.jumper.levels.AbstractLevel;
+import io.github.nomeyho.jumper.levels.UsualLevel;
 import io.github.nomeyho.jumper.math.Location;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
+import io.github.nomeyho.jumper.utils.ColorManager;
 
 public class GameBackground {
 
@@ -53,7 +57,9 @@ public class GameBackground {
         float w = Application.worldWidth;
         float h = this.background.getRegionHeight() * (w / this.background.getRegionWidth());
 
+        batch.setColor(ColorManager.get().getColor(AbstractLevel.MIN_HEIGHT));
         batch.draw(this.planet, PLANETLOCATION.getX(), PLANETLOCATION.getY(), PLANETSIZE, PLANETSIZE);
+        batch.setColor(1,1,1,1);
 
         float angle = (2 * Application.PI * time / PERIOD) % (2 * Application.PI);
         batch.draw(this.satelite, satelitePosition.getX(), satelitePosition.getY(), SATELITEWIDTH / 2f, SATELITEHEIGHT / 2f, SATELITEWIDTH, SATELITEHEIGHT, 1f, 1f, (float) Math.toDegrees(angle) -90);
