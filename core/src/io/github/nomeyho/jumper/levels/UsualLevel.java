@@ -39,12 +39,14 @@ public class UsualLevel extends AbstractLevel {
         this.currentBellHeight = i;
 
         // Remove the bells for the low levels
+        /*
         Iterator<AbstractGameObject> it = this.objects.iterator(); // TODO
         while(it.hasNext()) {
             AbstractGameObject go = it.next();
             if(go instanceof Portal && go.location.getY() < playerY)
                 it.remove();
         }
+        */
     }
 
     @Override
@@ -55,6 +57,11 @@ public class UsualLevel extends AbstractLevel {
         GameManager.get().player.draw(batch);
         for(int i=0, end=this.objects.size; i<end; ++i)
             this.objects.get(i).draw(batch);
+    }
+
+    @Override
+    public void remove(AbstractGameObject go) {
+        this.objects.removeValue(go, true);
     }
 
 }

@@ -15,13 +15,13 @@ public class Portal extends AbstractGameObject {
     public static final float WIDTH = 85;
     public static final float HEIGHT = 55;
     private static final float SPEED = 1;
+    private static final int SCORE = 1;
     private TextureRegion frontTexture;
     private TextureRegion backTexture;
     private AnimationWrapper explosion;
     private Color color;
 
     public Portal(float x, float y) {
-
         TextureAtlas textureAtlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
         this.frontTexture = textureAtlas.findRegion("portal_front");
         this.backTexture = textureAtlas.findRegion("portal_back");
@@ -40,6 +40,11 @@ public class Portal extends AbstractGameObject {
         this.location.setLocation(x, y);
         this.speed.set(0, SPEED, 0);
         this.color = ColorManager.get().getColor(y);
+    }
+
+    @Override
+    public int getScore() {
+        return SCORE;
     }
 
     @Override

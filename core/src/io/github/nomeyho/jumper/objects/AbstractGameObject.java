@@ -17,6 +17,7 @@ public abstract class AbstractGameObject {
     public abstract void draw(SpriteBatch batch);
     public abstract void drawBackground(SpriteBatch batch);
     public abstract void init(float x, float y);
+    public abstract int getScore();
 
     public void updateHitbox (float width, float height, float x, float y) {
         if(this.hitbox == null) return;

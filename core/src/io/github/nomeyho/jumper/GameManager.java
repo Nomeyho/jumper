@@ -107,14 +107,13 @@ public class GameManager {
         this.gameUI.draw();
     }
 
-    private void checkForCollision(){
-        AbstractGameObject go;
-        for(int i=0, end=this.level.objects.size; i<end; ++i) {
-            go = this.level.objects.get(i);
+    private void checkForCollision() {
+        for(AbstractGameObject go: this.level.objects) { // yeah warning, but controlled
             if(this.player.hitbox.overlap(go.hitbox)) {
                 SoundManager.get().playSound(SoundEnum.TINK);
                 //  this.player.speed.y = 2500;
-                PlayerStats.get().currentScore += 1; // TODO generalize with a valuator
+                PlayerStats.get().currentScore += go.getScore();
+                this.level.objects.removeValue(go, true);
             }
         }
     }

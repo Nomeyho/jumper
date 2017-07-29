@@ -268,7 +268,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.playBtn.setDisabled(PlayerStats.get().remainingLifes <= 0);
         this.buyBtn.setDisabled(this.game.service == null || this.game.service.isLoading());
 
-        this.loading.setRotation((time / 3000) % 360);
+        this.loading.setRotation((time / 3000) % 360); // TODO
         this.loading.setAlign(Align.center);
 
         this.stage.act(delta);

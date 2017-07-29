@@ -104,45 +104,52 @@ star
   index: 2
 
 assets2.png
-size: 1024,256
+size: 1024,512
 format: RGBA8888
 filter: MipMapLinearNearest,Linear
 repeat: none
 bell
   rotate: false
-  xy: 204, 41
+  xy: 305, 344
   size: 200, 161
   orig: 200, 161
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 406, 44
+  xy: 507, 347
   size: 200, 158
   orig: 200, 158
   offset: 0, 0
   index: 1
 bell
   rotate: false
-  xy: 608, 53
+  xy: 709, 356
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 3
 bell_explosion
   rotate: false
-  xy: 608, 53
+  xy: 709, 356
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 2
 bell_explosion
   rotate: false
-  xy: 810, 70
+  xy: 305, 210
   size: 167, 132
   orig: 167, 132
   offset: 0, 0
   index: 1
+loading
+  rotate: false
+  xy: 2, 204
+  size: 301, 301
+  orig: 301, 301
+  offset: 0, 0
+  index: -1
 smoke
   rotate: false
   xy: 2, 2

@@ -61,7 +61,11 @@ public class Player extends AbstractGameObject {
         this.location.setLocation(x, y);
         this.touchedPos.x = x + WIDTH/2;
         this.touchedPos.y = y + HEIGHT/2;
+    }
 
+    @Override
+    public int getScore() {
+        return 0;
     }
 
     @Override
