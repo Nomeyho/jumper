@@ -32,13 +32,14 @@ public class UserPreferences {
 
         String langStr = this.preferences.getString("lang", LanguageEnum.English.name());
         this.lang = LanguageEnum.valueOf(langStr);
-        this.lang = LanguageEnum.Francais;
 
         Gdx.app.log(Application.TAG, "Loaded preferences:\n" + this.toString());
+        System.out.println("Loaded preferences:\n" + this.toString());
     }
 
     public void save () {
         Gdx.app.log(Application.TAG, "Saved preferences:\n" + this.toString());
+        System.out.println("Saved preferences:\n" + this.toString());
 
         this.preferences.putInteger("sound", this.sound);
         this.preferences.putInteger("music", this.music);

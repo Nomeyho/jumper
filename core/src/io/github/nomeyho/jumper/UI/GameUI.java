@@ -34,7 +34,7 @@ public class GameUI implements ITranslatable {
     private ImageButton pauseIcon;
     private PauseMenu pauseMenu;
     private GameoverMenu gameoverMenu;
-    private I18NBundle bundle = LanguageManager.get().getBundle();
+    private I18NBundle bundle;
 
     public GameUI () {
         LanguageManager.get().register(this);
@@ -93,7 +93,7 @@ public class GameUI implements ITranslatable {
         this.stage.addActor(this.gameoverMenu);
 
         Application.get().inputMultiplexer.addProcessor(this.stage);
-
+        updateLang();
         resize();
     }
 
@@ -137,5 +137,7 @@ public class GameUI implements ITranslatable {
     }
 
     @Override
-    public void updateLang() {}
+    public void updateLang() {
+        this.bundle = LanguageManager.get().getBundle();
+    }
 }

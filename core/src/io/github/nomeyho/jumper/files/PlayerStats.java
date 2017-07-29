@@ -12,9 +12,12 @@ import java.util.Date;
 
 public class PlayerStats {
     private static PlayerStats INSTANCE = new PlayerStats();
+
+    // 50 lives + 25 every 12h
     private static final int INITIAL_LIFES = 50;
     private static final int DAILY_LIFES = 25;
-    private static final int TIME_LIFES = 1 / 60; // 50 lives + 25 every 12h
+    private static final int TIME_LIFES = Application.DEBUG ? (30*1000) : (12*60*60*1000);
+
     private Preferences preferences;
     private String hash;
     public int remainingLifes = 0;
@@ -106,19 +109,24 @@ public class PlayerStats {
     }
 
     public String getCountdown(I18NBundle bundle) {
-        long time = TimeUtils.timeSinceMillis(this.last.getTime()) - TIME_LIFES*60*60*1000;
+        long time = TimeUtils.timeSinceMillis(this.last.getTime());
 
-        if(time > 0) {
+        if(time > TIME_LIFES) {
             getDailyLifes();
             return null;
         } else {
-            time = -time;
+            // Remaining time to wait
+
+            time = TIME_LIFES - time;
+            int seconds = (int) (time / 1000) % 60;
             int minutes = (int) ((time / (1000*60)) % 60);
             int hours   = (int) ((time / (1000*60*60)) % 24);
             if(hours > 0)
                 return hours + " " + bundle.get("hours") + " " + minutes + bundle.get("minutes");
+            if(minutes > 0)
+                return minutes + " " + bundle.get("minutes");
             else
-                return minutes + bundle.get("minutes");
+                return seconds + " " + bundle.get("seconds");
         }
     }
 }

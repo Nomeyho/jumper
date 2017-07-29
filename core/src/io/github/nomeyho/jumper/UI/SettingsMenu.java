@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
+import io.github.nomeyho.jumper.files.UserPreferences;
 import io.github.nomeyho.jumper.lang.ITranslatable;
 import io.github.nomeyho.jumper.lang.LanguageEnum;
 import io.github.nomeyho.jumper.lang.LanguageManager;
@@ -101,9 +102,9 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.updateLang();
 
         /* Bind values to UI elements */
-        this.sound.setValue(io.github.nomeyho.jumper.files.UserPreferences.get().sound);
-        this.music.setValue(io.github.nomeyho.jumper.files.UserPreferences.get().music);
-        this.langSelect.setSelected(io.github.nomeyho.jumper.files.UserPreferences.get().lang);
+        this.sound.setValue(UserPreferences.get().sound);
+        this.music.setValue(UserPreferences.get().music);
+        this.langSelect.setSelected(UserPreferences.get().lang);
     }
 
     @Override
@@ -118,15 +119,15 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     }
 
     private void save () {
-        io.github.nomeyho.jumper.files.UserPreferences.get().sound = (int)this.sound.getValue();
-        io.github.nomeyho.jumper.files.UserPreferences.get().music = (int)this.music.getValue();
-        io.github.nomeyho.jumper.files.UserPreferences.get().lang = this.langSelect.getSelected();
+        UserPreferences.get().sound = (int)this.sound.getValue();
+        UserPreferences.get().music = (int)this.music.getValue();
+        UserPreferences.get().lang = this.langSelect.getSelected();
 
         // Actually save it to the file
-        io.github.nomeyho.jumper.files.UserPreferences.get().save();
+        UserPreferences.get().save();
 
         // Perform UI changes
-        LanguageManager.get().setLang(io.github.nomeyho.jumper.files.UserPreferences.get().lang);
+        LanguageManager.get().setLang(UserPreferences.get().lang);
         SoundManager.get().updateVolume();
     }
 }

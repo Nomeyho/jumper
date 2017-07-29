@@ -1,13 +1,9 @@
 package io.github.nomeyho.jumper.UI;
 
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -28,13 +24,18 @@ public class GameoverMenu extends Dialog implements ITranslatable {
     private String bestScorePrefix = "";
     private TextButton restartBtn;
     private TextButton mainBtn;
+    private Label tooltip;
+
+    // Given how it is used (only in the tooltip), do not use the full registering process
+    private I18NBundle bundle = LanguageManager.get().getBundle();
+
 
     public GameoverMenu(String title, Skin skin) {
         super(title, skin, "transparent");
         init(skin);
     }
 
-    public void init (Skin skin) {
+    public void init (final Skin skin) {
         LanguageManager.get().register(this);
 
         /* Create UI elements */
@@ -60,7 +61,12 @@ public class GameoverMenu extends Dialog implements ITranslatable {
         this.getContentTable().row();
 
         this.bestScore = new Label("", skin, "small");
-        this.getContentTable().add(this.bestScore).padBottom(200);
+        this.getContentTable().add(this.bestScore).padBottom(150);
+        this.getContentTable().row();
+
+        this.tooltip = new Label("", skin);
+        this.tooltip.setAlignment(Align.center);
+        this.getContentTable().add(this.tooltip).padBottom(50);
         this.getContentTable().row();
 
         // Restart
@@ -70,8 +76,15 @@ public class GameoverMenu extends Dialog implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 // Prevent playing without lifes
-                if(PlayerStats.get().remainingLifes <= 0)
+                if(PlayerStats.get().remainingLifes <= 0) {
+                    tooltip.setText(bundle.get("no_more_lives"));
+                    tooltip.addAction(Actions.sequence(
+                            Actions.color(Color.RED),
+                            Actions.fadeIn(1f),
+                            Actions.fadeOut(1f)
+                    ));
                     return;
+                }
 
                 super.tap(event, x, y, count, button);
                 SoundManager.get().playSound(SoundEnum.CLICK);
