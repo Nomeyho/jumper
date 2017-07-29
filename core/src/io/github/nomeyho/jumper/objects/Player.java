@@ -37,11 +37,8 @@ public class Player extends AbstractGameObject {
     private ParticleEffect fireEffect;
 
 
-    public Player(float x, float y, int layer) {
-        super(x, y, layer);
-        this.touchedPos.x = x + WIDTH/2;
-        this.touchedPos.y = y + HEIGHT/2;
-        this.speed.set(0,0,0);
+    public Player(float x, float y) {
+
 
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("player");
@@ -56,6 +53,15 @@ public class Player extends AbstractGameObject {
         this.fireEffect = ParticleManager.get().getEffect(ParticleEnum.FIRE);
     }
 
+    @Override
+    public void init(float x, float y){
+        this.state = PlayerEnum.WAITING;
+        this.speed.set(0,0,0);
+        this.location.setLocation(x, y);
+        this.touchedPos.x = x + WIDTH/2;
+        this.touchedPos.y = y + HEIGHT/2;
+
+    }
 
     @Override
     public void update(float delta) {
@@ -99,8 +105,8 @@ public class Player extends AbstractGameObject {
                 else {
                     this.fallAnimation.update(delta);
                     this.flyingAnimation.stateTime = 0;
-                    if(this.speed.y > -10)
-                        this.fireEffect.getEmitters().first().durationTimer = 0.9f * this.fireEffect.getEmitters().first().duration;
+                    if(this.speed.y > - 10)
+                        this.fireEffect.getEmitters().first().durationTimer = 0.8f * this.fireEffect.getEmitters().first().duration;
                 }
                 break;
         }
@@ -142,6 +148,9 @@ public class Player extends AbstractGameObject {
         this.smokeEffect.draw(batch);
     }
 
+    @Override
+    public void drawBackground(SpriteBatch batch) {}
+
     public void setTouchedPos(Vector3 pos) {
         this.touchedPos.x = pos.x;
         this.touchedPos.y = pos.y;
@@ -152,19 +161,6 @@ public class Player extends AbstractGameObject {
     }
 
     public void setAngle(){
-        if(this.touchedPos.x == this.location.getX() + WIDTH / 2f){}
-        else if(this.touchedPos.x > this.location.getX() + WIDTH / 2f) {
-            if(this.direction == DirectionEnum.LEFT) {
-                deltaPos.set(this.touchedPos.x - this.location.getX() - WIDTH / 2,
-                        Application.worldHeight / 2 - HEIGHT / 2);
-            }
-        }
-        else{
-            if(this.direction == DirectionEnum.RIGHT) {
-                deltaPos.set(this.touchedPos.x - this.location.getX() - WIDTH / 2,
-                        Application.worldHeight / 2 - HEIGHT / 2);
-            }
-        }
         deltaPos.set(this.touchedPos.x - this.location.getX() - WIDTH / 2,
                 (this.speed.y * this.speed.y) / (2 * GRAVITY) + HEIGHT);
         this.angle = (MathUtils.clamp(deltaPos.angle(), 25, 155)-90);
@@ -238,6 +234,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void hasHitGround(){
+        System.out.println(this.speed.y);
         if(this.location.getY() <= MIN_Y && this.speed.y < 0){
             this.location.setLocation(this.location.getX(), MIN_Y);
             this.speed.y = 0;

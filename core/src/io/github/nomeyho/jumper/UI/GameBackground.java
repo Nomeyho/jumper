@@ -31,11 +31,10 @@ public class GameBackground {
 
     public void init () {
         PLANETSIZE = Application.worldWidth / 2f;
-        PLANETLOCATION = new Location(Application.worldWidth / 4f, -50, -1);
+        PLANETLOCATION = new Location(Application.worldWidth / 4f, -50);
         satelitePosition = new Location(
                 PLANETLOCATION.getX()+ PLANETSIZE/2f - SATELITEWIDTH/2f,
-                PLANETLOCATION.getY() - SATELITEHEIGHT / 2, -1
-        );
+                PLANETLOCATION.getY() - SATELITEHEIGHT / 2);
     }
 
     public void update (float delta) {

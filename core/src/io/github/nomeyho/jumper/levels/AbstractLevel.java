@@ -9,5 +9,5 @@ public abstract class AbstractLevel {
     public Array<AbstractGameObject> objects = new Array<AbstractGameObject>();
 
     public abstract void update(float delta, float playerX, float playerY);
-    public abstract void draw(SpriteBatch batch, int layer);
+    public abstract void draw(SpriteBatch batch);
 }

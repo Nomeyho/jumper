@@ -43,7 +43,7 @@ public class GameManager {
      * MUST BE CALLED at GameScreen CREATION !
      */
     public void init (Game game, Viewport viewport, Camera camera, Camera guiCamera, SpriteBatch batch) {
-        this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
+        this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
         this.level = new UsualLevel();
         this.game = game;
         this.viewport = viewport;
@@ -89,14 +89,7 @@ public class GameManager {
         this.starManager.draw(batch);
         this.background.draw(batch);
 
-        // Draw layer per layer
-        for(int layer = Application.MIN_LAYER; layer <= Application.MAX_LAYER; ++layer) {
-            // Draw objects
-            this.level.draw(batch, layer);
-            // Draw player
-            if (this.player.location.getLayer() == layer)
-                this.player.draw(batch);
-        }
+        this.level.draw(batch);
     }
 
     /**
@@ -141,7 +134,7 @@ public class GameManager {
         PlayerStats.get().decreaseLifes();
         PlayerStats.get().save();
 
-        this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y, 0);
+        this.player.init(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
         this.level = new UsualLevel();
     }
 }

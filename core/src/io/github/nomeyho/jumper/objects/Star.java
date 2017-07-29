@@ -15,7 +15,7 @@ import io.github.nomeyho.jumper.utils.Utils;
 public class Star {
 
     protected float width, height;
-    public Location location = new Location(0, 0, 0);
+    public Location location = new Location(0, 0);
     public Vector3 speed = new Vector3(0,0,0);
     protected TextureRegion starTexture;
     protected float opacity;

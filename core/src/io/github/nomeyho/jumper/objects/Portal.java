@@ -1,5 +1,6 @@
 package io.github.nomeyho.jumper.objects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -7,28 +8,38 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
+import io.github.nomeyho.jumper.utils.ColorManager;
 import io.github.nomeyho.jumper.utils.Utils;
 
-public class Bell extends AbstractGameObject {
-    public static final float WIDTH = 126;
-    public static final float HEIGHT = 100;
+public class Portal extends AbstractGameObject {
+    public static final float WIDTH = 85;
+    public static final float HEIGHT = 55;
     private static final float SPEED = 1;
-    private TextureRegion bellTexture;
+    private TextureRegion frontTexture;
+    private TextureRegion backTexture;
     private AnimationWrapper explosion;
+    private Color color;
 
-    public Bell(float x, float y, int layer) {
-        super(x, y, layer);
+    public Portal(float x, float y) {
 
         TextureAtlas textureAtlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
-        this.bellTexture = textureAtlas.findRegion("bell", Utils.randomInt(1, 3));
-
-        this.speed.set(0, SPEED, 0);
+        this.frontTexture = textureAtlas.findRegion("portal_front");
+        this.backTexture = textureAtlas.findRegion("portal_back");
 
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("bell");
 
         // TODO CHANGE ATLAS
         this.explosion = new AnimationWrapper(0.33f, "bell_explosion", Application.TEXTURE_ATLAS);
+
+        init(x, y);
+    }
+
+    @Override
+    public void init(float x, float y){
+        this.location.setLocation(x, y);
+        this.speed.set(0, SPEED, 0);
+        this.color = ColorManager.get().getColor(y);
     }
 
     @Override
@@ -40,7 +51,17 @@ public class Bell extends AbstractGameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-       //batch.draw(this.bellTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
+        batch.setColor(1,0,0,1);
+       batch.draw(this.frontTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
+        batch.setColor(1,1,1,1);
       //  this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
+    }
+
+    @Override
+    public void drawBackground(SpriteBatch batch) {
+        batch.setColor(1,0,0,1);
+        batch.draw(this.backTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
+        batch.setColor(1,1,1,1);
+        //  this.explosion.draw(batch, this.location.getX(),this.location.getY(), WIDTH, HEIGHT);
     }
 }

@@ -2,8 +2,9 @@ package io.github.nomeyho.jumper.levels;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.nomeyho.jumper.Application;
+import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.objects.AbstractGameObject;
-import io.github.nomeyho.jumper.objects.Bell;
+import io.github.nomeyho.jumper.objects.Portal;
 import io.github.nomeyho.jumper.objects.Player;
 import io.github.nomeyho.jumper.utils.Utils;
 
@@ -31,9 +32,9 @@ public class UsualLevel extends AbstractLevel {
         // Generate new bells
         int i = (int) currentBellHeight;
         while(i<playerY + Application.worldHeight) {
-            float x = Utils.randomFloat(1, Application.worldWidth - Bell.WIDTH);
-            this.objects.add(new Bell(x, i, 0));
-            i += Bell.HEIGHT * 2;
+            float x = Utils.randomFloat(1, Application.worldWidth - Portal.WIDTH);
+            this.objects.add(new Portal(x, i));
+            i += Portal.HEIGHT * 2;
         }
         this.currentBellHeight = i;
 
@@ -41,20 +42,19 @@ public class UsualLevel extends AbstractLevel {
         Iterator<AbstractGameObject> it = this.objects.iterator(); // TODO
         while(it.hasNext()) {
             AbstractGameObject go = it.next();
-            if(go instanceof Bell && go.location.getY() < playerY)
+            if(go instanceof Portal && go.location.getY() < playerY)
                 it.remove();
         }
     }
 
     @Override
-    public void draw(SpriteBatch batch, int layer) {
+    public void draw(SpriteBatch batch) {
         // Draw each game object
-        AbstractGameObject go;
-        for(int i=0, end=this.objects.size; i<end; ++i) {
-            go = this.objects.get(i);
-            if(go.location.getLayer() == layer)
-                go.draw(batch);
-        }
+        for(int i=0, end=this.objects.size; i<end; ++i)
+            this.objects.get(i).drawBackground(batch);
+        GameManager.get().player.draw(batch);
+        for(int i=0, end=this.objects.size; i<end; ++i)
+            this.objects.get(i).draw(batch);
     }
 
 }
