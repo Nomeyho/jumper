@@ -55,7 +55,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
     private I18NBundle bundle;
 
-    public MenuScreen(Game game) {
+    public MenuScreen(AbstractGame game) {
         super(game);
         LanguageManager.get().register(this);
     }
@@ -178,9 +178,12 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
-                // TODO show BUT
-
-                PlayerStats.get().increaseLifes(1);
+                // Add service might not exist (e.g. on desktop)
+                if(game.service == null)
+                    return;
+                // Open new pub
+                game.service.openAdd();
+                // TODO PlayerStats.get().increaseLifes(1);
             }
         });
         this.layout.add(this.buyBtn).padBottom(100);
@@ -247,6 +250,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.countdown.setText(PlayerStats.get().getCountdown(this.bundle));
 
         this.playBtn.setDisabled(PlayerStats.get().remainingLifes <= 0);
+        this.buyBtn.setDisabled(this.game.service == null);
 
         this.stage.act(delta);
     }

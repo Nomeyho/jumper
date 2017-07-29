@@ -1,6 +1,5 @@
 package io.github.nomeyho.jumper.UI;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import io.github.nomeyho.jumper.AbstractGame;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.sound.SoundManager;
@@ -20,7 +20,7 @@ public class GameScreen extends AbstractGameScreen {
     private OrthographicCamera guiCamera;
     private SpriteBatch batch;
 
-    public GameScreen(Game game) {
+    public GameScreen(AbstractGame game) {
         super(game);
     }
 

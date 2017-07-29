@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import io.github.nomeyho.jumper.AbstractGame;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.particles.ParticleManager;
 import io.github.nomeyho.jumper.sound.SoundManager;
@@ -35,7 +36,7 @@ public class LoadingScreen extends AbstractGameScreen {
     private ProgressBar progressBar;
     private Label progressLabel;
 
-    public LoadingScreen(Game game) {
+    public LoadingScreen(AbstractGame game) {
         super(game);
     }
 

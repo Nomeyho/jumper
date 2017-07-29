@@ -20,7 +20,7 @@ public class GameManager {
     public GameState state = GameState.READY;
     public Player player;
     public AbstractLevel level;
-    public Game game;
+    public AbstractGame game;
     public Viewport viewport;
     public Camera camera;
     public Camera guiCamera;
@@ -42,7 +42,7 @@ public class GameManager {
     /**
      * MUST BE CALLED at GameScreen CREATION !
      */
-    public void init (Game game, Viewport viewport, Camera camera, Camera guiCamera, SpriteBatch batch) {
+    public void init (AbstractGame game, Viewport viewport, Camera camera, Camera guiCamera, SpriteBatch batch) {
         this.player = new Player(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
         this.level = new UsualLevel();
         this.game = game;

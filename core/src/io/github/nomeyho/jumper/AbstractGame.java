@@ -8,10 +8,7 @@ public abstract class AbstractGame extends Game {
 
     public AbstractGame(AdService service) {
         // Always check because the service might not exist...
-        if(service != null) {
-            this.service = service;
-            this.service.register(this);
-        }
+        this.service = service;
     }
 
     @Override

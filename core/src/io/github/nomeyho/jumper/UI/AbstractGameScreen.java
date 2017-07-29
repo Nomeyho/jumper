@@ -1,14 +1,14 @@
 package io.github.nomeyho.jumper.UI;
 
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import io.github.nomeyho.jumper.AbstractGame;
 
 public abstract class AbstractGameScreen implements Screen {
-    protected Game game;
+    protected AbstractGame game;
 
-    public AbstractGameScreen (Game game) {
+    public AbstractGameScreen (AbstractGame game) {
         this.game = game;
     }
 

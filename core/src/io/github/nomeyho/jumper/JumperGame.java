@@ -1,6 +1,5 @@
 package io.github.nomeyho.jumper;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import io.github.nomeyho.jumper.UI.LoadingScreen;
