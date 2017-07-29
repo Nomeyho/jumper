@@ -1,6 +1,5 @@
 package io.github.nomeyho.jumper;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -113,7 +112,7 @@ public class GameManager {
                 SoundManager.get().playSound(SoundEnum.TINK);
                 //  this.player.speed.y = 2500;
                 PlayerStats.get().currentScore += go.getScore();
-                this.level.objects.removeValue(go, true);
+                this.level.remove(go);
             }
         }
     }

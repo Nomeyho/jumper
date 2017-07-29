@@ -54,13 +54,18 @@ public class UsualLevel extends AbstractLevel {
         // Draw each game object
         for(int i=0, end=this.objects.size; i<end; ++i)
             this.objects.get(i).drawBackground(batch);
+
         GameManager.get().player.draw(batch);
+
         for(int i=0, end=this.objects.size; i<end; ++i)
             this.objects.get(i).draw(batch);
     }
 
     @Override
     public void remove(AbstractGameObject go) {
+
+
+
         this.objects.removeValue(go, true);
     }
 
