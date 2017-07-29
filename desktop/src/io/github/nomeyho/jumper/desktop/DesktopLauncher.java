@@ -9,6 +9,6 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 450;
 		config.height = 700;
-		new LwjglApplication(new JumperGame(), config);
+		new LwjglApplication(new JumperGame(null), config);
 	}
 }

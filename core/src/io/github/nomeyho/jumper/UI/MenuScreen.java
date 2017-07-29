@@ -179,6 +179,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 // TODO show BUT
+
                 PlayerStats.get().increaseLifes(1);
             }
         });

@@ -4,15 +4,20 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import io.github.nomeyho.jumper.JumperGame;
 
 public class AndroidLauncher extends AndroidApplication {
-	@Override
+
+    @Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Config
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useAccelerometer = false;
 		config.useCompass = false;
-		initialize(new JumperGame(), config);
+
+		// Init
+        AndroidAddService addService = new AndroidAddService(this);
+		initialize(new JumperGame(addService), config); // platform specific add
 	}
 }

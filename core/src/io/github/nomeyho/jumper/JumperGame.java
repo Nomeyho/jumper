@@ -10,7 +10,11 @@ import io.github.nomeyho.jumper.collisions.HitboxLoader;
 import io.github.nomeyho.jumper.lang.LanguageManager;
 import io.github.nomeyho.jumper.sound.SoundManager;
 
-public class JumperGame extends Game {
+public class JumperGame extends AbstractGame {
+
+	public JumperGame(AdService service) {
+		super(service);
+	}
 
 	@Override
 	public void create () {
