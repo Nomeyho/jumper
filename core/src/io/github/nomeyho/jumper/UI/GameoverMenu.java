@@ -88,7 +88,7 @@ public class GameoverMenu extends Dialog implements ITranslatable {
 
                 super.tap(event, x, y, count, button);
                 SoundManager.get().playSound(SoundEnum.CLICK);
-                GameManager.get().restart();
+                GameManager.get().restart(false);
                 hide();
             }
         });

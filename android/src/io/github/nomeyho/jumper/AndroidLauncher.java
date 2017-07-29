@@ -15,6 +15,7 @@ public class AndroidLauncher extends AndroidApplication implements RewardedVideo
     private static final String AD_ID = "ca-app-pub-3940256099942544/5224354917";
     private RewardedVideoAd mAd;
     private AbstractGame game;
+    private AndroidAdService adService;
 
     @Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -31,8 +32,8 @@ public class AndroidLauncher extends AndroidApplication implements RewardedVideo
         this.mAd.setRewardedVideoAdListener(this);
 
         // Init
-        AndroidAddService addService = new AndroidAddService(this);
-        this.game = new JumperGame(addService);
+        this.adService = new AndroidAdService(this);
+        this.game = new JumperGame(adService);
 		initialize(this.game, config);
 	}
 
@@ -55,13 +56,14 @@ public class AndroidLauncher extends AndroidApplication implements RewardedVideo
     }
 
     /* API */
-    protected void openAdd () {
+    protected void loadAdd () {
         mAd.loadAd(AD_ID, new AdRequest.Builder().build());
     }
 
 	/* Adds callback */
     @Override
     public void onRewardedVideoAdLoaded() {
+        this.adService.loading = false;
         System.out.println("ICI onRewardedVideoAdLoaded");
         if (this.mAd.isLoaded()) {
             this.mAd.show();

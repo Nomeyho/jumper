@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,6 +30,7 @@ import io.github.nomeyho.jumper.utils.Utils;
 public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     public static final float SIZE = Application.SIZE;
     private static final int ICON_SIZE = 30;
+    private static final int LOADER_SIZE = 70;
     private static float FADE_IN_DURATION = 0.05f;
     private static float FADE_OUT_DURATION = 0.15f;
     // View
@@ -45,6 +47,8 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private SettingsMenu settingsMenu;
     private AnimatedImage planetImage;
     private MenuBackground background;
+    private Image loading;
+    private float time = 0;
 
     private Image scoreIcon;
     private Label score;
@@ -81,6 +85,12 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.score.setPosition(60, Application.worldHeight - 40);
         this.livesIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
         this.lives.setPosition(60, Application.worldHeight - 80);
+        this.loading.setPosition(Application.worldWidth/2 - LOADER_SIZE/2, Application.worldHeight/2 - LOADER_SIZE/2);
+
+        this.loading.setPosition(
+                this.buyBtn.getX() + this.buyBtn.getWidth() + 20,
+                this.buyBtn.getY() + 5
+        );
     }
 
     @Override
@@ -110,6 +120,12 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
         Skin skin = Application.get().assetManager.get(Application.SKIN);
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
+
+        // Loading
+        this.loading = new Image(atlas.findRegion("loading"));
+        this.loading.setSize(LOADER_SIZE, LOADER_SIZE);
+        this.loading.setOrigin(LOADER_SIZE/2, LOADER_SIZE/2);
+        this.stage.addActor(this.loading);
 
         // Logo
         this.logo = new Label(Application.TAG, skin, "large");
@@ -179,11 +195,10 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 // Add service might not exist (e.g. on desktop)
-                if(game.service == null)
+                if(game.service == null || game.service.isLoading())
                     return;
                 // Open new pub
                 game.service.openAdd();
-                // TODO PlayerStats.get().increaseLifes(1);
             }
         });
         this.layout.add(this.buyBtn).padBottom(100);
@@ -245,12 +260,16 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     }
 
     private void update(float delta) {
+        this.time += delta;
         this.score.setText(PlayerStats.get().currentScore + "");
         this.lives.setText(PlayerStats.get().remainingLifes + "");
         this.countdown.setText(PlayerStats.get().getCountdown(this.bundle));
 
         this.playBtn.setDisabled(PlayerStats.get().remainingLifes <= 0);
-        this.buyBtn.setDisabled(this.game.service == null);
+        this.buyBtn.setDisabled(this.game.service == null || this.game.service.isLoading());
+
+        this.loading.setRotation((time / 3000) % 360);
+        this.loading.setAlign(Align.center);
 
         this.stage.act(delta);
     }

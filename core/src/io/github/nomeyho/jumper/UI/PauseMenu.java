@@ -75,7 +75,7 @@ public class PauseMenu extends Dialog implements ITranslatable {
                     return;
 
                 SoundManager.get().playSound(SoundEnum.CLICK);
-                GameManager.get().restart();
+                GameManager.get().restart(true);
                 PauseMenu.super.setVisible(false);
             }
         });

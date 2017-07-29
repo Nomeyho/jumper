@@ -5,4 +5,5 @@ package io.github.nomeyho.jumper;
  */
 public interface AdService {
     void openAdd ();
+    boolean isLoading ();
 }

@@ -128,13 +128,15 @@ public class GameManager {
         this.state = this.previousState;
     }
 
-    public void restart () {
+    public void restart (boolean removeLive) {
         this.previousState = null;
         this.savedStats = false;
         this.state = GameState.READY;
 
-        PlayerStats.get().decreaseLifes();
-        PlayerStats.get().save();
+        if(removeLive) {
+            PlayerStats.get().decreaseLifes();
+            PlayerStats.get().save();
+        }
 
         ColorManager.get().shuffle();
         this.player.init(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
