@@ -110,7 +110,7 @@ public class GameManager {
         for(AbstractGameObject go: this.level.objects) { // yeah warning, but controlled
             if(this.player.hitbox.overlap(go.hitbox)) {
                 SoundManager.get().playSound(SoundEnum.TINK);
-                //  this.player.speed.y = 2500;
+                this.player.setSpeed(1000);
                 PlayerStats.get().currentScore += go.getScore();
                 this.level.remove(go);
             }

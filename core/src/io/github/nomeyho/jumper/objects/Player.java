@@ -14,11 +14,11 @@ import io.github.nomeyho.jumper.utils.*;
 
 public class Player extends AbstractGameObject {
     // Const
-    public static final float WIDTH = 100;
-    public static final float HEIGHT = 160;
-    public static final float MAX_SPEED_X = 1100;
+    public static final float WIDTH = 70;
+    public static final float HEIGHT = 110;
+    public static final float MAX_SPEED_X = 750;
     public static final float MAX_SPEED_Y = 2000;
-    public static final float GRAVITY = 400;
+    public static final float GRAVITY = 1800;
     public static final float MIN_Y = 60;
     // State
     private Vector2 touchedPos =  new Vector2();
@@ -90,15 +90,15 @@ public class Player extends AbstractGameObject {
                 // Animations
                 if(this.takeoffAnimation.animation.isAnimationFinished(this.takeoffAnimation.stateTime)){
                     this.state = PlayerEnum.FLYING;
-                    giveImpulse();
+                    setSpeed(1500);
                     this.fireEffect.start();
                 }
                 // Animation
                 this.takeoffAnimation.update(delta);
                 break;
             case FLYING:
-                setSpeedX(delta);
-                setSpeedY(delta);
+                updateSpeedX(delta);
+                updateSpeedY(delta);
                 if(this.speed.y >= 0) {
                     // Animation
                     this.flyingAnimation.update(delta);
@@ -121,7 +121,7 @@ public class Player extends AbstractGameObject {
         hasHitGround();
         updateEffect(delta);
 
-        this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY());
+        this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY(), this.angle);
     }
 
     @Override
@@ -161,8 +161,12 @@ public class Player extends AbstractGameObject {
         this.touchedPos.y = pos.y;
     }
 
-    public void giveImpulse(){
-        this.speed.y += 3000;
+    public void setSpeed(float intensity){
+            if(intensity < -MAX_SPEED_Y)
+                intensity = -MAX_SPEED_Y;
+            else if(intensity > MAX_SPEED_Y)
+                intensity = MAX_SPEED_Y;
+            this.speed.y = intensity;
     }
 
     public void setAngle(){
@@ -206,7 +210,7 @@ public class Player extends AbstractGameObject {
     }
 
 
-    public void setSpeedX(float delta){
+    public void updateSpeedX(float delta){
         float avancement;
         if(startingPosition == endPosition)
             avancement = 1;
@@ -216,7 +220,7 @@ public class Player extends AbstractGameObject {
         this.speed.x = Interpolation.swingOut.apply(0, MAX_SPEED_X, 1 - avancement);
     }
 
-    public void setSpeedY(float delta){
+    public void updateSpeedY(float delta){
         if(this.speed.y > - MAX_SPEED_Y)
             this.speed.y -= GRAVITY * delta;
     }

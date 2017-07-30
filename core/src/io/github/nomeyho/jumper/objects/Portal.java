@@ -11,8 +11,8 @@ import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.ColorManager;
 
 public class Portal extends AbstractGameObject implements Pool.Poolable {
-    public static final float WIDTH = 85;
-    public static final float HEIGHT = 55;
+    public static final float WIDTH = 60;
+    public static final float HEIGHT = 45;
     private static final float SPEED = -10;
     private static final int SCORE = 1;
     private TextureRegion frontTexture;
@@ -27,7 +27,7 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
         this.backTexture = textureAtlas.findRegion("portal_back");
 
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
-        this.hitbox = hitboxAtlas.get("bell");
+        this.hitbox = hitboxAtlas.get("portal");
 
         this.dustEffect = ParticleManager.get().getEffect(ParticleEnum.DUST);
         this.dustEffect.start();
@@ -49,7 +49,7 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     @Override
     public void update(float delta) {
         this.location.add(0, + SPEED * delta);
-        this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY());
+        this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY(), 0);
         this.dustEffect.update(delta);
         this.dustEffect.setPosition(this.location.getX()+20, this.location.getY()+20);
     }
@@ -64,7 +64,7 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     @Override
     public void drawBackground(SpriteBatch batch) {
         batch.setColor(color);
-        this.dustEffect.draw(batch);
+        //this.dustEffect.draw(batch);
         batch.draw(this.backTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
         batch.setColor(1,1,1,1);
     }
