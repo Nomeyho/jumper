@@ -38,7 +38,7 @@ public class GameScreen extends AbstractGameScreen {
         this.guiCamera.position.set(Application.worldWidth/2,Application.worldHeight/2,0);
         this.guiCamera.update();
 
-        Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
+        // Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
         // TODO ?
         // Application.get().shapeRenderer.setTransformMatrix(this.camera.combined);
         // Application.get().shapeRenderer.updateMatrices();
@@ -106,9 +106,14 @@ public class GameScreen extends AbstractGameScreen {
      * Render a new scene
      */
     private void draw() {
-        // Grid
-        if(Application.DEBUG)
+        // Grid & hitbox
+        if(Application.DEBUG) {
             drawGrid();
+            GameManager.get().level.drawHitbox();
+        }
+
+        GameManager.get().level.drawHitbox();
+
         // World
         this.batch.begin();
         GameManager.get().draw();
@@ -143,6 +148,7 @@ public class GameScreen extends AbstractGameScreen {
 
     private void drawGrid () {
         ShapeRenderer shapeRenderer = Application.get().shapeRenderer;
+        shapeRenderer.setProjectionMatrix(this.guiCamera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int x = 0; x < this.viewport.getWorldWidth(); x += Application.CELL) {
             for (int y = 0; y < this.viewport.getWorldHeight(); y += Application.CELL) {
