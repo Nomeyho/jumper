@@ -140,12 +140,19 @@ public class GameScreen extends AbstractGameScreen {
     }
 
     private void drawGrid () {
-        Application.get().shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        ShapeRenderer shapeRenderer = Application.get().shapeRenderer;
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (int x = 0; x < this.viewport.getWorldWidth(); x += Application.CELL) {
             for (int y = 0; y < this.viewport.getWorldHeight(); y += Application.CELL) {
-                Application.get().shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
+                shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
             }
         }
-        Application.get().shapeRenderer.end();
+
+        // Draw hitboxes
+        GameManager.get().player.hitbox.draw(shapeRenderer);
+        for(int i=0; i<GameManager.get().level.objects.size; ++i)
+            GameManager.get().level.objects.get(i).hitbox.draw(shapeRenderer);
+
+        shapeRenderer.end();
     }
 }

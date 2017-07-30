@@ -1,5 +1,6 @@
 package io.github.nomeyho.jumper.collisions;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
@@ -69,5 +70,11 @@ public class Hitbox implements Shape2D {
         }
 
         return hitbox;
+    }
+
+    public void draw (ShapeRenderer shapeRenderer) {
+        for(int i=0; i<this.polygons.size; ++i) {
+            shapeRenderer.polygon(this.polygons.get(i).getTransformedVertices());
+        }
     }
 }

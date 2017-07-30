@@ -1,6 +1,7 @@
 package io.github.nomeyho.jumper.levels;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Pool;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
@@ -22,8 +23,8 @@ public class UsualLevel extends AbstractLevel {
 
     public void init () {
         super.init();
-        this.deltaX = Application.CELL * 5;
-        this.deltaY = Application.CELL * 3.5f;
+        this.deltaX = Application.CELL * 3;
+        this.deltaY = Application.CELL * 1.5f;
         this.pool = new Pool<Portal>(10, 40) {
             @Override
             protected Portal newObject() {
