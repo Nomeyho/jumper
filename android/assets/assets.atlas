@@ -110,35 +110,35 @@ filter: MipMapLinearNearest,Linear
 repeat: none
 bell
   rotate: false
-  xy: 305, 344
+  xy: 605, 344
   size: 200, 161
   orig: 200, 161
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 507, 347
+  xy: 807, 347
   size: 200, 158
   orig: 200, 158
   offset: 0, 0
   index: 1
 bell
   rotate: false
-  xy: 709, 356
+  xy: 605, 193
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 3
 bell_explosion
   rotate: false
-  xy: 709, 356
+  xy: 605, 193
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 2
 bell_explosion
   rotate: false
-  xy: 305, 210
+  xy: 807, 213
   size: 167, 132
   orig: 167, 132
   offset: 0, 0
@@ -148,6 +148,13 @@ loading
   xy: 2, 204
   size: 301, 301
   orig: 301, 301
+  offset: 0, 0
+  index: -1
+portal_dust
+  rotate: false
+  xy: 305, 214
+  size: 298, 291
+  orig: 298, 291
   offset: 0, 0
   index: -1
 smoke
