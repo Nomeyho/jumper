@@ -13,6 +13,8 @@ import java.util.Arrays;
 public class Hitbox implements Shape2D {
 
     public Array<Polygon> polygons;
+    public float originX;
+    public float originY;
 
     public Hitbox () {
         this.polygons = new Array<Polygon>();

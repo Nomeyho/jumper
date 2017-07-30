@@ -39,7 +39,9 @@ public class GameScreen extends AbstractGameScreen {
         this.guiCamera.update();
 
         Application.get().shapeRenderer.setProjectionMatrix(this.camera.combined);
-        Application.get().shapeRenderer.updateMatrices();
+        // TODO ?
+        // Application.get().shapeRenderer.setTransformMatrix(this.camera.combined);
+        // Application.get().shapeRenderer.updateMatrices();
 
         GameManager.get().starManager.resize();
         GameManager.get().background.resize();
@@ -147,12 +149,6 @@ public class GameScreen extends AbstractGameScreen {
                 shapeRenderer.rect(x,y, Application.CELL, Application.CELL);
             }
         }
-
-        // Draw hitboxes
-        GameManager.get().player.hitbox.draw(shapeRenderer);
-        for(int i=0; i<GameManager.get().level.objects.size; ++i)
-            GameManager.get().level.objects.get(i).hitbox.draw(shapeRenderer);
-
         shapeRenderer.end();
     }
 }

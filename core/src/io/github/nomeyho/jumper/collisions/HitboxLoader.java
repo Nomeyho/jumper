@@ -38,21 +38,28 @@ public class HitboxLoader extends
         JsonValue bodies = root.get("rigidBodies");
         Gdx.app.log(Application.TAG, "Found " + bodies.size + " bodies");
         for(JsonValue body: bodies) {
+            // Origin
+            float originX = body.get("origin").getFloat("x");
+            float originY = body.get("origin").getFloat("x");
             // List of polygons - assume to have the origin at (0,0)
-            JsonValue polygons = body.get("polygons");
+            JsonValue polygons = body.get("shapes");
             Array<Polygon> _polygons = new Array<Polygon>();
             for(JsonValue polygon: polygons) {
+                JsonValue vertices = polygon.get("vertices");
                 // List of vertices
-                Gdx.app.log(Application.TAG, body.getString("name") + "(" + polygon.size + " points)");
-                float[] vertices = new float[polygon.size * 2];
+                Gdx.app.log(Application.TAG, body.getString("name") + "(" + vertices.size + " points)");
+                float[] _vertices = new float[vertices.size * 2];
                 int idx = 0;
-                for(JsonValue vertex: polygon) {
-                    vertices[idx++] = vertex.getFloat("x");
-                    vertices[idx++] = vertex.getFloat("y");
+                for(JsonValue vertex: vertices) {
+                    _vertices[idx++] = vertex.getFloat("x");
+                    _vertices[idx++] = vertex.getFloat("y");
                 }
-                _polygons.add(new Polygon(vertices));
+                _polygons.add(new Polygon(_vertices));
             }
-            atlas.hitboxes.put(body.getString("name"), new Hitbox(_polygons));
+            Hitbox hitbox = new Hitbox(_polygons);
+            hitbox.originX = originX;
+            hitbox.originY = originY;
+            atlas.hitboxes.put(body.getString("name"), hitbox);
         }
 
         this.atlas = atlas;
@@ -71,4 +78,23 @@ public class HitboxLoader extends
     }
 
     static public class HitboxParameter extends AssetLoaderParameters<HitboxAtlas> {}
+
+    /*
+    private void normalize (float[] vertices) {
+        // Find maxima
+        float maxX = 0;
+        float maxY = 0;
+        for(int i=0; i<vertices.length - 1; i+=2) {
+            if(vertices[i] > maxX)
+                maxX = vertices[i];
+            if(vertices[i+1] > maxY)
+                maxY = vertices[i+1];
+        }
+        // Normalize
+        for(int i=0; i<vertices.length - 1; i+=2) {
+            vertices[i] /= maxX;
+            vertices[i+1] /= maxY;
+        }
+    }
+    */
 }

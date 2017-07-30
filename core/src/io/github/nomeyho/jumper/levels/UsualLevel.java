@@ -129,6 +129,8 @@ public class UsualLevel extends AbstractLevel {
 
         for(int i=0, end=this.objects.size; i<end; ++i)
             this.objects.get(i).draw(batch);
+
+        super.draw(batch);
     }
 
     @Override
