@@ -23,7 +23,7 @@ import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.GameState;
 
 public class GameUI implements ITranslatable {
-    private static final int ICON_SIZE = 50;
+    private static final int ICON_SIZE = 30;
     private Stage stage;
     private Label start;
     private Label fps;
@@ -63,22 +63,21 @@ public class GameUI implements ITranslatable {
         this.scoreIcon.setSize(ICON_SIZE, ICON_SIZE);
         this.stage.addActor(this.scoreIcon);
 
-        this.score = new Label("", skin);
+        this.score = new Label("", skin, "small");
         this.stage.addActor(this.score);
 
         this.livesIcon = new Image(atlas.findRegion("heart"));
         this.livesIcon.setSize(ICON_SIZE, ICON_SIZE);
         this.stage.addActor(this.livesIcon);
 
-        this.lives = new Label("", skin);
+        this.lives = new Label("", skin, "small");
         this.stage.addActor(this.lives);
 
         this.pauseMenu = new PauseMenu("", skin);
         this.stage.addActor(this.pauseMenu);
 
         this.pauseIcon = new ImageButton(new TextureRegionDrawable(atlas.findRegion("pause")));
-        this.pauseIcon.setSize(1.5f * ICON_SIZE, 1.5f * ICON_SIZE);
-        this.pauseIcon.getImage().setSize(1.5f * ICON_SIZE, 1.5f * ICON_SIZE);
+        this.pauseIcon.setSize(2.5f * ICON_SIZE, 2.5f * ICON_SIZE);
         this.pauseIcon.addListener(new ActorGestureListener() {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
@@ -124,13 +123,13 @@ public class GameUI implements ITranslatable {
     public void resize () {
         this.start.setPosition(Application.worldWidth / 2, 0.7f * Application.worldHeight);
         this.scoreIcon.setPosition(20, Application.worldHeight - 40 - ICON_SIZE/2);
-        this.score.setPosition(90, Application.worldHeight - 40);
-        this.livesIcon.setPosition(20, Application.worldHeight - 110 - ICON_SIZE/2);
-        this.lives.setPosition(90, Application.worldHeight - 110);
-        this.fps.setPosition(20, Application.worldHeight - 170);
+        this.score.setPosition(60, Application.worldHeight - 40);
+        this.livesIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
+        this.lives.setPosition(60, Application.worldHeight - 80);
+        this.fps.setPosition(20, Application.worldHeight - 120);
         this.pauseIcon.setPosition(
-                Application.worldWidth - 2 * ICON_SIZE,
-                Application.worldHeight - 2 * ICON_SIZE
+                Application.worldWidth - 2.5f * ICON_SIZE - 20,
+                Application.worldHeight - 2.5f * ICON_SIZE - 20
         );
 
         this.pauseMenu.setWidth(Application.worldWidth);
