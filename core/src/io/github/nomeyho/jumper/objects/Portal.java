@@ -2,15 +2,15 @@ package io.github.nomeyho.jumper.objects;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.utils.Pool;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.particles.ParticleEnum;
 import io.github.nomeyho.jumper.particles.ParticleManager;
 import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.ColorManager;
-import io.github.nomeyho.jumper.utils.Utils;
 
-public class Portal extends AbstractGameObject {
+public class Portal extends AbstractGameObject implements Pool.Poolable {
     public static final float WIDTH = 85;
     public static final float HEIGHT = 55;
     private static final float SPEED = -10;
@@ -63,10 +63,13 @@ public class Portal extends AbstractGameObject {
 
     @Override
     public void drawBackground(SpriteBatch batch) {
-        System.out.println(this.dustEffect.getEmitters().first().durationTimer);
         batch.setColor(color);
         this.dustEffect.draw(batch);
         batch.draw(this.backTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
         batch.setColor(1,1,1,1);
+    }
+
+    @Override
+    public void reset() {
     }
 }

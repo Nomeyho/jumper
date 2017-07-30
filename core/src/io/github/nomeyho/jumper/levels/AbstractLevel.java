@@ -11,6 +11,10 @@ public abstract class AbstractLevel {
     public final static float MIN_HEIGHT = 500;
 
     public AbstractLevel () {
+        init();
+    }
+
+    public void init () {
         this.objects = new Array<AbstractGameObject>();
         this.objects.ordered = false;
     }

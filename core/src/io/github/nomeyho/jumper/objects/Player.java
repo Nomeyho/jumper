@@ -239,7 +239,7 @@ public class Player extends AbstractGameObject {
     }
 
     public void hasHitGround(){
-        System.out.println(this.speed.y);
+        // System.out.println(this.speed.y);
         if(this.location.getY() <= MIN_Y && this.speed.y < 0){
             this.location.setLocation(this.location.getX(), MIN_Y);
             this.speed.y = 0;
