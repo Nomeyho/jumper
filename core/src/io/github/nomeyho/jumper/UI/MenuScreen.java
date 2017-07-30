@@ -29,7 +29,7 @@ import io.github.nomeyho.jumper.utils.Utils;
 
 public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     public static final float SIZE = Application.SIZE;
-    private static final int ICON_SIZE = 30;
+    private static final int ICON_SIZE = 50;
     private static final int LOADER_SIZE = 50;
     private static float FADE_IN_DURATION = 0.05f;
     private static float FADE_OUT_DURATION = 0.15f;
@@ -82,11 +82,12 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.settingsMenu.setSize(this.viewport.getWorldWidth(), this.viewport.getWorldHeight());
         this.background.init();
         this.scoreIcon.setPosition(20, Application.worldHeight - 40 - ICON_SIZE/2);
-        this.score.setPosition(60, Application.worldHeight - 40);
-        this.livesIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
-        this.lives.setPosition(60, Application.worldHeight - 80);
-        this.loading.setPosition(Application.worldWidth/2 - LOADER_SIZE/2, Application.worldHeight/2 - LOADER_SIZE/2);
+        this.score.setPosition(90, Application.worldHeight - 40);
+        this.livesIcon.setPosition(20, Application.worldHeight - 110 - ICON_SIZE/2);
+        this.lives.setPosition(90, Application.worldHeight - 110);
 
+        // TODO
+        this.loading.setPosition(Application.worldWidth/2 - LOADER_SIZE/2, Application.worldHeight/2 - LOADER_SIZE/2);
         this.loading.setPosition(
                 this.buyBtn.getX() + this.buyBtn.getWidth()/2 - this.loading.getWidth()/2,
                 this.buyBtn.getY() + this.buyBtn.getHeight()/2 - this.loading.getHeight()/2
@@ -223,14 +224,14 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.scoreIcon.setSize(ICON_SIZE, ICON_SIZE);
         this.stage.addActor(this.scoreIcon);
 
-        this.score = new Label("", skin, "small");
+        this.score = new Label("", skin);
         this.stage.addActor(this.score);
 
         this.livesIcon = new Image(atlas.findRegion("heart"));
         this.livesIcon.setSize(ICON_SIZE, ICON_SIZE);
         this.stage.addActor(this.livesIcon);
 
-        this.lives = new Label("", skin, "small");
+        this.lives = new Label("", skin);
         this.stage.addActor(this.lives);
 
         // Lang
