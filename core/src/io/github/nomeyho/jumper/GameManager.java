@@ -136,6 +136,7 @@ public class GameManager {
             PlayerStats.get().save();
         }
 
+        starManager.init();
         ColorManager.get().shuffle();
         this.player.init(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
         // TODO

@@ -110,8 +110,8 @@ public class Player extends AbstractGameObject {
                 else {
                     this.fallAnimation.update(delta);
                     this.flyingAnimation.stateTime = 0;
-                    if(this.speed.y > - 10)
-                        this.fireEffect.getEmitters().first().durationTimer = 0.8f * this.fireEffect.getEmitters().first().duration;
+                    if(this.speed.y > - 50)
+                        this.fireEffect.getEmitters().first().durationTimer = this.fireEffect.getEmitters().first().duration;
                 }
                 break;
         }
@@ -169,13 +169,13 @@ public class Player extends AbstractGameObject {
             this.speed.y = intensity;
     }
 
-    public void setAngle(){
+    private void setAngle(){
         deltaPos.set(this.touchedPos.x - this.location.getX() - WIDTH / 2,
                 (this.speed.y * this.speed.y) / (2 * GRAVITY) + HEIGHT);
         this.angle = (MathUtils.clamp(deltaPos.angle(), 25, 155)-90);
     }
 
-    public TextureRegion getFlyingframe(){
+    private TextureRegion getFlyingframe(){
         TextureRegion frame;
         if(this.speed.y > 0) {
             frame = this.flyingAnimation.animation.getKeyFrame(this.flyingAnimation.stateTime, true);
@@ -189,7 +189,7 @@ public class Player extends AbstractGameObject {
         return frame;
     }
 
-    public void setDirection(){
+    private void setDirection(){
         if(this.touchedPos.x == this.location.getX() + WIDTH / 2f){}
         else if(this.touchedPos.x > this.location.getX() + WIDTH / 2f) {
             if(this.direction == DirectionEnum.LEFT)
@@ -203,14 +203,14 @@ public class Player extends AbstractGameObject {
         }
     }
 
-    public void setReferencePosition(){
+    private void setReferencePosition(){
         if(this.speed.x <= 0.01)
             this.startingPosition = this.location.getX();
         this.endPosition = this.touchedPos.x - WIDTH/2;
     }
 
 
-    public void updateSpeedX(float delta){
+    private void updateSpeedX(float delta){
         float avancement;
         if(startingPosition == endPosition)
             avancement = 1;
@@ -220,12 +220,12 @@ public class Player extends AbstractGameObject {
         this.speed.x = Interpolation.swingOut.apply(0, MAX_SPEED_X, 1 - avancement);
     }
 
-    public void updateSpeedY(float delta){
+    private void updateSpeedY(float delta){
         if(this.speed.y > - MAX_SPEED_Y)
             this.speed.y -= GRAVITY * delta;
     }
 
-    public void setPosition(float delta){
+    private void setPosition(float delta){
         float x, y;
         /* X */
         // Do not overextend arrival position
@@ -242,20 +242,19 @@ public class Player extends AbstractGameObject {
         this.location.setLocation(x, y);
     }
 
-    public void hasHitGround(){
+    private void hasHitGround(){
         // System.out.println(this.speed.y);
         if(this.location.getY() <= MIN_Y && this.speed.y < 0){
             this.location.setLocation(this.location.getX(), MIN_Y);
             this.speed.y = 0;
             this.state = PlayerEnum.WAITING;
-            // TODO
             GameManager.get().state = GameState.ENDED;
             playParticle(this.smokeEffect);
             this.fireEffect.reset();
         }
     }
 
-    public void updateEffect(float delta){
+    private void updateEffect(float delta){
         this.smokeEffect.update(delta);
         this.smokeEffect.setPosition(location.getX() + WIDTH/2, location.getY());
         this.fireEffect.update(delta);
@@ -269,13 +268,12 @@ public class Player extends AbstractGameObject {
         this.fireEffect.getEmitters().first().getRotation().setLow( this.angle, this.angle);
         this.fireEffect.getEmitters().first().getRotation().setHigh( this.angle, this.angle);
         this.fireEffect.getEmitters().first().getAngle().setLow(90 + this.angle,90 + this.angle);
-        this.fireEffect.getEmitters().first().getAngle().setHigh(45 + this.angle, 135 + this.angle);;
+        this.fireEffect.getEmitters().first().getAngle().setHigh(45 + this.angle, 135 + this.angle);
     }
 
-    public void playParticle(ParticleEffect particleEffect){
+    private void playParticle(ParticleEffect particleEffect){
         if(particleEffect.isComplete())
             particleEffect.start();
     }
-
 
 }

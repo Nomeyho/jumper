@@ -13,11 +13,10 @@ import io.github.nomeyho.jumper.utils.ColorManager;
 public class Portal extends AbstractGameObject implements Pool.Poolable {
     public static final float WIDTH = 60;
     public static final float HEIGHT = 45;
-    private static final float SPEED = -10;
+    private static final float SPEED = -30;
     private static final int SCORE = 1;
     private TextureRegion frontTexture;
     private TextureRegion backTexture;
-    private AnimationWrapper explosion;
     private Color color;
     private ParticleEffect dustEffect;
 
