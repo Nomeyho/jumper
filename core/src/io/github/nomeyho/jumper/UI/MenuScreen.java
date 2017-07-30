@@ -30,7 +30,7 @@ import io.github.nomeyho.jumper.utils.Utils;
 public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     public static final float SIZE = Application.SIZE;
     private static final int ICON_SIZE = 30;
-    private static final int LOADER_SIZE = 70;
+    private static final int LOADER_SIZE = 50;
     private static float FADE_IN_DURATION = 0.05f;
     private static float FADE_OUT_DURATION = 0.15f;
     // View
@@ -88,8 +88,8 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.loading.setPosition(Application.worldWidth/2 - LOADER_SIZE/2, Application.worldHeight/2 - LOADER_SIZE/2);
 
         this.loading.setPosition(
-                this.buyBtn.getX() + this.buyBtn.getWidth() + 20,
-                this.buyBtn.getY() + 5
+                this.buyBtn.getX() + this.buyBtn.getWidth()/2 - this.loading.getWidth()/2,
+                this.buyBtn.getY() + this.buyBtn.getHeight()/2 - this.loading.getHeight()/2
         );
     }
 
@@ -238,6 +238,9 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
         // Start taking input from the UI
         Application.get().inputMultiplexer.addProcessor(this.stage);
+
+        this.layout.invalidate();
+        this.layout.invalidateHierarchy();
     }
 
     @Override
@@ -260,16 +263,23 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     }
 
     private void update(float delta) {
+        System.out.println("ici " + this.loading.getX() + " / " + this.loading.getY());
         this.time += delta;
+
         this.score.setText(PlayerStats.get().currentScore + "");
         this.lives.setText(PlayerStats.get().remainingLifes + "");
         this.countdown.setText(PlayerStats.get().getCountdown(this.bundle));
 
         this.playBtn.setDisabled(PlayerStats.get().remainingLifes <= 0);
-        this.buyBtn.setDisabled(this.game.service == null || this.game.service.isLoading());
 
-        this.loading.setRotation((time / 3000) % 360); // TODO
-        this.loading.setAlign(Align.center);
+        if(this.game.service == null || this.game.service.isLoading()) {
+            this.buyBtn.setDisabled(true);
+            this.buyBtn.setText("");
+            this.loading.setRotation((time * 160) % 360);
+        } else {
+            this.buyBtn.setDisabled(false);
+            this.buyBtn.setText(this.bundle.get("buy"));
+        }
 
         this.stage.act(delta);
     }
