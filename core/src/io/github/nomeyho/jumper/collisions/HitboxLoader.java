@@ -40,7 +40,7 @@ public class HitboxLoader extends
         for(JsonValue body: bodies) {
             // Origin
             float originX = body.get("origin").getFloat("x");
-            float originY = body.get("origin").getFloat("x");
+            float originY = body.get("origin").getFloat("y");
             // List of polygons - assume to have the origin at (0,0)
             JsonValue polygons = body.get("shapes");
             Array<Polygon> _polygons = new Array<Polygon>();

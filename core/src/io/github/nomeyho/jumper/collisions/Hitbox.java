@@ -71,6 +71,9 @@ public class Hitbox implements Shape2D {
             hitbox.polygons.add(new Polygon(copy));
         }
 
+        hitbox.originX = this.originX;
+        hitbox.originY = this.originY;
+
         return hitbox;
     }
 

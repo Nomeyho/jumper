@@ -263,7 +263,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     }
 
     private void update(float delta) {
-        System.out.println("ici " + this.loading.getX() + " / " + this.loading.getY());
+        // TODO System.out.println("ici " + this.loading.getX() + " / " + this.loading.getY());
         this.time += delta;
 
         this.score.setText(PlayerStats.get().currentScore + "");

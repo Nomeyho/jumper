@@ -27,6 +27,7 @@ public abstract class AbstractGameObject {
             polygon.setScale(width, width); // back magic
             polygon.setPosition(x, y);
             polygon.setOrigin(hitbox.originX, hitbox.originY);
+            polygon.translate(width * hitbox.originX, width * hitbox.originY);
             polygon.setRotation(angle);
         }
     }
