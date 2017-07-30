@@ -11,8 +11,8 @@ import io.github.nomeyho.jumper.utils.Utils;
 import java.util.Iterator;
 
 public class UsualLevel extends AbstractLevel {
-    private static final float LEFT_LIMIT = Application.worldWidth - 2*Portal.WIDTH;
-    private static final float RIGHT_LIMIT = 2*Portal.WIDTH;
+    private static final float RIGHT_LIMIT = Application.worldWidth - 1*Portal.WIDTH;
+    private static final float LEFT_LIMIT = 1*Portal.WIDTH;
     private float currentBellHeight = MIN_HEIGHT;
     private float deltaY;
     private float deltaX;
@@ -84,34 +84,34 @@ public class UsualLevel extends AbstractLevel {
     }
 
     private float getNextX (float x) {
+        float delta = Utils.randomFloat(-this.deltaX, this.deltaX);
+        float tmp = x + delta;
+
+        while(tmp < LEFT_LIMIT || tmp > RIGHT_LIMIT || Math.abs(x - tmp) < Application.CELL) {
+            delta = Utils.randomFloat(-this.deltaX, this.deltaX);
+            tmp = x + delta;
+        }
+
+        return tmp;
         /*
         // Left
-        float left = 0;
+        float left;
         if(x > (deltaX + LEFT_LIMIT))
             left = LEFT_LIMIT;
         else
             left = deltaX + LEFT_LIMIT;
 
         // Right
-        float right = 0;
+        float right;
         if(x < (RIGHT_LIMIT - deltaX))
             right = RIGHT_LIMIT;
         else
             right = RIGHT_LIMIT - deltaX;
 
-        x = Utils.randomFloat(left, right);
-        */
+        System.out.println("limits" + left + " - " + right);
 
-        float delta = Utils.randomFloat(-this.deltaX, this.deltaX);
-
-        float tmp = x + delta;
-        while(tmp < LEFT_LIMIT || tmp > RIGHT_LIMIT || Math.abs(x - tmp) < Application.CELL) {
-            delta = Utils.randomFloat(-this.deltaX, this.deltaX);
-            tmp = x + delta;
-        }
-
-        x = tmp;
-        return x;
+       return Utils.randomFloat(left, right);
+       */
     }
 
     private float getNextY (float y) {
