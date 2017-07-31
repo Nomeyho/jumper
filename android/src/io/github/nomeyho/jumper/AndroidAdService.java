@@ -11,7 +11,6 @@ public class AndroidAdService implements AdService {
     /* Cross platform */
     @Override
     public void openAdd() {
-        System.out.println("ICI ICI openAdd");
         app.runOnUiThread(new Runnable() {
             @Override
             public void run() {

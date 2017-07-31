@@ -113,5 +113,6 @@ public class AndroidLauncher extends AndroidApplication implements RewardedVideo
                 "Error loading the video",
                 Toast.LENGTH_SHORT
         ).show();
+        this.adService.loading = false;
     }
 }
