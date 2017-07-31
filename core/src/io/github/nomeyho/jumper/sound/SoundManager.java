@@ -45,7 +45,7 @@ public class SoundManager {
     }
 
     public void updateVolume () {
-        this.music.setVolume(UserPreferences.get().music / 100f);
+        this.music.setVolume(UserPreferences.get().music / 500f);
     }
 
     // TODO use
