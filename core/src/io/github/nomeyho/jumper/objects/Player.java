@@ -276,4 +276,6 @@ public class Player extends AbstractGameObject {
             particleEffect.start();
     }
 
+    @Override
+    public void disappear() {}
 }

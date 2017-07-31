@@ -28,7 +28,7 @@ public abstract class AbstractLevel {
 
     public abstract void update(float delta, float playerX, float playerY);
     public abstract void draw(SpriteBatch batch);
-    public abstract void remove(AbstractGameObject go);
+    public abstract void disappear(AbstractGameObject go);
 
     public void drawHitbox() {
         ShapeRenderer shapeRenderer = Application.get().shapeRenderer;

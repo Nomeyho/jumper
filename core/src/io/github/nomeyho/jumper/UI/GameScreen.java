@@ -112,8 +112,6 @@ public class GameScreen extends AbstractGameScreen {
             GameManager.get().level.drawHitbox();
         }
 
-        GameManager.get().level.drawHitbox();
-
         // World
         this.batch.begin();
         GameManager.get().draw();

@@ -7,7 +7,6 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.particles.ParticleEnum;
 import io.github.nomeyho.jumper.particles.ParticleManager;
-import io.github.nomeyho.jumper.utils.AnimationWrapper;
 import io.github.nomeyho.jumper.utils.ColorManager;
 
 public class Portal extends AbstractGameObject implements Pool.Poolable {
@@ -19,6 +18,8 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     private TextureRegion backTexture;
     private Color color;
     private ParticleEffect dustEffect;
+    public float scale;
+    public boolean disappear;
 
     public Portal(float x, float y) {
         TextureAtlas textureAtlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
@@ -38,6 +39,8 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
         this.location.setLocation(x, y);
         this.speed.set(0, SPEED, 0);
         this.color = ColorManager.get().getColor(y);
+        this.scale = 1;
+        this.disappear = false;
     }
 
     @Override
@@ -51,24 +54,59 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
         this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY(), 0);
         this.dustEffect.update(delta);
         this.dustEffect.setPosition(this.location.getX()+20, this.location.getY()+20);
+
+        if(this.disappear && this.scale > 0) {
+            this.scale -= delta/2f;
+        } else {
+            this.scale = 1;
+            this.disappear = false;
+        }
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         batch.setColor(color);
-       batch.draw(this.frontTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
+        batch.draw(
+                this.frontTexture,
+                this.location.getX(),
+                this.location.getY(),
+                WIDTH/2,
+                HEIGHT/2,
+                WIDTH,
+                HEIGHT,
+                this.scale,
+                this.scale,
+                0
+        );
         batch.setColor(1,1,1,1);
     }
 
     @Override
     public void drawBackground(SpriteBatch batch) {
         batch.setColor(color);
-        //this.dustEffect.draw(batch);
-        batch.draw(this.backTexture, this.location.getX(), this.location.getY(), WIDTH, HEIGHT);
+        // TODO this.dustEffect.draw(batch);
+        batch.draw(
+                this.backTexture,
+                this.location.getX(),
+                this.location.getY(),
+                WIDTH/2,
+                HEIGHT/2,
+                WIDTH,
+                HEIGHT,
+                this.scale,
+                this.scale,
+                0
+        );
         batch.setColor(1,1,1,1);
     }
 
     @Override
     public void reset() {
+    }
+
+    @Override
+    public void disappear () {
+        this.disappear = true;
+        this.scale = 1;
     }
 }

@@ -112,7 +112,7 @@ public class GameManager {
                 SoundManager.get().playSound(SoundEnum.TINK);
                 this.player.setSpeed(1000);
                 PlayerStats.get().currentScore += go.getScore();
-                this.level.remove(go);
+                this.level.disappear(go);
             }
         }
     }

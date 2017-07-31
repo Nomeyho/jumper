@@ -2,7 +2,9 @@ package io.github.nomeyho.jumper.levels;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import io.github.nomeyho.jumper.AbstractGame;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.objects.AbstractGameObject;
@@ -40,6 +42,8 @@ public class UsualLevel extends AbstractLevel {
      * @param playerY world Y
      */
     public void update (float delta, float playerX, float playerY) {
+        clearDisappeared();
+
         /* Update each game objects */
         for(int i=0, end=this.objects.size; i<end; ++i)
             this.objects.get(i).update(delta);
@@ -137,8 +141,20 @@ public class UsualLevel extends AbstractLevel {
     }
 
     @Override
-    public void remove(AbstractGameObject go) {
-        // TODO effect
-        this.objects.removeValue(go, true);
+    public void disappear(AbstractGameObject go) {
+        go.disappear();
+    }
+
+    private void clearDisappeared () {
+        Portal portal;
+        for(AbstractGameObject go: this.objects) {
+            if(go instanceof Portal) {
+                portal = (Portal) go;
+                if(portal.disappear && portal.scale <= 0) {
+                    this.objects.removeValue(go, true);
+                    this.pool.free(portal);
+                }
+            }
+        }
     }
 }
