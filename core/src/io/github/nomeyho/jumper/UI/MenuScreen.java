@@ -47,7 +47,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private SettingsMenu settingsMenu;
     private AnimatedImage planetImage;
     private MenuBackground background;
-    private Image loading;
     private float time = 0;
 
     private Image scoreIcon;
@@ -85,12 +84,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.score.setPosition(60, Application.worldHeight - 40);
         this.livesIcon.setPosition(20, Application.worldHeight - 80 - ICON_SIZE/2);
         this.lives.setPosition(60, Application.worldHeight - 80);
-        this.loading.setPosition(Application.worldWidth/2 - LOADER_SIZE/2, Application.worldHeight/2 - LOADER_SIZE/2);
-
-        this.loading.setPosition(
-                this.buyBtn.getX() + this.buyBtn.getWidth()/2 - this.loading.getWidth()/2,
-                this.buyBtn.getY() + this.buyBtn.getHeight()/2 - this.loading.getHeight()/2
-        );
     }
 
     @Override
@@ -120,12 +113,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
 
         Skin skin = Application.get().assetManager.get(Application.SKIN);
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
-
-        // Loading
-        this.loading = new Image(atlas.findRegion("loading"));
-        this.loading.setSize(LOADER_SIZE, LOADER_SIZE);
-        this.loading.setOrigin(LOADER_SIZE/2, LOADER_SIZE/2);
-        this.stage.addActor(this.loading);
 
         // Logo
         this.logo = new Label(Application.TAG, skin, "large");
@@ -275,7 +262,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         if(this.game.service == null || this.game.service.isLoading()) {
             this.buyBtn.setDisabled(true);
             this.buyBtn.setText("");
-            this.loading.setRotation((time * 160) % 360);
+            this.buyBtn.setText(getLoadingText());
         } else {
             this.buyBtn.setDisabled(false);
             this.buyBtn.setText(this.bundle.get("buy"));
@@ -319,5 +306,28 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         // Set button width depending on the contained text
         Utils.setButtonWidth(this.layout);
         this.layout.invalidate();
+    }
+
+    public String getLoadingText () {
+        String txt = this.bundle.get("loading");
+
+        // 4 sec to display '...'
+        int len = (int) this.time % 4;
+        switch (len) {
+            case 0:
+                txt += "";
+                break;
+            case 1:
+                txt += ".";
+                break;
+            case 2:
+                txt += "..";
+                break;
+            case 3:
+                txt += "...";
+                break;
+        }
+
+        return txt;
     }
 }
