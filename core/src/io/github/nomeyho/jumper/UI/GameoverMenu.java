@@ -66,6 +66,7 @@ public class GameoverMenu extends Dialog implements ITranslatable {
 
         this.tooltip = new Label("", skin);
         this.tooltip.setAlignment(Align.center);
+        this.tooltip.setColor(Color.RED);
         this.getContentTable().add(this.tooltip).padBottom(50);
         this.getContentTable().row();
 
@@ -138,6 +139,10 @@ public class GameoverMenu extends Dialog implements ITranslatable {
         this.scoreTitle.setText("Score");
         this.score.setText(PlayerStats.get().currentScore + "");
         this.bestScore.setText(this.bestScorePrefix + " " + PlayerStats.get().bestScore);
+
+        // Play sound once
+        if(!this.isVisible())
+            SoundManager.get().playSound(SoundEnum.GAME_OVER);
 
         this.setVisible(true);
     }

@@ -4,7 +4,9 @@ import com.badlogic.gdx.utils.Array;
 
 public enum SoundEnum {
     CLICK("sound/click.mp3"),
-    TINK("sound/tink.wav");
+    TINK("sound/tink.mp3"),
+    GAME_OVER("sound/gameover.mp3"),
+    TAKEOFF("sound/takeoff.mp3");
 
     private String fileName;
 

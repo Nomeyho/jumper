@@ -12,6 +12,8 @@ import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
 import io.github.nomeyho.jumper.particles.ParticleEnum;
 import io.github.nomeyho.jumper.particles.ParticleManager;
+import io.github.nomeyho.jumper.sound.SoundEnum;
+import io.github.nomeyho.jumper.sound.SoundManager;
 import io.github.nomeyho.jumper.utils.*;
 
 public class Player extends AbstractGameObject {
@@ -106,6 +108,7 @@ public class Player extends AbstractGameObject {
                     this.state = PlayerEnum.FLYING;
                     setSpeed(1500);
                     this.fireEffect.start();
+                    SoundManager.get().playSound(SoundEnum.TAKEOFF);
                 }
                 // Animation
                 this.takeoffAnimation.update(delta);
