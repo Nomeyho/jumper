@@ -1,5 +1,6 @@
 package io.github.nomeyho.jumper.levels;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -20,7 +21,7 @@ public class UsualLevel extends AbstractLevel {
     private static final float LEFT_LIMIT = 1*Portal.WIDTH;
     private float currentBellHeight = MIN_HEIGHT;
     private float deltaY;
-    private float deltaX;
+    private float deltaXMax, deltaXMin;
     private Pool<Portal> pool;
     private static final float rainbowProbability = 0.02f;
 
@@ -28,7 +29,8 @@ public class UsualLevel extends AbstractLevel {
 
     public void init () {
         super.init();
-        this.deltaX = Application.CELL * 3;
+        this.deltaXMax = Application.CELL * 3;
+        this.deltaXMin = Application.CELL/3f;
         this.deltaY = Application.CELL * 1.5f;
         this.pool = new Pool<Portal>(10, 40) {
             @Override
@@ -72,7 +74,7 @@ public class UsualLevel extends AbstractLevel {
             }
             else{
                 x = lastPortal.location.getX();
-                x = getNextX(x, Application.CELL/3f, this.deltaX);
+                x = getNextX(x, this.deltaXMin, this.deltaXMax);
             }
             // Add new portals
             portal = this.pool.obtain();
@@ -105,7 +107,14 @@ public class UsualLevel extends AbstractLevel {
             }
         }
 
-        System.out.println(GameManager.get().player.location.getY());
+        if(y > 1){
+            deltaXMax = 6*Application.CELL;
+            deltaY = 2f*Application.CELL;
+        }
+        /*if(y > 2000 && y < 4000){
+            deltaXMax = 4*Application.CELL;
+            deltaY = 1.65f*Application.CELL;
+        }*/
     }
 
     private float getNextX (float x, float min, float max) {
