@@ -107,7 +107,6 @@ public class UsualLevel extends AbstractLevel {
                 go.init(go.location.getX(), go.location.getY());
             }
         }
-        System.out.println(this.currentBellHeight);
         setDifficulty(this.currentBellHeight);
     }
 

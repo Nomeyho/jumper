@@ -20,7 +20,7 @@ public class Player extends AbstractGameObject {
     // Const
     public static final float WIDTH = 70;
     public static final float HEIGHT = 110;
-    public static final float MAX_SPEED_X = 750;
+    public static final float MAX_SPEED_X = 800;
     public static final float MAX_SPEED_Y = 2000;
     public static final float GRAVITY = 1800;
     public static final float MIN_Y = 60;
