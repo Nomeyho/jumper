@@ -139,6 +139,7 @@ public class Player extends AbstractGameObject {
             this.maxHeight = this.location.getY();
         if(this.location.getY() < this.maxHeight - Application.worldHeight*2f && this.speed.y < 0) {
             this.location.setLocation(this.location.getX(), Application.worldHeight);
+            GameManager.get().starManager.init();
             this.maxHeight = 0;
         }
 
