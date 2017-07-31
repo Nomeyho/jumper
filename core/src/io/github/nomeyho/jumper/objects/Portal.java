@@ -14,9 +14,10 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     public static final float WIDTH = 60;
     public static final float HEIGHT = 45;
     private static final float SPEED = -30;
-    private static final int SCORE = 1;
-    private TextureRegion frontTexture;
-    private TextureRegion backTexture;
+    private static final int SCORE = 10;
+    private static final int IMPULSE = 1050;
+    protected TextureRegion frontTexture;
+    protected TextureRegion backTexture;
     private Color color;
     private ParticleEffect dustEffect;
     public float scale;
@@ -25,15 +26,20 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     private float time;
 
     public Portal(float x, float y) {
+        this(x,y,"portal");
+    }
+
+    public Portal(float x, float y, String textureName) {
         TextureAtlas textureAtlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
-        this.frontTexture = textureAtlas.findRegion("portal_front");
-        this.backTexture = textureAtlas.findRegion("portal_back");
+        this.frontTexture = textureAtlas.findRegion(textureName + "_front");
+        this.backTexture = textureAtlas.findRegion(textureName + "_back");
 
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("portal");
 
         this.dustEffect = ParticleManager.get().getEffect(ParticleEnum.DUST);
         this.dustEffect.start();
+        super.isPooled = true;
         init(x, y);
     }
 
@@ -46,6 +52,7 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
         this.disappear = false;
         this.toRemove = false;
         this.time = 0;
+
     }
 
     @Override
@@ -126,5 +133,10 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     public void disappear () {
         this.disappear = true;
         this.scale = 1;
+    }
+
+    @Override
+    public float getImpulse(){
+        return IMPULSE;
     }
 }

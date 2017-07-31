@@ -10,6 +10,7 @@ public abstract class AbstractGameObject {
     public Location location = new Location(0, 0);
     public Vector3 speed = new Vector3(0,0,0);
     public Hitbox hitbox;
+    public boolean isPooled = false;
 
 
     public abstract float getWidth ();
@@ -20,6 +21,7 @@ public abstract class AbstractGameObject {
     public abstract void init(float x, float y);
     public abstract int getScore();
     public abstract void disappear();
+    public abstract float getImpulse();
 
     public void updateHitbox (float width, float height, float x, float y, float angle) {
         if(this.hitbox == null) return;

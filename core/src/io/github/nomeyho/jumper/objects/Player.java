@@ -58,6 +58,7 @@ public class Player extends AbstractGameObject {
 
     @Override
     public void init(float x, float y){
+        this.maxHeight = 0;
         this.state = PlayerEnum.WAITING;
         this.speed.set(0,0,0);
         this.location.setLocation(x, y);
@@ -135,11 +136,12 @@ public class Player extends AbstractGameObject {
         updateEffect(delta);
 
         if(this.location.getY() > this.maxHeight)
-             this.maxHeight = this.location.getY();
-        if(this.location.getY() < this.maxHeight - Application.worldHeight*2f) {
-            this.maxHeight = 0;
+            this.maxHeight = this.location.getY();
+        if(this.location.getY() < this.maxHeight - Application.worldHeight*2f && this.speed.y < 0) {
             this.location.setLocation(this.location.getX(), Application.worldHeight);
+            this.maxHeight = 0;
         }
+
         this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY(), this.angle);
     }
 
@@ -181,11 +183,8 @@ public class Player extends AbstractGameObject {
     }
 
     public void setSpeed(float intensity){
-            if(intensity < -MAX_SPEED_Y)
-                intensity = -MAX_SPEED_Y;
-            else if(intensity > MAX_SPEED_Y)
-                intensity = MAX_SPEED_Y;
-            this.speed.y = intensity;
+            if(intensity > this.speed.y)
+                this.speed.y = intensity;
     }
 
     private void setAngle(){
@@ -297,4 +296,9 @@ public class Player extends AbstractGameObject {
 
     @Override
     public void disappear() {}
+
+    @Override
+    public float getImpulse() {
+        return 0;
+    }
 }

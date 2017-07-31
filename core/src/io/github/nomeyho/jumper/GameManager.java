@@ -140,14 +140,12 @@ public class GameManager {
         for(AbstractGameObject go: this.level.objects) { // yeah warning, but controlled
             if(this.player.hitbox.overlap(go.hitbox)) {
                 SoundManager.get().playSound(SoundEnum.TINK);
-                this.player.setSpeed(1000);
-                if(this.player.speed.y > 950)
-                    this.player.speed.y += 200;
+                this.player.setSpeed(go.getImpulse());
                 PlayerStats.get().currentScore += go.getScore();
                 this.level.disappear(go);
                 showScore(
                         go.location.getX() + go.getWidth()/2,
-                        go.location.getY() + go.getHeight(),
+                        go.location.getY() - go.getHeight()/2,
                         "" + go.getScore()
                 );
             }
@@ -177,17 +175,13 @@ public class GameManager {
         PlayerStats.get().currentScore =0;
         ColorManager.get().shuffle();
         this.player.init(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
-        System.out.println(player.location.getY());
         // TODO
         this.level = new UsualLevel();
     }
 
     public void showScore (float x, float y, String score) {
         ScoreLabel label = this.labelPool.obtain();
-        Vector3 pos = this.camera.project(new Vector3(x, y, 0));
-        // label.init(pos.x, pos.y, score);
-        // label.init(pos.x, pos.y, score);
-        label.init(x, y, "1");
+        label.init(x, y, score);
         this.labels.add(label);
     }
 }

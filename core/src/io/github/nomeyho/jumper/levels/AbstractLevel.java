@@ -23,7 +23,6 @@ public abstract class AbstractLevel {
 
     public void init () {
         this.objects = new Array<AbstractGameObject>();
-        this.objects.ordered = false;
     }
 
     public abstract void update(float delta, float playerX, float playerY);

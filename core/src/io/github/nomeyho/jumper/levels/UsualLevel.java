@@ -9,6 +9,8 @@ import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.GameManager;
 import io.github.nomeyho.jumper.objects.AbstractGameObject;
 import io.github.nomeyho.jumper.objects.Portal;
+import io.github.nomeyho.jumper.objects.RainbowPortal;
+import io.github.nomeyho.jumper.utils.PlayerEnum;
 import io.github.nomeyho.jumper.utils.Utils;
 
 import java.util.Iterator;
@@ -20,6 +22,7 @@ public class UsualLevel extends AbstractLevel {
     private float deltaY;
     private float deltaX;
     private Pool<Portal> pool;
+    private static final float rainbowProbability = 0.02f;
 
     public UsualLevel () { init(); }
 
@@ -53,26 +56,35 @@ public class UsualLevel extends AbstractLevel {
         float maxY = playerY + Application.worldHeight;
         float y = minY;
         float x;
-        int len;
+        float random;
         Portal portal;
+        Portal lastPortal;
 
         // Generate portals
         while (y < maxY) {
             // Get next Y
             y = getNextY(y);
             // Get next X
-            len = this.objects.size;
-            if(len > 0) {
-                x = this.objects.get(len - 1).location.getX();
-                x = getNextX(x);
-            } else {
+            lastPortal = getLastPortal();
+            if(lastPortal == null){
                 // Don't start on the side
                 x = Utils.randomFloat(Portal.WIDTH, Application.worldWidth - 2*Portal.WIDTH);
+            }
+            else{
+                x = lastPortal.location.getX();
+                x = getNextX(x, Application.CELL/3f, this.deltaX);
             }
             // Add new portals
             portal = this.pool.obtain();
             portal.init(x, y);
             this.objects.add(portal);
+            // Rainbow
+            random = Utils.randomFloat(0,1);
+
+            if(random < rainbowProbability && y > Application.worldHeight){
+                x = getNextX(x, 4*Application.CELL, 7*Application.CELL);
+                this.objects.add(new RainbowPortal(x,y + Utils.randomFloat(-Application.CELL/2, Application.CELL/2)));
+            }
         }
 
         this.currentBellHeight = y;
@@ -82,27 +94,27 @@ public class UsualLevel extends AbstractLevel {
         while(it.hasNext()) {
             AbstractGameObject go = it.next();
             if(go.location.getY() < (playerY - 1.5f*Application.worldHeight)) {
-                this.pool.free((Portal)go);
+                if(go.isPooled)
+                    this.pool.free((Portal)go);
                 it.remove();
             }
             //
-            if(go.location.getY() < MIN_HEIGHT) {
-                go.location.setLocation(Utils.randomFloat(Portal.WIDTH, Application.worldWidth - 2*Portal.WIDTH), maxY
-                        - this.deltaY - Utils.randomFloat(-0.2f * this.deltaY, 0.2f * this.deltaY));
+            if(go.location.getY() < MIN_HEIGHT && GameManager.get().player.state == PlayerEnum.WAITING) {
+                go.location.setLocation(Utils.randomFloat(Portal.WIDTH, Application.worldWidth - 2*Portal.WIDTH), maxY);
                 go.init(go.location.getX(), go.location.getY());
             }
         }
     }
 
-    private float getNextX (float x) {
-        float delta = Utils.randomFloat(-this.deltaX, this.deltaX);
+    private float getNextX (float x, float min, float max) {
+        float delta = Utils.randomFloat(-max, max);
         float tmp = x + delta;
 
-        while(tmp < LEFT_LIMIT || tmp > RIGHT_LIMIT || Math.abs(x - tmp) < Application.CELL) {
-            delta = Utils.randomFloat(-this.deltaX, this.deltaX);
+
+        while(tmp < LEFT_LIMIT || tmp > RIGHT_LIMIT || Math.abs(delta) < min) {
+            delta = Utils.randomFloat(-max, max);
             tmp = x + delta;
         }
-
         return tmp;
         /*
         // Left
@@ -153,9 +165,18 @@ public class UsualLevel extends AbstractLevel {
                 portal = (Portal) go;
                 if(portal.toRemove) {
                     this.objects.removeValue(go, true);
-                    this.pool.free(portal);
+                    if(portal.isPooled)
+                        this.pool.free(portal);
                 }
             }
         }
+    }
+
+    private Portal getLastPortal(){
+        for(int i=this.objects.size-1; i >= 0; --i) {
+            if(!(this.objects.get(i) instanceof RainbowPortal))
+                return (Portal) this.objects.get(i);
+        }
+        return null;
     }
 }
