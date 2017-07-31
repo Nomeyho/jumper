@@ -103,77 +103,77 @@ filter: MipMapLinearNearest,Linear
 repeat: none
 bell
   rotate: false
-  xy: 504, 334
+  xy: 435, 325
   size: 200, 161
   orig: 200, 161
   offset: 0, 0
   index: 2
 bell
   rotate: false
-  xy: 706, 337
+  xy: 637, 328
   size: 200, 158
   orig: 200, 158
   offset: 0, 0
   index: 1
 bell
   rotate: false
-  xy: 302, 144
+  xy: 435, 174
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 3
 bell_explosion
   rotate: false
-  xy: 302, 144
+  xy: 435, 174
   size: 200, 149
   orig: 200, 149
   offset: 0, 0
   index: 2
 bell_explosion
   rotate: false
-  xy: 504, 200
+  xy: 839, 354
   size: 167, 132
   orig: 167, 132
   offset: 0, 0
   index: 1
 pause
   rotate: false
-  xy: 2, 2
+  xy: 2, 52
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
   index: -1
 portal_back
   rotate: false
-  xy: 504, 101
+  xy: 637, 229
   size: 186, 97
   orig: 186, 97
   offset: 0, 0
   index: -1
 portal_dust
   rotate: false
-  xy: 2, 204
-  size: 298, 291
-  orig: 298, 291
+  xy: 2, 254
+  size: 229, 232
+  orig: 229, 232
   offset: 0, 0
   index: -1
 portal_front
   rotate: false
-  xy: 706, 238
+  xy: 637, 130
   size: 186, 97
   orig: 186, 97
   offset: 0, 0
   index: -1
 score
   rotate: false
-  xy: 908, 447
+  xy: 2, 2
   size: 50, 48
   orig: 50, 48
   offset: 0, 0
   index: -1
 smoke
   rotate: false
-  xy: 302, 295
+  xy: 233, 286
   size: 200, 200
   orig: 200, 200
   offset: 0, 0
