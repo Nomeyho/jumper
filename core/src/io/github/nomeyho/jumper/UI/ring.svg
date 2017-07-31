@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg4888"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="ring.svg">
+  <defs
+     id="defs4882">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4941">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4943"
+         style="fill:#ffffff;fill-opacity:0.72473898;fill-rule:nonzero;stroke:none;stroke-width:1.21703529"
+         d="m -3903.3767,417.96565 c -4.8908,87.71916 59.0529,167.92725 166.6644,227.12944 -24.1824,-30.26175 -36.6944,-63.63478 -34.7492,-98.57288 7.5175,-134.34712 225.9625,-241.15002 487.9395,-238.52277 261.9739,2.63915 468.2509,113.69906 460.7422,248.05152 -2.5274,45.32625 -29.1085,87.53935 -73.2347,123.46069 146.5645,-57.62006 243.357,-147.29222 249.0379,-248.89228 9.9391,-177.92231 -263.2385,-325.0199 -610.1857,-328.51659 -346.9481,-3.491904 -636.268,137.946 -646.2144,315.86287"
+         inkscape:export-filename="C:\Users\Pierre-Olivier\Desktop\jumper\android\assets\img\portal_back.png"
+         inkscape:export-xdpi="13.711369"
+         inkscape:export-ydpi="13.711369" />
+    </clipPath>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4818"
+       id="radialGradient4820-7"
+       cx="-3391.6592"
+       cy="3853.1582"
+       fx="-3391.6592"
+       fy="3853.1582"
+       r="1649.5375"
+       gradientTransform="matrix(1,0,0,0.70083796,0,1152.7187)"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4818">
+      <stop
+         style="stop-color:#241c1c;stop-opacity:1;"
+         offset="0"
+         id="stop4814" />
+      <stop
+         style="stop-color:#241c1c;stop-opacity:0;"
+         offset="1"
+         id="stop4816" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4929">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4931"
+         style="opacity:1;fill:#fafafa;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.21703529"
+         d="m -2645.9549,428.79603 c 4.7663,-87.72103 -59.308,-167.60325 -167.0313,-226.27612 24.2316,30.13846 36.7947,63.44521 34.899,98.38453 -7.3274,134.34918 -225.6744,242.16909 -487.7211,240.80193 -262.043,-1.38694 -468.5299,-111.43087 -461.2116,-245.78315 2.4629,-45.32616 28.9905,-87.65503 73.0763,-123.77897 -146.5188,58.30716 -243.2074,148.42003 -248.7445,250.01859 -9.6867,177.92672 263.7693,323.6759 610.8088,325.50797 347.0398,1.82971 636.2297,-140.95847 645.9244,-318.87478"
+         inkscape:export-filename="C:\Users\Pierre-Olivier\Desktop\jumper\android\assets\img\portal_front.png"
+         inkscape:export-xdpi="13.711369"
+         inkscape:export-ydpi="13.711369" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="243.18963"
+     inkscape:cy="767.02675"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="821"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4885">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <image
+       y="22.844059"
+       x="-3918.0566"
+       id="image4740"
+       xlink:href="data:image/jpeg;base64,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 "
+       preserveAspectRatio="none"
+       height="733.211"
+       width="1289.8516"
+       style="opacity:0.71300001;fill:#241c1c;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       inkscape:export-filename="C:\Users\Pierre-Olivier\Desktop\jumper\android\assets\img\portal_rainbow_FULL.png"
+       inkscape:export-xdpi="13"
+       inkscape:export-ydpi="13"
+       clip-path="url(#clipPath4941)"
+       transform="matrix(0.10850019,0,0,0.13642105,455.29893,24.644675)" />
+    <rect
+       style="opacity:1;fill:#ff1919;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:0.33508381;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
+       id="rect4730-6"
+       width="139.94914"
+       height="100.02541"
+       x="30.189116"
+       y="27.761105"
+       inkscape:export-filename="C:\Users\Pierre-Olivier\Desktop\jumper\android\assets\img\portal_rainbow_FULL.png"
+       inkscape:export-xdpi="13"
+       inkscape:export-ydpi="13" />
+    <image
+       y="22.844059"
+       x="-3918.0566"
+       id="image4740-3"
+       xlink:href="data:image/jpeg;base64,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 "
+       preserveAspectRatio="none"
+       height="733.211"
+       width="1289.8516"
+       style="fill:url(#radialGradient4820-7);fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       clip-path="url(#clipPath4929)"
+       inkscape:export-filename="C:\Users\Pierre-Olivier\Desktop\jumper\android\assets\img\portal_rainbow_FULL.png"
+       inkscape:export-xdpi="13"
+       inkscape:export-ydpi="13"
+       transform="matrix(0.10850019,0,0,0.13642105,455.29893,24.644675)" />
+  </g>
+</svg>
