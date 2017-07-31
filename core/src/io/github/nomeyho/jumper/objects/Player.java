@@ -1,5 +1,7 @@
 package io.github.nomeyho.jumper.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
@@ -27,6 +29,7 @@ public class Player extends AbstractGameObject {
     private float startingPosition, endPosition;
     private Vector2 deltaPos = new Vector2();
     private float angle =0;
+    private float maxHeight =0;
     // Graphics
     private AnimationWrapper takeoffAnimation;
     private AnimationWrapper flyingAnimation;
@@ -46,11 +49,10 @@ public class Player extends AbstractGameObject {
         this.playerTexture = this.takeoffAnimation.getCurrentTexture();
 
         this.flyingAnimation = new AnimationWrapper(1f / 10, "player_flying", Application.PLAYER_FLYING_ATLAS);
-        this.fallAnimation = new AnimationWrapper(1f / 15, "player_fall", Application.PLAYER_FALL_ATLAS, Animation.PlayMode.NORMAL);
+        this.fallAnimation = new AnimationWrapper(1f / 50, "player_fall", Application.PLAYER_FALL_ATLAS, Animation.PlayMode.NORMAL);
 
         this.smokeEffect = ParticleManager.get().getEffect(ParticleEnum.SMOKE);
         this.fireEffect = ParticleManager.get().getEffect(ParticleEnum.FIRE);
-
         init(x, y);
     }
 
@@ -61,6 +63,7 @@ public class Player extends AbstractGameObject {
         this.location.setLocation(x, y);
         this.touchedPos.x = x + WIDTH/2;
         this.touchedPos.y = y + HEIGHT/2;
+
     }
 
     @Override
@@ -131,6 +134,12 @@ public class Player extends AbstractGameObject {
         hasHitGround();
         updateEffect(delta);
 
+        if(this.location.getY() > this.maxHeight)
+             this.maxHeight = this.location.getY();
+        if(this.location.getY() < this.maxHeight - Application.worldHeight*2f) {
+            this.maxHeight = 0;
+            this.location.setLocation(this.location.getX(), Application.worldHeight);
+        }
         this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY(), this.angle);
     }
 
@@ -270,11 +279,11 @@ public class Player extends AbstractGameObject {
         this.fireEffect.update(delta);
         float radius = WIDTH / 2.55f;
         if(this.direction == DirectionEnum.LEFT)
-            this.fireEffect.setPosition(this.location.getX() + WIDTH/2 + radius*MathUtils.cosDeg(320 + this.angle),
-                    this.location.getY() + HEIGHT/2 + radius*MathUtils.sinDeg(320 + this.angle));
+            this.fireEffect.setPosition(this.location.getX() + WIDTH/2f + radius*MathUtils.cosDeg(320 + this.angle),
+                    this.location.getY() + HEIGHT/2f + radius*MathUtils.sinDeg(320 + this.angle));
         else
-            this.fireEffect.setPosition(this.location.getX() + WIDTH/2 + radius*MathUtils.cosDeg(230 + this.angle),
-                    this.location.getY() + HEIGHT/2 + radius*MathUtils.sinDeg(230 + this.angle));
+            this.fireEffect.setPosition(this.location.getX() + WIDTH/2f + radius*MathUtils.cosDeg(230 + this.angle),
+                    this.location.getY() + HEIGHT/2f + radius*MathUtils.sinDeg(230 + this.angle));
         this.fireEffect.getEmitters().first().getRotation().setLow( this.angle, this.angle);
         this.fireEffect.getEmitters().first().getRotation().setHigh( this.angle, this.angle);
         this.fireEffect.getEmitters().first().getAngle().setLow(90 + this.angle,90 + this.angle);

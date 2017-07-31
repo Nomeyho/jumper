@@ -72,7 +72,7 @@ public class AndroidLauncher extends AndroidApplication implements RewardedVideo
         if (this.mAd.isLoaded()) {
             // Volume
             float volume = Math.min(UserPreferences.get().music, UserPreferences.get().sound);
-            MobileAds.setAppVolume(volume);
+            MobileAds.setAppVolume(volume/100f);
             // Open add
             this.mAd.show();
         }

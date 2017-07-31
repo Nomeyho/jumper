@@ -141,6 +141,8 @@ public class GameManager {
             if(this.player.hitbox.overlap(go.hitbox)) {
                 SoundManager.get().playSound(SoundEnum.TINK);
                 this.player.setSpeed(1000);
+                if(this.player.speed.y > 950)
+                    this.player.speed.y += 200;
                 PlayerStats.get().currentScore += go.getScore();
                 this.level.disappear(go);
                 showScore(
@@ -172,8 +174,10 @@ public class GameManager {
         }
 
         starManager.init();
+        PlayerStats.get().currentScore =0;
         ColorManager.get().shuffle();
         this.player.init(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
+        System.out.println(player.location.getY());
         // TODO
         this.level = new UsualLevel();
     }

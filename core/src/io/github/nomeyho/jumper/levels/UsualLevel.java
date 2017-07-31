@@ -87,7 +87,8 @@ public class UsualLevel extends AbstractLevel {
             }
             //
             if(go.location.getY() < MIN_HEIGHT) {
-                go.location.setLocation(Utils.randomFloat(Portal.WIDTH, Application.worldWidth - 2*Portal.WIDTH), maxY);
+                go.location.setLocation(Utils.randomFloat(Portal.WIDTH, Application.worldWidth - 2*Portal.WIDTH), maxY
+                        - this.deltaY - Utils.randomFloat(-0.2f * this.deltaY, 0.2f * this.deltaY));
                 go.init(go.location.getX(), go.location.getY());
             }
         }
