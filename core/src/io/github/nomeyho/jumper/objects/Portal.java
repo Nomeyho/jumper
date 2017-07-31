@@ -85,7 +85,7 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
         this.location.add(0, + SPEED * delta);
         this.updateHitbox(this.disappear ? 0 : WIDTH, this.disappear ? 0 : HEIGHT, this.location.getX(), this.location.getY(), 0);
         this.dustEffect.update(delta);
-        this.dustEffect.setPosition(this.location.getX()+20, this.location.getY()+20);
+        this.dustEffect.setPosition(this.location.getX(), this.location.getY());
     }
 
     @Override
@@ -109,7 +109,10 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     @Override
     public void drawBackground(SpriteBatch batch) {
         batch.setColor(color);
-        // TODO this.dustEffect.draw(batch);
+        for(int i=0; i <this.dustEffect.getEmitters().size; i++){
+            this.dustEffect.getEmitters().get(i).getTint().setColors(new float[]{color.r, color.g, color.b, color.a});
+        }
+        this.dustEffect.draw(batch);
         batch.draw(
                 this.backTexture,
                 this.location.getX(),
