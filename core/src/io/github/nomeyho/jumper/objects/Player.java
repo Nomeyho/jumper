@@ -103,14 +103,15 @@ public class Player extends AbstractGameObject {
                         this.smokeEffect.getEmitters().get(i).durationTimer = 0;
                 }
                 playParticle(this.smokeEffect);
+                // Sound
+                if(this.takeoffAnimation.stateTime == 0)
+                    SoundManager.get().playSound(SoundEnum.TAKEOFF);
                 // Animations
                 if(this.takeoffAnimation.animation.isAnimationFinished(this.takeoffAnimation.stateTime)){
                     this.state = PlayerEnum.FLYING;
                     setSpeed(1500);
                     this.fireEffect.start();
-                    SoundManager.get().playSound(SoundEnum.TAKEOFF);
                 }
-                // Animation
                 this.takeoffAnimation.update(delta);
                 break;
             case FLYING:
