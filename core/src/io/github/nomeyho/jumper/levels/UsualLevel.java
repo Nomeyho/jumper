@@ -150,7 +150,7 @@ public class UsualLevel extends AbstractLevel {
         for(AbstractGameObject go: this.objects) {
             if(go instanceof Portal) {
                 portal = (Portal) go;
-                if(portal.disappear && portal.scale <= 0) {
+                if(portal.toRemove) {
                     this.objects.removeValue(go, true);
                     this.pool.free(portal);
                 }

@@ -2,6 +2,7 @@ package io.github.nomeyho.jumper.objects;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Pool;
 import io.github.nomeyho.jumper.Application;
 import io.github.nomeyho.jumper.collisions.HitboxAtlas;
@@ -20,6 +21,8 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     private ParticleEffect dustEffect;
     public float scale;
     public boolean disappear;
+    public boolean toRemove;
+    private float time;
 
     public Portal(float x, float y) {
         TextureAtlas textureAtlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
@@ -41,6 +44,8 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
         this.color = ColorManager.get().getColor(y);
         this.scale = 1;
         this.disappear = false;
+        this.toRemove = false;
+        this.time = 0;
     }
 
     @Override
@@ -50,17 +55,20 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
 
     @Override
     public void update(float delta) {
+        if(this.toRemove) return;
+
+        if(this.disappear) {
+            this.time += delta;
+            // this.scale = Interpolation.pow5in.apply((1 - (time) % 1));
+            this.scale = Interpolation.swingIn.apply((1 - (time) % 1));
+            if(this.scale < 0.001)
+                this.toRemove = true;
+        }
+
         this.location.add(0, + SPEED * delta);
-        this.updateHitbox(WIDTH, HEIGHT, this.location.getX(), this.location.getY(), 0);
+        this.updateHitbox(this.disappear ? 0 : WIDTH, this.disappear ? 0 : HEIGHT, this.location.getX(), this.location.getY(), 0);
         this.dustEffect.update(delta);
         this.dustEffect.setPosition(this.location.getX()+20, this.location.getY()+20);
-
-        if(this.disappear && this.scale > 0) {
-            this.scale -= delta/2f;
-        } else {
-            this.scale = 1;
-            this.disappear = false;
-        }
     }
 
     @Override
