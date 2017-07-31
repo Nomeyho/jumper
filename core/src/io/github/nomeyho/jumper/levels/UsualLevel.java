@@ -23,7 +23,7 @@ public class UsualLevel extends AbstractLevel {
     private float deltaY;
     private float deltaXMax, deltaXMin;
     private Pool<Portal> pool;
-    private static final float rainbowProbability = 0.02f;
+    private float rainbowProbability = 0.02f;
 
     public UsualLevel () { init(); }
 
@@ -32,6 +32,7 @@ public class UsualLevel extends AbstractLevel {
         this.deltaXMax = Application.CELL * 3;
         this.deltaXMin = Application.CELL/3f;
         this.deltaY = Application.CELL * 1.5f;
+        this.rainbowProbability = 0.02f;
         this.pool = new Pool<Portal>(10, 40) {
             @Override
             protected Portal newObject() {
@@ -106,15 +107,8 @@ public class UsualLevel extends AbstractLevel {
                 go.init(go.location.getX(), go.location.getY());
             }
         }
-
-        if(y > 1){
-            deltaXMax = 6*Application.CELL;
-            deltaY = 2f*Application.CELL;
-        }
-        /*if(y > 2000 && y < 4000){
-            deltaXMax = 4*Application.CELL;
-            deltaY = 1.65f*Application.CELL;
-        }*/
+        System.out.println(this.currentBellHeight);
+        setDifficulty(this.currentBellHeight);
     }
 
     private float getNextX (float x, float min, float max) {
@@ -183,11 +177,34 @@ public class UsualLevel extends AbstractLevel {
         }
     }
 
-    private Portal getLastPortal(){
+    private Portal getLastPortal() {
         for(int i=this.objects.size-1; i >= 0; --i) {
             if(!(this.objects.get(i) instanceof RainbowPortal))
                 return (Portal) this.objects.get(i);
         }
         return null;
+    }
+
+   private void setDifficulty(float y) {
+        if(y < 40000){
+            this.deltaXMax = 3*Application.CELL;
+            this.deltaY = 1.5f*Application.CELL;
+            this.rainbowProbability = 0.02f;
+        }
+        else if(y > 40000 && y < 60000){
+            this.deltaXMax = 4*Application.CELL;
+            this.deltaY = 1.65f*Application.CELL;
+            this.rainbowProbability = 0.035f;
+        }
+        else if(y > 60000 && y < 80000){
+            this.deltaXMax = 5*Application.CELL;
+            this.deltaY = 1.8f*Application.CELL;
+            this.rainbowProbability = 0.05f;
+        }
+        else if(y > 100000){
+            this.deltaXMax = 6*Application.CELL;
+            this.deltaY = 2f*Application.CELL;
+            this.rainbowProbability = 0.07f;
+        }
     }
 }
