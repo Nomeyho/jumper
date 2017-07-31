@@ -93,7 +93,7 @@ public class UsualLevel extends AbstractLevel {
         Iterator<AbstractGameObject> it = this.objects.iterator(); // controlled
         while(it.hasNext()) {
             AbstractGameObject go = it.next();
-            if(go.location.getY() < (playerY - 1.5f*Application.worldHeight)) {
+            if(go.location.getY() < (playerY - 0.7f*Application.worldHeight)) {
                 if(go.isPooled)
                     this.pool.free((Portal)go);
                 it.remove();
