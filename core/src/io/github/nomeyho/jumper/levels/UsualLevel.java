@@ -104,6 +104,8 @@ public class UsualLevel extends AbstractLevel {
                 go.init(go.location.getX(), go.location.getY());
             }
         }
+
+        System.out.println(GameManager.get().player.location.getY());
     }
 
     private float getNextX (float x, float min, float max) {
