@@ -112,7 +112,7 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
         for(int i=0; i <this.dustEffect.getEmitters().size; i++){
             this.dustEffect.getEmitters().get(i).getTint().setColors(new float[]{color.r, color.g, color.b, color.a});
         }
-        this.dustEffect.draw(batch);
+        //this.dustEffect.draw(batch);
         batch.draw(
                 this.backTexture,
                 this.location.getX(),
