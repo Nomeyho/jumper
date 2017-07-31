@@ -50,6 +50,7 @@ public class PlayerStats {
             Gdx.app.log(Application.TAG, "Invalid hash, reset");
             this.remainingLifes = INITIAL_LIFES;
             this.bestScore = 0;
+            this.last = new Date();
             this.save();
         }
 

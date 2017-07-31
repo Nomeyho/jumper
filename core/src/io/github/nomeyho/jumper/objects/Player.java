@@ -69,6 +69,16 @@ public class Player extends AbstractGameObject {
     }
 
     @Override
+    public float getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public float getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
     public void update(float delta) {
 
         setDirection();

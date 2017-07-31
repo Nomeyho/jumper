@@ -1,8 +1,6 @@
 package io.github.nomeyho.jumper.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector3;
 import io.github.nomeyho.jumper.collisions.Hitbox;
@@ -13,6 +11,9 @@ public abstract class AbstractGameObject {
     public Vector3 speed = new Vector3(0,0,0);
     public Hitbox hitbox;
 
+
+    public abstract float getWidth ();
+    public abstract float getHeight ();
     public abstract void update(float delta);
     public abstract void draw(SpriteBatch batch);
     public abstract void drawBackground(SpriteBatch batch);

@@ -54,6 +54,16 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     }
 
     @Override
+    public float getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public float getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
     public void update(float delta) {
         if(this.toRemove) return;
 

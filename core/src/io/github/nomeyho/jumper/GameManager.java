@@ -2,9 +2,14 @@ package io.github.nomeyho.jumper;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.nomeyho.jumper.UI.GameUI;
 import io.github.nomeyho.jumper.UI.GameBackground;
+import io.github.nomeyho.jumper.UI.ScoreLabel;
 import io.github.nomeyho.jumper.files.PlayerStats;
 import io.github.nomeyho.jumper.levels.AbstractLevel;
 import io.github.nomeyho.jumper.levels.UsualLevel;
@@ -29,11 +34,21 @@ public class GameManager {
     public StarManager starManager;
     public GameBackground background;
     public SpriteBatch batch;
+    private Pool<ScoreLabel> labelPool;
+    private Array<ScoreLabel> labels = new Array<ScoreLabel>();
 
     private GameState previousState = null;
     private boolean savedStats;
 
-    private GameManager() {}
+    private GameManager() {
+        final Skin skin = Application.get().assetManager.get(Application.SKIN);
+        this.labelPool = new Pool<ScoreLabel>(2, 10) {
+            @Override
+            protected ScoreLabel newObject() {
+                return new ScoreLabel("", skin);
+            }
+        };
+    }
 
     public static GameManager get() {
         return INSTANCE;
@@ -56,12 +71,24 @@ public class GameManager {
         this.background = new GameBackground();
         this.state = GameState.READY;
         this.savedStats = false;
+
+        for(int i=0; i<this.labels.size; ++i)
+            this.labelPool.free(this.labels.get(i));
+        this.labels.clear();
+
         ColorManager.get().shuffle();
     }
 
     public void update (float delta) {
         if(this.state == GameState.PAUSED)
             return;
+
+        for(ScoreLabel label: this.labels) { // yeah, but controlled
+            if(label.toRemove)
+                this.labels.removeValue(label, true);
+            else
+                label.act(delta);
+        }
 
         this.player.update(delta);
         this.level.update(delta, this.player.location.getX(), this.player.location.getY());
@@ -91,6 +118,9 @@ public class GameManager {
         this.background.draw(batch);
 
         this.level.draw(batch);
+
+        for(int i=0, end=this.labels.size; i<end; ++i)
+            this.labels.get(i).draw(this.batch, 1);
     }
 
     /**
@@ -113,6 +143,11 @@ public class GameManager {
                 this.player.setSpeed(1000);
                 PlayerStats.get().currentScore += go.getScore();
                 this.level.disappear(go);
+                showScore(
+                        go.location.getX() + go.getWidth()/2,
+                        go.location.getY() + go.getHeight(),
+                        "" + go.getScore()
+                );
             }
         }
     }
@@ -141,5 +176,14 @@ public class GameManager {
         this.player.init(Application.worldWidth / 2 - Player.WIDTH/2, Player.MIN_Y);
         // TODO
         this.level = new UsualLevel();
+    }
+
+    public void showScore (float x, float y, String score) {
+        ScoreLabel label = this.labelPool.obtain();
+        Vector3 pos = this.camera.project(new Vector3(x, y, 0));
+        // label.init(pos.x, pos.y, score);
+        // label.init(pos.x, pos.y, score);
+        label.init(x, y, "1");
+        this.labels.add(label);
     }
 }

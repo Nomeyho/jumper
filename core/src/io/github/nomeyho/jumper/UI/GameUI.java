@@ -39,7 +39,7 @@ public class GameUI implements ITranslatable {
     public GameUI () {
         LanguageManager.get().register(this);
 
-        Skin skin = Application.get().assetManager.get(Application.SKIN);
+        final Skin skin = Application.get().assetManager.get(Application.SKIN);
         TextureAtlas atlas = Application.get().assetManager.get(Application.TEXTURE_ATLAS);
 
         this.stage = new Stage(GameManager.get().viewport, GameManager.get().batch);
@@ -82,6 +82,9 @@ public class GameUI implements ITranslatable {
             @Override
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
+                if(GameManager.get().state == GameState.ENDED)
+                    return;
+
                 SoundManager.get().playSound(SoundEnum.CLICK);
                 GameManager.get().pause();
                 pauseMenu.setVisible(true);
@@ -114,8 +117,10 @@ public class GameUI implements ITranslatable {
 
     public void draw () {
         // Show game over
-        if(GameManager.get().state == GameState.ENDED)
+        if(GameManager.get().state == GameState.ENDED) {
+            this.pauseMenu.setVisible(false);
             this.gameoverMenu.show();
+        }
 
         this.stage.draw();
     }
