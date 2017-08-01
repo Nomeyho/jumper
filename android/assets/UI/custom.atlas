@@ -105,7 +105,7 @@ h_scroll_bg
   index: -1
 knob
   rotate: false
-  xy: 774, 847
+  xy: 260, 52
   size: 29, 29
   orig: 29, 29
   offset: 0, 0
@@ -184,6 +184,13 @@ window
   split: 12, 12, 80, 12
   pad: 13, 12, 80, 11
   orig: 353, 318
+  offset: 0, 0
+  index: -1
+window_notitle
+  rotate: false
+  xy: 774, 823
+  size: 58, 53
+  orig: 58, 53
   offset: 0, 0
   index: -1
 window_transparent

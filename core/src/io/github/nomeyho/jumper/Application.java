@@ -38,11 +38,20 @@ public class Application {
     public static final String SKIN = "UI/custom.json";
     public static final String SKIN_ATLAS = "UI/custom.atlas";
     public static final String MUSIC = "sound/music.mp3";
-    public AssetManager assetManager = new AssetManager();
-    public ShapeRenderer shapeRenderer = new ShapeRenderer();
-    public InputMultiplexer inputMultiplexer = new InputMultiplexer();
+    public AssetManager assetManager;
+    public ShapeRenderer shapeRenderer;
+    public InputMultiplexer inputMultiplexer;
+
+    public void init () {
+        this.assetManager = new AssetManager();
+        this.shapeRenderer = new ShapeRenderer();
+        this.inputMultiplexer = new InputMultiplexer();
+    }
 
     public void loadUIAssets () {
+
+
+        System.out.println("ici " + this.assetManager);
         if(DEBUG)
             this.assetManager.getLogger().setLevel(Logger.DEBUG);
 

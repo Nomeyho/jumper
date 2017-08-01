@@ -28,7 +28,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     private TextButton cancelBtn;
 
     public SettingsMenu(String title, Skin skin) {
-        super(title, skin);
+        super(title, skin, "notitle");
         this.init(skin);
     }
 
@@ -45,6 +45,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
         this.getContentTable().setFillParent(true);
 
         // Title
+        this.getTitleLabel().setText("");
         this.getTitleLabel().setAlignment(Align.center);
 
         // Sound
@@ -110,7 +111,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     @Override
     public void updateLang() {
         I18NBundle bundle = LanguageManager.get().getBundle();
-        this.getTitleLabel().setText(bundle.get("settings"));
+        // this.getTitleLabel().setText(bundle.get("settings"));
         this.soundLabel.setText(bundle.get("sound"));
         this.musicLabel.setText(bundle.get("music"));
         this.langLabel.setText(bundle.get("lang"));

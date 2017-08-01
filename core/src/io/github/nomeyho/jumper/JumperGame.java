@@ -17,11 +17,13 @@ public class JumperGame extends AbstractGame {
 
 	@Override
 	public void create () {
+        System.out.println("create");
 		if(Application.DEBUG)
 			Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_DEBUG);
 		else
 			Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_ERROR);
 
+		Application.get().init();
 		Application.get().assetManager.setLoader(HitboxAtlas.class, new HitboxLoader(new InternalFileHandleResolver()));
 		Application.get().loadUIAssets();
 		UserPreferences.get().load();
@@ -31,17 +33,21 @@ public class JumperGame extends AbstractGame {
 	}
 
 	@Override
-	public void resume () {
+	public void resume ()
+    {
+        System.out.println("resume");
 		super.pause();
 	}
 
 	@Override
 	public void pause () {
-		super.pause();
+        System.out.println("pause");
+	    super.pause();
 	}
 
 	@Override
 	public void dispose () {
+        System.out.println("dispose");
 		super.dispose(); // = screen.dispose() = screen.hide()
 		// TODO dispose everything (game objects, managers? not only screens)
 		SoundManager.get().dispose();
