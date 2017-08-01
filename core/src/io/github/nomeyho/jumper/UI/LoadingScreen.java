@@ -77,7 +77,7 @@ public class LoadingScreen extends AbstractGameScreen {
 
         // Logo
         this.logoTexture = new Texture(Gdx.files.internal("logo.png"), true);
-        this.logoTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Nearest);
+        this.logoTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.Linear);
         this.logo = new Image(this.logoTexture);
         this.stage.addActor(this.logo);
 
@@ -120,6 +120,7 @@ public class LoadingScreen extends AbstractGameScreen {
 
     private long t1 = System.currentTimeMillis();
     private void update() {
+
         if(Application.DEBUG) {
             long t2 = System.currentTimeMillis();
             if (t2 - t1 > 5) { // Loading time...

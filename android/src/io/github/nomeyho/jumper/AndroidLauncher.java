@@ -16,7 +16,7 @@ import io.github.nomeyho.jumper.files.UserPreferences;
 
 public class AndroidLauncher extends AndroidApplication implements RewardedVideoAdListener {
     private static final String APP_ID = "ca-app-pub-3227008925572350~2198960964";
-    private static final String AD_ID = "ca-app-pub-3940256099942544/5224354917";
+    private static final String AD_ID = "ca-app-pub-3227008925572350/8297287840";
     private RewardedVideoAd mAd;
     private AbstractGame game;
     private AndroidAdService adService;
