@@ -17,7 +17,6 @@ public class JumperGame extends AbstractGame {
 
 	@Override
 	public void create () {
-        System.out.println("create");
 		if(Application.DEBUG)
 			Gdx.app.setLogLevel(com.badlogic.gdx.Application.LOG_DEBUG);
 		else
@@ -35,20 +34,17 @@ public class JumperGame extends AbstractGame {
 	@Override
 	public void resume ()
     {
-        System.out.println("resume");
 		super.pause();
 	}
 
 	@Override
 	public void pause () {
-        System.out.println("pause");
 	    super.pause();
 	}
 
 	@Override
 	public void dispose () {
-        System.out.println("dispose");
-		super.dispose(); // = screen.dispose() = screen.hide()
+	    super.dispose(); // = screen.dispose() = screen.hide()
 		// TODO dispose everything (game objects, managers? not only screens)
 		SoundManager.get().dispose();
 		Application.get().assetManager.dispose();

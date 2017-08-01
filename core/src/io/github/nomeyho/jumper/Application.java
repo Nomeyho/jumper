@@ -49,9 +49,6 @@ public class Application {
     }
 
     public void loadUIAssets () {
-
-
-        System.out.println("ici " + this.assetManager);
         if(DEBUG)
             this.assetManager.getLogger().setLevel(Logger.DEBUG);
 
