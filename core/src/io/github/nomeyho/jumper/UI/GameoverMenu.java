@@ -108,7 +108,9 @@ public class GameoverMenu extends Dialog implements ITranslatable {
                 // Remove event listeners
                 Application.get().inputMultiplexer.clear();
                 // New screen
-                GameManager.get().game.setScreen(new MenuScreen(GameManager.get().game));
+                MenuScreen screen = new MenuScreen(GameManager.get().game);
+                screen.background.fadeIn();
+                GameManager.get().game.setScreen(screen);
             }
         });
         this.getContentTable().add(this.mainBtn).padBottom(100);

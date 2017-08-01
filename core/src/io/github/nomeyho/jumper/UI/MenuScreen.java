@@ -40,7 +40,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     private TextButton buyBtn;
     private TextButton settingsBtn;
     private SettingsMenu settingsMenu;
-    private MenuBackground background;
+    public MenuBackground background;
     private float time = 0;
 
     private Image scoreIcon;
@@ -55,6 +55,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
     public MenuScreen(AbstractGame game) {
         super(game);
         this.batch = new SpriteBatch();
+        this.background = new MenuBackground();
         LanguageManager.get().register(this);
     }
 
@@ -96,7 +97,6 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         this.viewport = new ExtendViewport(SIZE, SIZE, this.camera);
         // Layout & stage
         this.stage = new Stage(this.viewport, this.batch);
-        this.background = new MenuBackground();
         this.layout = new Table();
         this.stage.addActor(this.layout);
         this.layout.setFillParent(true);
