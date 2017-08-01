@@ -106,7 +106,7 @@ public class GameoverMenu extends Dialog implements ITranslatable {
                 SoundManager.get().playSound(SoundEnum.CLICK);
                 hide();
                 // Remove event listeners
-                Application.get().inputMultiplexer.clear();
+                 Application.get().inputMultiplexer.clear();
                 // New screen
                 MenuScreen screen = new MenuScreen(GameManager.get().game);
                 screen.background.fadeIn();
