@@ -192,7 +192,7 @@ public class MenuScreen extends AbstractGameScreen implements ITranslatable {
         });
         this.settingsBtn.getLabelCell().padBottom(7).padTop(7);
         this.layout.add(this.settingsBtn).padBottom(100);
-        this.settingsMenu = new SettingsMenu("", skin);
+        this.settingsMenu = new SettingsMenu("", skin, this.background);
 
         // Life & score
         this.scoreIcon = new Image(atlas.findRegion("score"));

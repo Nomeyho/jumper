@@ -3,6 +3,7 @@ package io.github.nomeyho.jumper.UI;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import io.github.nomeyho.jumper.files.UserPreferences;
@@ -27,8 +28,11 @@ public class SettingsMenu extends Dialog implements ITranslatable {
     private TextButton saveBtn;
     private TextButton cancelBtn;
 
-    public SettingsMenu(String title, Skin skin) {
+    private MenuBackground background;
+
+    public SettingsMenu(String title, Skin skin, MenuBackground background) {
         super(title, skin, "notitle");
+        this.background = background;
         this.init(skin);
     }
 
@@ -79,6 +83,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
                 SoundManager.get().playSound(SoundEnum.CLICK);
                 // Save new parameters and close window
                 save();
+                background.fadeIn();
                 SettingsMenu.super.hide();
             }
         });
@@ -92,6 +97,7 @@ public class SettingsMenu extends Dialog implements ITranslatable {
             public void tap(InputEvent event, float x, float y, int count, int button) {
                 super.tap(event, x, y, count, button);
                 SoundManager.get().playSound(SoundEnum.CLICK);
+                background.fadeIn();
                 SettingsMenu.super.hide();
             }
         });
