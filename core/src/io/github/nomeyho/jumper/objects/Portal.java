@@ -36,9 +36,6 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
 
         HitboxAtlas hitboxAtlas = Application.get().assetManager.get(Application.HITBOX_ATLAS);
         this.hitbox = hitboxAtlas.get("portal");
-
-        this.dustEffect = ParticleManager.get().getEffect(ParticleEnum.DUST);
-        this.dustEffect.start();
         super.isPooled = true;
         init(x, y);
     }
@@ -76,7 +73,6 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
 
         if(this.disappear) {
             this.time += delta;
-            // this.scale = Interpolation.pow5in.apply((1 - (time) % 1));
             this.scale = Interpolation.swingIn.apply((1 - (time) % 1));
             if(this.scale < 0.001)
                 this.toRemove = true;
@@ -84,8 +80,6 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
 
         this.location.add(0, + SPEED * delta);
         this.updateHitbox(this.disappear ? 0 : WIDTH, this.disappear ? 0 : HEIGHT, this.location.getX(), this.location.getY(), 0);
-        this.dustEffect.update(delta);
-        this.dustEffect.setPosition(this.location.getX(), this.location.getY());
     }
 
     @Override
@@ -109,10 +103,6 @@ public class Portal extends AbstractGameObject implements Pool.Poolable {
     @Override
     public void drawBackground(SpriteBatch batch) {
         batch.setColor(color);
-        for(int i=0; i <this.dustEffect.getEmitters().size; i++){
-            this.dustEffect.getEmitters().get(i).getTint().setColors(new float[]{color.r, color.g, color.b, color.a});
-        }
-        //this.dustEffect.draw(batch);
         batch.draw(
                 this.backTexture,
                 this.location.getX(),

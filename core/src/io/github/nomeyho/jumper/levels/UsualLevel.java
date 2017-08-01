@@ -186,22 +186,22 @@ public class UsualLevel extends AbstractLevel {
     }
 
    private void setDifficulty(float y) {
-        if(y < 40000){
+        if(y < 60000){
             this.deltaXMax = 3*Application.CELL;
             this.deltaY = 1.5f*Application.CELL;
             this.rainbowProbability = 0.02f;
         }
-        else if(y > 40000 && y < 60000){
+        else if(y > 60000 && y < 100000){
             this.deltaXMax = 4*Application.CELL;
             this.deltaY = 1.65f*Application.CELL;
             this.rainbowProbability = 0.035f;
         }
-        else if(y > 60000 && y < 80000){
+        else if(y > 100000 && y < 140000){
             this.deltaXMax = 5*Application.CELL;
             this.deltaY = 1.8f*Application.CELL;
             this.rainbowProbability = 0.05f;
         }
-        else if(y > 100000){
+        else if(y > 140000){
             this.deltaXMax = 6*Application.CELL;
             this.deltaY = 2f*Application.CELL;
             this.rainbowProbability = 0.07f;
